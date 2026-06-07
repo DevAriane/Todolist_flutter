@@ -4,9 +4,11 @@ import 'package:getxtra/get.dart';
 import '../controller/category_controller.dart';
 import '../controller/task_controller.dart';
 import '../controller/color_controller.dart';
+import '../controller/date_picker_controller.dart';
 import '../core/app_color.dart';
 import 'app_bottom_sheet.dart';
 import '../utils/color_picker.dart';
+import '../utils/date_picker_view.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -21,6 +23,7 @@ class _AddTaskState extends State<AddTask> {
   final TextEditingController _title = TextEditingController();
   final TextEditingController _description = TextEditingController();
   final ColorController color = Get.find<ColorController>();
+  final DatePickerController date = Get.find<DatePickerController>();
   int? _selectedCategoryId;
 
   @override
@@ -62,6 +65,7 @@ class _AddTaskState extends State<AddTask> {
       _description.text,
       _selectedCategoryId,
       color.selectedColor.value,
+      date.selectedDate.value,
     );
 
     if (!isSaved) {
@@ -158,6 +162,8 @@ class _AddTaskState extends State<AddTask> {
           const Text("Choisir la couleur de votre tache"),
           const SizedBox(height: 10),
           ColorsPicker(),
+          const SizedBox(height: 10),
+          DatePickerView(),
           const SizedBox(height: 10),
           SizedBox(
             width: double.infinity,

@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart'; // Nécessaire pour la classe Color
+import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 import './category_entity.dart';
+import './person_entity.dart';
 
 @Entity()
 class TaskEntity {
@@ -13,11 +14,13 @@ class TaskEntity {
   int? dbColor;
 
   final category = ToOne<CategoryEntity>();
+  final person = ToOne<PersonEntity>();
 
   TaskEntity({
     required this.title,
     this.completed = false,
     this.description,
+    this.date,
     Color? color,
   }) {
     this.color = color;

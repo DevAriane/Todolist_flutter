@@ -76,6 +76,7 @@ class TaskController extends GetxController {
     String? description,
     int? categoryId,
     Color? color,
+    DateTime? date,
   ) {
     final trimmedTitle = title.trim();
     if (trimmedTitle.isEmpty || categoryId == null) {
@@ -96,6 +97,7 @@ class TaskController extends GetxController {
           ? null
           : trimmedDescription,
       color: color,
+      date: date,
     );
 
     newTask.category.target = existingCategory;

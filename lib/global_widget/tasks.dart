@@ -29,6 +29,14 @@ class Tasks extends StatelessWidget {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Container(
+                width: 10,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  color: task.color,
+                ),
+              ),
+
               InkWell(
                 onTap: () {
                   showModalBottomSheet(
@@ -42,9 +50,22 @@ class Tasks extends StatelessWidget {
                     },
                   );
                 },
-                child: Text(
-                  task.title,
-                  style: const TextStyle(color: AppColor.blanc),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      task.title,
+                      style: const TextStyle(color: AppColor.blanc),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      task.completed ? "Complétée" : "À faire le ${task.date}",
+                      style: const TextStyle(
+                        color: AppColor.placeholder,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Row(
