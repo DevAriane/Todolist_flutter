@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:getxtra/get.dart';
 
 import '../models/task_entity.dart';
@@ -70,7 +71,12 @@ class TaskController extends GetxController {
     }
   }
 
-  bool addTask(String title, String? description, int? categoryId) {
+  bool addTask(
+    String title,
+    String? description,
+    int? categoryId,
+    Color? color,
+  ) {
     final trimmedTitle = title.trim();
     if (trimmedTitle.isEmpty || categoryId == null) {
       return false;
@@ -89,6 +95,7 @@ class TaskController extends GetxController {
       description: trimmedDescription == null || trimmedDescription.isEmpty
           ? null
           : trimmedDescription,
+      color: color,
     );
 
     newTask.category.target = existingCategory;

@@ -6,6 +6,7 @@ import 'package:getxtra/get.dart';
 
 import 'controller/task_controller.dart';
 import 'controller/category_controller.dart';
+import './controller/color_controller.dart';
 import './services/objectbox_service.dart';
 
 Future<void> main() async {
@@ -13,6 +14,7 @@ Future<void> main() async {
   await ObjectBoxService.init();
 
   Get.lazyPut(() => CategoryController());
+  Get.lazyPut(() => ColorController());
   Get.lazyPut(() => TaskController());
   runApp(const MyApp());
 }

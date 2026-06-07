@@ -3,8 +3,10 @@ import 'package:getxtra/get.dart';
 
 import '../controller/category_controller.dart';
 import '../controller/task_controller.dart';
+import '../controller/color_controller.dart';
 import '../core/app_color.dart';
 import 'app_bottom_sheet.dart';
+import '../utils/color_picker.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -18,6 +20,7 @@ class _AddTaskState extends State<AddTask> {
   final CategoryController control = Get.find<CategoryController>();
   final TextEditingController _title = TextEditingController();
   final TextEditingController _description = TextEditingController();
+  final ColorController color = Get.find<ColorController>();
   int? _selectedCategoryId;
 
   @override
@@ -58,6 +61,7 @@ class _AddTaskState extends State<AddTask> {
       title,
       _description.text,
       _selectedCategoryId,
+      color.selectedColor.value,
     );
 
     if (!isSaved) {
@@ -150,6 +154,10 @@ class _AddTaskState extends State<AddTask> {
               },
             );
           }),
+          const SizedBox(height: 10),
+          const Text("Choisir la couleur de votre tache"),
+          const SizedBox(height: 10),
+          ColorsPicker(),
           const SizedBox(height: 10),
           SizedBox(
             width: double.infinity,
