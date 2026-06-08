@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:getxtra/get.dart'; // Note : Assurez-vous que ce package est correct, le package officiel est 'package:get/get.dart'
-
-import '../models/task_entity.dart';
+import 'package:getxtra/get.dart'; 
 import '../services/api_service.dart';
 import '../services/objectbox_service.dart';
 import '../models/person_entity.dart';

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import './task_entity.dart';
 import 'package:todolist_flutter/objectbox.g.dart';
 import 'package:objectbox/objectbox.dart';

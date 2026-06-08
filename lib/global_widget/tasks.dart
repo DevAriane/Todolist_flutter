@@ -100,7 +100,7 @@ class Tasks extends StatelessWidget {
                         },
                       );
                     },
-                    icon: const Icon(Icons.update),
+                    icon: const Icon(Icons.update ),
                   ),
                   IconButton(
                     onPressed: () {

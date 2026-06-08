@@ -9,18 +9,36 @@ class SearchController extends GetxController {
   final TaskController controller = Get.find<TaskController>();
   final CategoryController _categoryController = Get.find<CategoryController>();
 
+  var searchQuery = ''.obs;
+  var isLoading = false.obs;
+
   @override
   void onReady() {
     super.onReady();
   }
 
-  void searchTask(String title) {
+  void searchTask() {
+    if (searchQuery.value.isEmpty) return;
+
+    isLoading.value = true;
+
     Query<TaskEntity> query = ObjectBoxService.taskBox
-        .query(TaskEntity_.title.contains(title))
+        .query(TaskEntity_.title.contains(searchQuery.value))
         .build();
 
-    controller.tasks.value = query.find();
-    _categoryController.taksCategories.value = query.find();
+    List<TaskEntity> results = query.find();
+    controller.tasks.value = results;
+    _categoryController.taksCategories.value = results;
+
     query.close();
+    isLoading.value = false;
+  }
+
+  void resetSearch() {
+    searchQuery.value = '';
+    isLoading.value = false;
+    _categoryController.filteredTaks(
+      _categoryController.selectedCategoryId.value,
+    );
   }
 }

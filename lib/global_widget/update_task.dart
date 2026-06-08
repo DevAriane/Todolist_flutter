@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:getxtra/get.dart';
-
 import '../controller/task_controller.dart';
 import '../core/app_color.dart';
 import '../models/task_entity.dart';
 import 'app_bottom_sheet.dart';
-import 'package:flutter/material.dart';
-import 'package:getxtra/get.dart';
-
 import '../controller/category_controller.dart';
-import '../controller/task_controller.dart';
 import '../controller/color_controller.dart';
 import '../controller/date_picker_controller.dart';
-import '../core/app_color.dart';
-import 'app_bottom_sheet.dart';
 import '../utils/color_picker.dart';
 import '../utils/date_picker_view.dart';
 import '../controller/person_controller.dart';

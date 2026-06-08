@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:getxtra/get.dart';
 import 'package:todolist_flutter/objectbox.g.dart';
@@ -96,7 +95,7 @@ class TaskController extends GetxController {
     verifyNameTask(title, categoryId);
 
     final trimmedTitle = title.trim();
-    if (trimmedTitle.isEmpty ) {
+    if (trimmedTitle.isEmpty) {
       return false;
     }
 
@@ -207,7 +206,7 @@ class TaskController extends GetxController {
 
   void _refreshFilteredTasks() {
     categoryController.filteredTaks(
-     categoryController.selectedCategoryId.value,
+      categoryController.selectedCategoryId.value,
     );
   }
 

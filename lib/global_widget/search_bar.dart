@@ -7,7 +7,6 @@ class Searchbars extends StatelessWidget {
   Searchbars({super.key});
 
   final SearchController _searchController = Get.find<SearchController>();
-
   final TextEditingController _search = TextEditingController();
 
   @override
@@ -22,6 +21,11 @@ class Searchbars extends StatelessWidget {
       child: TextField(
         controller: _search,
         style: const TextStyle(color: AppColor.blanc),
+        onChanged: (value) {
+          if (value.trim().isEmpty) {
+            _searchController.resetSearch();
+          }
+        },
         decoration: InputDecoration(
           hintText: "Rechercher...",
           hintStyle: const TextStyle(color: AppColor.placeholder),
@@ -43,8 +47,12 @@ class Searchbars extends StatelessWidget {
               child: IconButton(
                 icon: const Icon(Icons.tune, color: AppColor.noir, size: 15.0),
                 onPressed: () {
-                  final title = _search.text.trim();
-                  _searchController.searchTask(title);
+                  if (_search.text.trim().isNotEmpty) {
+                    _searchController.searchQuery.value = _search.text.trim();
+                    _searchController.searchTask();
+                  } else {
+                    _searchController.resetSearch();
+                  }
                 },
               ),
             ),

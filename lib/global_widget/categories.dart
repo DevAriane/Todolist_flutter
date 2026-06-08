@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide SearchController;
 import 'package:getxtra/get.dart';
 import '../core/app_color.dart';
 import '../controller/category_controller.dart';
@@ -36,7 +36,6 @@ class Categories extends StatelessWidget {
             ),
           ],
         ),
-
         const SizedBox(height: 10),
         SizedBox(
           height: 60,
@@ -76,7 +75,6 @@ class Categories extends StatelessWidget {
                 Expanded(
                   child: ListView.separated(
                     shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemCount: categories.length,
                     separatorBuilder: (context, index) =>
