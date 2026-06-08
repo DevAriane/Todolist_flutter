@@ -71,7 +71,7 @@ class _AddTaskState extends State<AddTask> {
     final isSaved = controller.addTask(
       title,
       _description.text,
-      _selectedCategoryId,
+      _selectedCategoryId!,
       _selectedPersonId!,
       color.selectedColor.value,
       date.selectedDate.value,

@@ -83,4 +83,6 @@ class CategoryController extends GetxController {
       query.close();
     }
   }
+
+
 }

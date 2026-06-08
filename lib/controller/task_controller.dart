@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:getxtra/get.dart';
+import 'package:todolist_flutter/objectbox.g.dart';
 
 import '../models/task_entity.dart';
 import '../services/api_service.dart';
@@ -8,7 +9,7 @@ import '../services/objectbox_service.dart';
 import './category_controller.dart';
 
 class TaskController extends GetxController {
-  final CategoryController _categoryController = Get.find<CategoryController>();
+  final CategoryController categoryController = Get.find<CategoryController>();
   final tasks = <TaskEntity>[].obs;
   final isLoading = false.obs;
 
@@ -23,7 +24,7 @@ class TaskController extends GetxController {
   Future<void> loadTasks() async {
     isLoading(true);
     try {
-      await _categoryController.loadCategories();
+      await categoryController.loadCategories();
 
       final localTasks = ObjectBoxService.taskBox.getAll();
       if (localTasks.isNotEmpty) {
@@ -87,13 +88,15 @@ class TaskController extends GetxController {
   bool addTask(
     String title,
     String? description,
-    int? categoryId,
+    int categoryId,
     int personId,
     Color? color,
     DateTime? date,
   ) {
+    verifyNameTask(title, categoryId);
+
     final trimmedTitle = title.trim();
-    if (trimmedTitle.isEmpty || categoryId == null) {
+    if (trimmedTitle.isEmpty ) {
       return false;
     }
 
@@ -156,6 +159,8 @@ class TaskController extends GetxController {
     Color? color,
     DateTime? date,
   ) {
+    verifyNameTask(newTitle, categoryId);
+
     final trimmedTitle = newTitle.trim();
     if (trimmedTitle.isEmpty) {
       return false;
@@ -201,8 +206,23 @@ class TaskController extends GetxController {
   }
 
   void _refreshFilteredTasks() {
-    _categoryController.filteredTaks(
-      _categoryController.selectedCategoryId.value,
+    categoryController.filteredTaks(
+     categoryController.selectedCategoryId.value,
     );
+  }
+
+  void verifyNameTask(String newTitle, int categoryId) {
+    Query<TaskEntity> query = ObjectBoxService.taskBox
+        .query(TaskEntity_.category.equals(categoryId))
+        .build();
+    final taksCategories = query.find();
+    for (TaskEntity task in taksCategories) {
+      if (task.title == newTitle) {
+        debugPrint(
+          "dans une meme categorie on ne peut pas avoir deux taches avec le meme non",
+        );
+        return;
+      }
+    }
   }
 }
