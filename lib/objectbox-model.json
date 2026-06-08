@@ -24,7 +24,7 @@
     },
     {
       "id": "2:4761011152696546302",
-      "lastPropertyId": "5:5751274080126445439",
+      "lastPropertyId": "8:8219946363973099018",
       "name": "TaskEntity",
       "properties": [
         {
@@ -55,13 +55,50 @@
           "id": "5:5751274080126445439",
           "name": "description",
           "type": 9
+        },
+        {
+          "id": "6:8273818876350773588",
+          "name": "date",
+          "type": 10
+        },
+        {
+          "id": "7:1235058293433416291",
+          "name": "dbColor",
+          "type": 6
+        },
+        {
+          "id": "8:8219946363973099018",
+          "name": "personId",
+          "indexId": "2:7819590626907652588",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "PersonEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:160033768349466157",
+      "lastPropertyId": "2:4970226742266615404",
+      "name": "PersonEntity",
+      "properties": [
+        {
+          "id": "1:3131630848226221813",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4970226742266615404",
+          "name": "name",
+          "type": 9
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "2:4761011152696546302",
-  "lastIndexId": "1:2974962879502558720",
+  "lastEntityId": "3:160033768349466157",
+  "lastIndexId": "2:7819590626907652588",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

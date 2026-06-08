@@ -9,6 +9,7 @@ import '../core/app_color.dart';
 import 'app_bottom_sheet.dart';
 import '../utils/color_picker.dart';
 import '../utils/date_picker_view.dart';
+import '../controller/person_controller.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -24,7 +25,9 @@ class _AddTaskState extends State<AddTask> {
   final TextEditingController _description = TextEditingController();
   final ColorController color = Get.find<ColorController>();
   final DatePickerController date = Get.find<DatePickerController>();
+  final PersonController person = Get.find<PersonController>();
   int? _selectedCategoryId;
+  int? _selectedPersonId;
 
   @override
   void initState() {
@@ -51,12 +54,17 @@ class _AddTaskState extends State<AddTask> {
   void _submit() {
     final title = _title.text.trim();
     if (title.isEmpty) {
-      _showMessage('Le titre de la tache est obligatoire.');
+      _showMessage('Le titre de la tâche est obligatoire.');
       return;
     }
 
     if (_selectedCategoryId == null) {
-      _showMessage('Selectionne une categorie avant de valider.');
+      _showMessage('Sélectionnez une catégorie avant de valider.');
+      return;
+    }
+
+    if (_selectedPersonId == null) {
+      _showMessage('Sélectionnez une personne avant de valider.');
       return;
     }
 
@@ -64,12 +72,13 @@ class _AddTaskState extends State<AddTask> {
       title,
       _description.text,
       _selectedCategoryId,
+      _selectedPersonId!,
       color.selectedColor.value,
       date.selectedDate.value,
     );
 
     if (!isSaved) {
-      _showMessage("Impossible d'enregistrer la tache.");
+      _showMessage("Impossible d'enregistrer la tâche.");
       return;
     }
 
@@ -83,12 +92,12 @@ class _AddTaskState extends State<AddTask> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text("Entrez le titre de votre tache"),
+          const Text("Entrez le titre de votre tâche"),
           const SizedBox(height: 10),
           TextField(
             controller: _title,
             decoration: InputDecoration(
-              hintText: "EX: learning ObjectBox",
+              hintText: "EX : Apprendre ObjectBox",
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: const BorderSide(color: AppColor.bordure),
@@ -100,13 +109,13 @@ class _AddTaskState extends State<AddTask> {
             ),
           ),
           const SizedBox(height: 10),
-          const Text("Description de votre tache"),
+          const Text("Description de votre tâche"),
           const SizedBox(height: 10),
           TextField(
             controller: _description,
             maxLines: 3,
             decoration: InputDecoration(
-              hintText: "EX: Terminer l'integration ObjectBox",
+              hintText: "EX : Terminer l'intégration ObjectBox",
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: const BorderSide(color: AppColor.bordure),
@@ -118,7 +127,7 @@ class _AddTaskState extends State<AddTask> {
             ),
           ),
           const SizedBox(height: 10),
-          const Text("Selectionner une categorie"),
+          const Text("Sélectionner une catégorie"),
           const SizedBox(height: 10),
           Obx(() {
             final categories = control.categories;
@@ -159,7 +168,48 @@ class _AddTaskState extends State<AddTask> {
             );
           }),
           const SizedBox(height: 10),
-          const Text("Choisir la couleur de votre tache"),
+          const Text("Sélectionner une personne"),
+          const SizedBox(height: 10),
+          Obx(() {
+            final persons = person.persons;
+            final hasSelectedPerson = persons.any(
+              (person) => person.id == _selectedPersonId,
+            );
+
+            return DropdownButtonFormField<int>(
+              initialValue: hasSelectedPerson ? _selectedPersonId : null,
+              hint: const Text("Sélectionner une personne"),
+              isExpanded: true,
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(color: AppColor.bordure),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(
+                    color: AppColor.bordure,
+                    width: 2,
+                  ),
+                ),
+              ),
+              items: persons
+                  .map(
+                    (person) => DropdownMenuItem<int>(
+                      value: person.id,
+                      child: Text(person.name),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (newId) {
+                setState(() {
+                  _selectedPersonId = newId;
+                });
+              },
+            );
+          }),
+          const SizedBox(height: 10),
+          const Text("Choisir la couleur de votre tâche"),
           const SizedBox(height: 10),
           ColorsPicker(),
           const SizedBox(height: 10),

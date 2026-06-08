@@ -30,13 +30,13 @@ class _CreateCategoryState extends State<CreateCategory> {
   void _submit() {
     final name = _nameCategory.text.trim();
     if (name.isEmpty) {
-      _showMessage('Le nom de la categorie est obligatoire.');
+      _showMessage('Le nom de la catégorie est obligatoire.');
       return;
     }
 
     final isSaved = controller.addCategory(name);
     if (!isSaved) {
-      _showMessage('Cette categorie existe deja ou le nom est invalide.');
+      _showMessage('Cette catégorie existe déjà ou le nom est invalide.');
       return;
     }
 
@@ -51,14 +51,14 @@ class _CreateCategoryState extends State<CreateCategory> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            "Entrez le nom de la categorie",
+            "Entrez le nom de la catégorie",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 10),
           TextField(
             controller: _nameCategory,
             decoration: InputDecoration(
-              hintText: "EX: Study",
+              hintText: "EX : Études",
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: const BorderSide(color: AppColor.bordure),

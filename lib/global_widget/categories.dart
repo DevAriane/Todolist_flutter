@@ -18,7 +18,7 @@ class Categories extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.max,
           children: [
-            const Text("Categories", style: TextStyle(color: AppColor.blanc)),
+            const Text("Catégories", style: TextStyle(color: AppColor.blanc)),
             IconButton(
               onPressed: () {
                 showModalBottomSheet(
@@ -66,7 +66,7 @@ class Categories extends StatelessWidget {
                     ),
                     child: const Center(
                       child: Text(
-                        "All",
+                        "Tout ",
                         style: TextStyle(color: AppColor.blanc),
                       ),
                     ),

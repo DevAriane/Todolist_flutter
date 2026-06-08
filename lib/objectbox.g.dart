@@ -15,6 +15,7 @@ import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_sync_flutter_libs/objectbox_sync_flutter_libs.dart';
 
 import 'models/category_entity.dart';
+import 'models/person_entity.dart';
 import 'models/task_entity.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
@@ -51,7 +52,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(2, 4761011152696546302),
     name: 'TaskEntity',
-    lastPropertyId: const obx_int.IdUid(5, 5751274080126445439),
+    lastPropertyId: const obx_int.IdUid(8, 8219946363973099018),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -87,9 +88,58 @@ final _entities = <obx_int.ModelEntity>[
         type: 9,
         flags: 0,
       ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 8273818876350773588),
+        name: 'date',
+        type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 1235058293433416291),
+        name: 'dbColor',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 8219946363973099018),
+        name: 'personId',
+        type: 11,
+        flags: 520,
+        indexId: const obx_int.IdUid(2, 7819590626907652588),
+        relationField: 'person',
+        relationTarget: 'PersonEntity',
+      ),
     ],
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
+  ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(3, 160033768349466157),
+    name: 'PersonEntity',
+    lastPropertyId: const obx_int.IdUid(2, 4970226742266615404),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 3131630848226221813),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 4970226742266615404),
+        name: 'name',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[
+      obx_int.ModelBacklink(
+        name: 'tasks',
+        srcEntity: 'TaskEntity',
+        srcField: 'person',
+      ),
+    ],
   ),
 ];
 
@@ -136,8 +186,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
     // Typically, this is done with `dart run build_runner build`.
     generatorVersion: obx_int.GeneratorVersion.v2025_12_16,
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(2, 4761011152696546302),
-    lastIndexId: const obx_int.IdUid(1, 2974962879502558720),
+    lastEntityId: const obx_int.IdUid(3, 160033768349466157),
+    lastIndexId: const obx_int.IdUid(2, 7819590626907652588),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
     retiredEntityUids: const [],
@@ -194,7 +244,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
     ),
     TaskEntity: obx_int.EntityDefinition<TaskEntity>(
       model: _entities[1],
-      toOneRelations: (TaskEntity object) => [object.category],
+      toOneRelations: (TaskEntity object) => [object.category, object.person],
       toManyRelations: (TaskEntity object) => {},
       getId: (TaskEntity object) => object.id,
       setId: (TaskEntity object, int id) {
@@ -205,18 +255,26 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final descriptionOffset = object.description == null
             ? null
             : fbb.writeString(object.description!);
-        fbb.startTable(6);
+        fbb.startTable(9);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, titleOffset);
         fbb.addBool(2, object.completed);
         fbb.addInt64(3, object.category.targetId);
         fbb.addOffset(4, descriptionOffset);
+        fbb.addInt64(5, object.date?.millisecondsSinceEpoch);
+        fbb.addInt64(6, object.dbColor);
+        fbb.addInt64(7, object.person.targetId);
         fbb.finish(fbb.endTable());
         return object.id;
       },
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
+        final dateValue = const fb.Int64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          14,
+        );
         final titleParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 6, '');
@@ -229,11 +287,22 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final descriptionParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGetNullable(buffer, rootOffset, 12);
-        final object = TaskEntity(
-          title: titleParam,
-          completed: completedParam,
-          description: descriptionParam,
-        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        final dateParam = dateValue == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(dateValue);
+        final object =
+            TaskEntity(
+                title: titleParam,
+                completed: completedParam,
+                description: descriptionParam,
+                date: dateParam,
+              )
+              ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+              ..dbColor = const fb.Int64Reader().vTableGetNullable(
+                buffer,
+                rootOffset,
+                16,
+              );
         object.category.targetId = const fb.Int64Reader().vTableGet(
           buffer,
           rootOffset,
@@ -241,6 +310,55 @@ obx_int.ModelDefinition getObjectBoxModel() {
           0,
         );
         object.category.attach(store);
+        object.person.targetId = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          18,
+          0,
+        );
+        object.person.attach(store);
+        return object;
+      },
+    ),
+    PersonEntity: obx_int.EntityDefinition<PersonEntity>(
+      model: _entities[2],
+      toOneRelations: (PersonEntity object) => [],
+      toManyRelations: (PersonEntity object) => {
+        obx_int.RelInfo<TaskEntity>.toOneBacklink(
+          8,
+          object.id,
+          (TaskEntity srcObject) => srcObject.person,
+        ): object.tasks,
+      },
+      getId: (PersonEntity object) => object.id,
+      setId: (PersonEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (PersonEntity object, fb.Builder fbb) {
+        final nameOffset = fbb.writeString(object.name);
+        fbb.startTable(3);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, nameOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final nameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 6, '');
+        final object = PersonEntity(name: nameParam)
+          ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        obx_int.InternalToManyAccess.setRelInfo<PersonEntity>(
+          object.tasks,
+          store,
+          obx_int.RelInfo<TaskEntity>.toOneBacklink(
+            8,
+            object.id,
+            (TaskEntity srcObject) => srcObject.person,
+          ),
+        );
         return object;
       },
     ),
@@ -292,5 +410,38 @@ class TaskEntity_ {
   /// See [TaskEntity.description].
   static final description = obx.QueryStringProperty<TaskEntity>(
     _entities[1].properties[4],
+  );
+
+  /// See [TaskEntity.date].
+  static final date = obx.QueryDateProperty<TaskEntity>(
+    _entities[1].properties[5],
+  );
+
+  /// See [TaskEntity.dbColor].
+  static final dbColor = obx.QueryIntegerProperty<TaskEntity>(
+    _entities[1].properties[6],
+  );
+
+  /// See [TaskEntity.person].
+  static final person = obx.QueryRelationToOne<TaskEntity, PersonEntity>(
+    _entities[1].properties[7],
+  );
+}
+
+/// [PersonEntity] entity fields to define ObjectBox queries.
+class PersonEntity_ {
+  /// See [PersonEntity.id].
+  static final id = obx.QueryIntegerProperty<PersonEntity>(
+    _entities[2].properties[0],
+  );
+
+  /// See [PersonEntity.name].
+  static final name = obx.QueryStringProperty<PersonEntity>(
+    _entities[2].properties[1],
+  );
+
+  /// see [PersonEntity.tasks]
+  static final tasks = obx.QueryBacklinkToMany<TaskEntity, PersonEntity>(
+    TaskEntity_.person,
   );
 }

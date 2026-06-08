@@ -20,7 +20,6 @@ class HomePages extends StatelessWidget {
         backgroundColor: AppColor.noir,
         actionsPadding: const EdgeInsets.all(20),
         centerTitle: true,
-
         title: const Text(
           "Zen List",
           style: TextStyle(
@@ -42,7 +41,7 @@ class HomePages extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                "Good morning, Hattie !",
+                "Bonjour, Hattie !",
                 style: TextStyle(color: AppColor.blanc, fontSize: 18),
               ),
               const SizedBox(height: 8),
@@ -50,7 +49,7 @@ class HomePages extends StatelessWidget {
                 final taskCount = controller.tasks.length;
                 return Text.rich(
                   TextSpan(
-                    text: "You have ",
+                    text: "Vous avez ",
                     style: const TextStyle(
                       color: AppColor.blanc,
                       fontSize: 24,
@@ -58,18 +57,21 @@ class HomePages extends StatelessWidget {
                     ),
                     children: [
                       TextSpan(
-                        text: "$taskCount tasks",
+                        text: taskCount == 0
+                            ? "aucune tâche"
+                            : taskCount == 1
+                            ? "1 tâche"
+                            : "$taskCount tâches",
                         style: const TextStyle(
                           color: AppColor.or,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const TextSpan(text: " today."),
+                      const TextSpan(text: " aujourd'hui."),
                     ],
                   ),
                 );
               }),
-
               const SizedBox(height: 20),
               const Searchbars(),
               const SizedBox(height: 20),
@@ -80,7 +82,7 @@ class HomePages extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   const Text(
-                    "Taches a effectuer ",
+                    "Tâches à effectuer",
                     style: TextStyle(color: AppColor.blanc),
                   ),
                   IconButton(

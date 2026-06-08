@@ -14,6 +14,9 @@ class DetailsTasks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final personName = task.person.target?.name;
+    final description = task.description;
+
     return AppBottomSheet(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,13 +26,19 @@ class DetailsTasks extends StatelessWidget {
             task.title,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
           ),
-          const SizedBox(height: 10),
-          Text(task.description ?? ""),
+          if (description != null && description.trim().isNotEmpty) ...[
+            const SizedBox(height: 10),
+            Text(description),
+          ],
+          if (personName != null && personName.trim().isNotEmpty) ...[
+            const SizedBox(height: 10),
+            Text("Assignée à : $personName"),
+          ],
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Completer la tache", style: TextStyle(fontSize: 16)),
+              const Text("Compléter la tâche", style: TextStyle(fontSize: 16)),
               IconButton(
                 onPressed: () {
                   controller.toggleCompleted(task);

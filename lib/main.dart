@@ -8,6 +8,7 @@ import 'controller/task_controller.dart';
 import 'controller/category_controller.dart';
 import './controller/color_controller.dart';
 import 'controller/date_picker_controller.dart';
+import 'controller/person_controller.dart';
 import './services/objectbox_service.dart';
 
 Future<void> main() async {
@@ -18,6 +19,7 @@ Future<void> main() async {
   Get.lazyPut(() => ColorController());
   Get.lazyPut(() => TaskController());
   Get.lazyPut(() => DatePickerController());
+  Get.lazyPut(() => PersonController());
   runApp(const MyApp());
 }
 

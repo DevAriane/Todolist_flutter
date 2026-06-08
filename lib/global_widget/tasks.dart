@@ -5,6 +5,7 @@ import '../controller/task_controller.dart';
 import '../controller/category_controller.dart';
 import './update_task.dart';
 import './details_tasks.dart';
+import 'package:intl/intl.dart';
 
 class Tasks extends StatelessWidget {
   Tasks({super.key});
@@ -20,54 +21,68 @@ class Tasks extends StatelessWidget {
       }
 
       if (control.taksCategories.isEmpty) {
-        return const Center(child: Text("aucune tache"));
+        return const Center(
+          child: Text("Aucune tâche", style: TextStyle(color: AppColor.blanc)),
+        );
       }
 
       return ListView.separated(
         itemBuilder: (context, index) {
           final task = control.taksCategories[index];
+          final hasDate = task.date != null;
+
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                width: 10,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(15)),
-                  color: task.color,
-                ),
+              Row(
+                children: [
+                  Container(
+                    width: 20,
+                    height: 20,
+                    margin: const EdgeInsets.only(right: 12),
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      color: task.color ?? Colors.blue,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      showModalBottomSheet(
+                        showDragHandle: false,
+                        useSafeArea: true,
+                        backgroundColor: Colors.transparent,
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (context) {
+                          return DetailsTasks(task: task);
+                        },
+                      );
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          task.title,
+                          style: const TextStyle(color: AppColor.blanc),
+                        ),
+                        if (hasDate) ...[
+                          const SizedBox(height: 5),
+                          Text(
+                            task.completed
+                                ? "Complétée le ${DateFormat('dd/MM/yyyy').format(task.date!)}"
+                                : "À faire le ${DateFormat('dd/MM/yyyy').format(task.date!)}",
+                            style: const TextStyle(
+                              color: AppColor.placeholder,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ],
               ),
 
-              InkWell(
-                onTap: () {
-                  showModalBottomSheet(
-                    showDragHandle: false,
-                    useSafeArea: true,
-                    backgroundColor: Colors.transparent,
-                    context: context,
-                    isScrollControlled: true,
-                    builder: (context) {
-                      return DetailsTasks(task: task);
-                    },
-                  );
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      task.title,
-                      style: const TextStyle(color: AppColor.blanc),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      task.completed ? "Complétée" : "À faire le ${task.date}",
-                      style: const TextStyle(
-                        color: AppColor.placeholder,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               Row(
                 children: [
                   IconButton(

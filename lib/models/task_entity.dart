@@ -10,6 +10,7 @@ class TaskEntity {
   String title;
   String? description;
   bool completed;
+  @Property(type: PropertyType.date)
   DateTime? date;
   int? dbColor;
 

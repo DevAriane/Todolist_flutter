@@ -60,6 +60,19 @@ class TaskController extends GetxController {
             );
           }
         }
+
+        final apiPersonId = json['personId'];
+
+        if (apiPersonId != null) {
+          final existingPerson = ObjectBoxService.personBox.get(apiPersonId);
+
+          if (existingPerson != null) {
+            task.person.target = existingPerson;
+          } else {
+            "Attention : la personne avec l'ID $apiPersonId n'existe pas localement";
+          }
+        }
+
         ObjectBoxService.taskBox.put(task);
       }
       tasks.value = ObjectBoxService.taskBox.getAll();
@@ -75,6 +88,7 @@ class TaskController extends GetxController {
     String title,
     String? description,
     int? categoryId,
+    int personId,
     Color? color,
     DateTime? date,
   ) {
@@ -102,6 +116,14 @@ class TaskController extends GetxController {
 
     newTask.category.target = existingCategory;
 
+    final existingPersong = ObjectBoxService.personBox.get(personId);
+
+    if (existingPersong == null) {
+      debugPrint('Personne non specifiee');
+      return false;
+    }
+    newTask.person.target = existingPersong;
+
     ObjectBoxService.taskBox.put(newTask);
     tasks.add(newTask);
     _refreshFilteredTasks();
@@ -125,7 +147,15 @@ class TaskController extends GetxController {
     return ObjectBoxService.taskBox.get(taskId);
   }
 
-  bool updateTaskTitle(int taskId, String newTitle, String? description) {
+  bool updateTaskTitle(
+    int taskId,
+    String newTitle,
+    String? description,
+    int categoryId,
+    int personId,
+    Color? color,
+    DateTime? date,
+  ) {
     final trimmedTitle = newTitle.trim();
     if (trimmedTitle.isEmpty) {
       return false;
@@ -141,6 +171,23 @@ class TaskController extends GetxController {
     task.description = trimmedDescription == null || trimmedDescription.isEmpty
         ? null
         : trimmedDescription;
+
+    final existingCategory = ObjectBoxService.categoryBox.get(categoryId);
+
+    if (existingCategory == null) {
+      debugPrint('Categorie non specifiee');
+      return false;
+    }
+
+    task.category.target = existingCategory;
+
+    final existingPersong = ObjectBoxService.personBox.get(personId);
+
+    if (existingPersong == null) {
+      debugPrint('Personne non specifiee');
+      return false;
+    }
+    task.person.target = existingPersong;
     ObjectBoxService.taskBox.put(task);
 
     final index = tasks.indexWhere((t) => t.id == taskId);

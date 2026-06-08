@@ -16,7 +16,7 @@ class Searchbars extends StatelessWidget {
       child: TextField(
         style: const TextStyle(color: AppColor.blanc),
         decoration: InputDecoration(
-          hintText: "Search...",
+          hintText: "Rechercher...",
           hintStyle: const TextStyle(color: AppColor.placeholder),
           prefixIcon: const Icon(
             Icons.search,
