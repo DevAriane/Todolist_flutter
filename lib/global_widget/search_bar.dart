@@ -1,8 +1,14 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide SearchController;
+import 'package:getxtra/get.dart';
 import '../core/app_color.dart';
+import '../controller/search_controller.dart';
 
 class Searchbars extends StatelessWidget {
-  const Searchbars({super.key});
+  Searchbars({super.key});
+
+  final SearchController _searchController = Get.find<SearchController>();
+
+  final TextEditingController _search = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +20,7 @@ class Searchbars extends StatelessWidget {
         border: Border.all(color: AppColor.bordure, width: 1.0),
       ),
       child: TextField(
+        controller: _search,
         style: const TextStyle(color: AppColor.blanc),
         decoration: InputDecoration(
           hintText: "Rechercher...",
@@ -35,7 +42,10 @@ class Searchbars extends StatelessWidget {
               ),
               child: IconButton(
                 icon: const Icon(Icons.tune, color: AppColor.noir, size: 15.0),
-                onPressed: () {},
+                onPressed: () {
+                  final title = _search.text.trim();
+                  _searchController.searchTask(title);
+                },
               ),
             ),
           ),

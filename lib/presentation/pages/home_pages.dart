@@ -35,76 +35,78 @@ class HomePages extends StatelessWidget {
         actions: const [Icon(Icons.notifications_none, color: AppColor.blanc)],
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Bonjour, Hattie !",
-                style: TextStyle(color: AppColor.blanc, fontSize: 18),
-              ),
-              const SizedBox(height: 8),
-              Obx(() {
-                final taskCount = controller.tasks.length;
-                return Text.rich(
-                  TextSpan(
-                    text: "Vous avez ",
-                    style: const TextStyle(
-                      color: AppColor.blanc,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: taskCount == 0
-                            ? "aucune tâche"
-                            : taskCount == 1
-                            ? "1 tâche"
-                            : "$taskCount tâches",
-                        style: const TextStyle(
-                          color: AppColor.or,
-                          fontWeight: FontWeight.bold,
-                        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Bonjour, Hattie !",
+                  style: TextStyle(color: AppColor.blanc, fontSize: 18),
+                ),
+                const SizedBox(height: 8),
+                Obx(() {
+                  final taskCount = controller.tasks.length;
+                  return Text.rich(
+                    TextSpan(
+                      text: "Vous avez ",
+                      style: const TextStyle(
+                        color: AppColor.blanc,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                       ),
-                      const TextSpan(text: " aujourd'hui."),
-                    ],
-                  ),
-                );
-              }),
-              const SizedBox(height: 20),
-              const Searchbars(),
-              const SizedBox(height: 20),
-              Categories(),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  const Text(
-                    "Tâches à effectuer",
-                    style: TextStyle(color: AppColor.blanc),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                        showDragHandle: false,
-                        useSafeArea: true,
-                        backgroundColor: Colors.transparent,
-                        context: context,
-                        isScrollControlled: true,
-                        builder: (context) {
-                          return const AddTask();
-                        },
-                      );
-                    },
-                    icon: const Icon(Icons.add_circle, color: AppColor.blanc),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Expanded(child: Tasks()),
-            ],
+                      children: [
+                        TextSpan(
+                          text: taskCount == 0
+                              ? "aucune tâche"
+                              : taskCount == 1
+                              ? "1 tâche"
+                              : "$taskCount tâches",
+                          style: const TextStyle(
+                            color: AppColor.or,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const TextSpan(text: " aujourd'hui."),
+                      ],
+                    ),
+                  );
+                }),
+                const SizedBox(height: 20),
+                Searchbars(),
+                const SizedBox(height: 20),
+                Categories(),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const Text(
+                      "Tâches à effectuer",
+                      style: TextStyle(color: AppColor.blanc),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          showDragHandle: false,
+                          useSafeArea: true,
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) {
+                            return const AddTask();
+                          },
+                        );
+                      },
+                      icon: const Icon(Icons.add_circle, color: AppColor.blanc),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Tasks(),
+              ],
+            ),
           ),
         ),
       ),

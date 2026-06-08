@@ -27,6 +27,8 @@ class Tasks extends StatelessWidget {
       }
 
       return ListView.separated(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           final task = control.taksCategories[index];
           final hasDate = task.date != null;

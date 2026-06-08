@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide SearchController;
 import 'package:todolist_flutter/core/app_color.dart';
 import 'package:todolist_flutter/presentation/pages/home_pages.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,6 +8,7 @@ import 'controller/task_controller.dart';
 import 'controller/category_controller.dart';
 import './controller/color_controller.dart';
 import 'controller/date_picker_controller.dart';
+import 'controller/search_controller.dart';
 import 'controller/person_controller.dart';
 import './services/objectbox_service.dart';
 
@@ -20,6 +21,7 @@ Future<void> main() async {
   Get.lazyPut(() => TaskController());
   Get.lazyPut(() => DatePickerController());
   Get.lazyPut(() => PersonController());
+  Get.lazyPut(() => SearchController());
   runApp(const MyApp());
 }
 

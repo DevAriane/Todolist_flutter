@@ -75,6 +75,8 @@ class Categories extends StatelessWidget {
                 const SizedBox(width: 10),
                 Expanded(
                   child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemCount: categories.length,
                     separatorBuilder: (context, index) =>
