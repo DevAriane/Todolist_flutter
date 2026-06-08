@@ -11,6 +11,8 @@ import 'controller/date_picker_controller.dart';
 import 'controller/search_controller.dart';
 import 'controller/person_controller.dart';
 import './services/objectbox_service.dart';
+import './controller/navigation_controller.dart';
+import './presentation/navigation_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +24,7 @@ Future<void> main() async {
   Get.lazyPut(() => DatePickerController());
   Get.lazyPut(() => PersonController());
   Get.lazyPut(() => SearchController());
+  Get.lazyPut(() => NavigationController());
   runApp(const MyApp());
 }
 
@@ -33,11 +36,11 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'TodoList',
       theme: ThemeData(
-        scaffoldBackgroundColor: AppColor.noir,
+        scaffoldBackgroundColor: AppColor.noir.withValues(alpha: 0.3),
         colorScheme: .fromSeed(seedColor: AppColor.blanc),
         textTheme: GoogleFonts.interTextTheme(),
       ),
-      home: HomePages(),
+      home: NavigationPage(),
       debugShowCheckedModeBanner: false,
     );
   }
