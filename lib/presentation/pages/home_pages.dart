@@ -3,7 +3,7 @@ import '../../core/app_color.dart';
 import '../../global_widget/search_bar.dart';
 import '../../global_widget/categories.dart';
 import '../../global_widget/tasks.dart';
-import '../../global_widget/add_task.dart';
+import '../../global_widget/horizontal_date_picker.dart';
 import '../../controller/task_controller.dart';
 import 'package:getxtra/get.dart';
 
@@ -41,48 +41,17 @@ class HomePages extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Bonjour, Hattie !",
-                  style: TextStyle(color: AppColor.blanc, fontSize: 18),
-                ),
-                const SizedBox(height: 8),
-                Obx(() {
-                  final taskCount = controller.tasks.length;
-                  return Text.rich(
-                    TextSpan(
-                      text: "Vous avez ",
-                      style: const TextStyle(
-                        color: AppColor.blanc,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: taskCount == 0
-                              ? "aucune tâche"
-                              : taskCount == 1
-                              ? "1 tâche"
-                              : "$taskCount tâches",
-                          style: const TextStyle(
-                            color: AppColor.or,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const TextSpan(text: " aujourd'hui."),
-                      ],
-                    ),
-                  );
-                }),
-                const SizedBox(height: 20),
                 Searchbars(),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
+                const HorizontalDatePicker(),
+                const SizedBox(height: 10),
                 Categories(),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 const Text(
                   "Tâches à effectuer",
                   style: TextStyle(color: AppColor.blanc),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Tasks(),
               ],
             ),

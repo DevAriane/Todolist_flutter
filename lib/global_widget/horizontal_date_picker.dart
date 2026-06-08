@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todolist_flutter/core/app_color.dart';
 
 class HorizontalDatePicker extends StatefulWidget {
   const HorizontalDatePicker({super.key});
@@ -27,7 +28,6 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
   Widget build(BuildContext context) {
     return Container(
       height: 100,
-      color: const Color(0xFF1E1E24),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: dates.length,
@@ -51,9 +51,7 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
               width: 60,
               margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
               decoration: BoxDecoration(
-                color: isSelected
-                    ? const Color(0xFFFFC107)
-                    : const Color(0xFF2D2D35),
+                color: isSelected ? AppColor.or : const Color(0xFF2D2D35),
                 borderRadius: BorderRadius.circular(30),
               ),
               child: Column(

@@ -98,6 +98,7 @@ class _AddTaskState extends State<AddTask> {
             controller: _title,
             decoration: InputDecoration(
               hintText: "EX : Apprendre ObjectBox",
+              labelStyle: const TextStyle(color: AppColor.blanc),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: const BorderSide(color: AppColor.bordure),
