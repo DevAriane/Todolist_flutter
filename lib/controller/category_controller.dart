@@ -78,10 +78,6 @@ class CategoryController extends GetxController {
           .build();
 
       taksCategories.value = query.find();
-
-      query.close();
     }
   }
-
-
 }

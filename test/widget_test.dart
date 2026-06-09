@@ -8,9 +8,7 @@ void main() {
   testWidgets('Search bar renders its hint and icons', (
     WidgetTester tester,
   ) async {
-    await tester.pumpWidget(
-      const MaterialApp(home: Scaffold(body: Searchbars())),
-    );
+    await tester.pumpWidget(MaterialApp(home: Scaffold(body: Searchbars())));
 
     expect(find.text('Search...'), findsOneWidget);
     expect(find.byIcon(Icons.search), findsOneWidget);

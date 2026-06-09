@@ -1,237 +1,168 @@
 import 'package:flutter/material.dart';
 import 'package:getxtra/get.dart';
-
-import '../controller/category_controller.dart';
-import '../controller/task_controller.dart';
-import '../controller/color_controller.dart';
-import '../controller/date_picker_controller.dart';
 import '../core/app_color.dart';
-import 'app_bottom_sheet.dart';
-import '../utils/color_picker.dart';
-import '../utils/date_picker_view.dart';
-import '../controller/person_controller.dart';
+import '../controller/task_controller.dart';
+import '../controller/category_controller.dart';
+import './update_task.dart';
+import './details_tasks.dart';
+import 'package:intl/intl.dart';
 
-class AddTask extends StatefulWidget {
-  const AddTask({super.key});
+class Tasks extends StatelessWidget {
+  Tasks({super.key});
 
-  @override
-  State<AddTask> createState() => _AddTaskState();
-}
-
-class _AddTaskState extends State<AddTask> {
   final TaskController controller = Get.find<TaskController>();
   final CategoryController control = Get.find<CategoryController>();
-  final TextEditingController _title = TextEditingController();
-  final TextEditingController _description = TextEditingController();
-  final ColorController color = Get.find<ColorController>();
-  final DatePickerController date = Get.find<DatePickerController>();
-  final PersonController person = Get.find<PersonController>();
-  int? _selectedCategoryId;
-  int? _selectedPersonId;
 
-  @override
-  void initState() {
-    super.initState();
-    final activeCategoryId = control.selectedCategoryId.value;
-    if (activeCategoryId != 0) {
-      _selectedCategoryId = activeCategoryId;
-    }
-  }
+  Widget _buildTaskItem(BuildContext context, dynamic task) {
+    final hasDate = task.date != null;
 
-  @override
-  void dispose() {
-    _title.dispose();
-    _description.dispose();
-    super.dispose();
-  }
+    final bool isTaskCompleted =
+        task.completed == true ||
+        task.completed == 1 ||
+        task.completed.toString() == 'true';
 
-  void _showMessage(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
-  }
-
-  void _submit() {
-    final title = _title.text.trim();
-    if (title.isEmpty) {
-      _showMessage('Le titre de la tâche est obligatoire.');
-      return;
-    }
-
-    if (_selectedCategoryId == null) {
-      _showMessage('Sélectionnez une catégorie avant de valider.');
-      return;
-    }
-
-    if (_selectedPersonId == null) {
-      _showMessage('Sélectionnez une personne avant de valider.');
-      return;
-    }
-
-    final isSaved = controller.addTask(
-      title,
-      _description.text,
-      _selectedCategoryId!,
-      _selectedPersonId!,
-      color.selectedColor.value,
-      date.selectedDate.value,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 20,
+                height: 20,
+                margin: const EdgeInsets.only(right: 12),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  color: task.color ?? Colors.blue,
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  showModalBottomSheet(
+                    showDragHandle: false,
+                    useSafeArea: true,
+                    backgroundColor: Colors.transparent,
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) => DetailsTasks(task: task),
+                  );
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      task.title,
+                      style: const TextStyle(color: AppColor.blanc),
+                    ),
+                    if (hasDate) ...[
+                      const SizedBox(height: 5),
+                      Text(
+                        isTaskCompleted
+                            ? "Complétée le ${DateFormat('dd/MM/yyyy').format(task.date!)}"
+                            : "À faire le ${DateFormat('dd/MM/yyyy').format(task.date!)}",
+                        style: const TextStyle(
+                          color: AppColor.placeholder,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
+          ),
+          if (!isTaskCompleted)
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      showDragHandle: false,
+                      useSafeArea: true,
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => UpdateTask(idTask: task.id),
+                    );
+                  },
+                  icon: const Icon(Icons.update),
+                ),
+                IconButton(
+                  onPressed: () => controller.deleteTask(task),
+                  icon: const Icon(Icons.delete),
+                ),
+              ],
+            ),
+        ],
+      ),
     );
+  }
 
-    if (!isSaved) {
-      _showMessage("Impossible d'enregistrer la tâche.");
-      return;
-    }
+  Widget _buildSection(
+    BuildContext context,
+    String title,
+    List<dynamic> sectionTasks,
+  ) {
+    if (sectionTasks.isEmpty) return const SizedBox.shrink();
 
-    Navigator.of(context).pop();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
+          child: Text(
+            title,
+            style: const TextStyle(
+              color: AppColor.or,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: sectionTasks.length,
+          itemBuilder: (context, index) =>
+              _buildTaskItem(context, sectionTasks[index]),
+        ),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return AppBottomSheet(
-      child: Column(
+    return Obx(() {
+      if (controller.isLoading.value || control.isLoading.value) {
+        return const Center(child: CircularProgressIndicator());
+      }
+
+      if (control.taksCategories.isEmpty) {
+        return const Center(
+          child: Text("Aucune tâche", style: TextStyle(color: AppColor.blanc)),
+        );
+      }
+
+      final pendingTasks = control.taksCategories.where((task) {
+        return task.completed == false ||
+            task.completed == 0 ||
+            task.completed.toString() == 'false';
+      }).toList();
+
+      final completedTasks = control.taksCategories.where((task) {
+        return task.completed == true ||
+            task.completed == 1 ||
+            task.completed.toString() == 'true';
+      }).toList();
+
+      return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
         children: [
-          const Text("Entrez le titre de votre tâche"),
-          const SizedBox(height: 10),
-          TextField(
-            controller: _title,
-            decoration: InputDecoration(
-              hintText: "EX : Apprendre ObjectBox",
-              labelStyle: const TextStyle(color: AppColor.blanc),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: AppColor.bordure),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: AppColor.bordure, width: 2),
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          const Text("Description de votre tâche"),
-          const SizedBox(height: 10),
-          TextField(
-            controller: _description,
-            maxLines: 3,
-            decoration: InputDecoration(
-              hintText: "EX : Terminer l'intégration ObjectBox",
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: AppColor.bordure),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: AppColor.bordure, width: 2),
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          const Text("Sélectionner une catégorie"),
-          const SizedBox(height: 10),
-          Obx(() {
-            final categories = control.categories;
-            final hasSelectedCategory = categories.any(
-              (category) => category.id == _selectedCategoryId,
-            );
-
-            return DropdownButtonFormField<int>(
-              initialValue: hasSelectedCategory ? _selectedCategoryId : null,
-              hint: const Text("Sélectionner une catégorie"),
-              isExpanded: true,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: AppColor.bordure),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(
-                    color: AppColor.bordure,
-                    width: 2,
-                  ),
-                ),
-              ),
-              items: categories
-                  .map(
-                    (category) => DropdownMenuItem<int>(
-                      value: category.id,
-                      child: Text(category.name),
-                    ),
-                  )
-                  .toList(),
-              onChanged: (newId) {
-                setState(() {
-                  _selectedCategoryId = newId;
-                });
-              },
-            );
-          }),
-          const SizedBox(height: 10),
-          const Text("Sélectionner une personne"),
-          const SizedBox(height: 10),
-          Obx(() {
-            final persons = person.persons;
-            final hasSelectedPerson = persons.any(
-              (person) => person.id == _selectedPersonId,
-            );
-
-            return DropdownButtonFormField<int>(
-              initialValue: hasSelectedPerson ? _selectedPersonId : null,
-              hint: const Text("Sélectionner une personne"),
-              isExpanded: true,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: AppColor.bordure),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(
-                    color: AppColor.bordure,
-                    width: 2,
-                  ),
-                ),
-              ),
-              items: persons
-                  .map(
-                    (person) => DropdownMenuItem<int>(
-                      value: person.id,
-                      child: Text(person.name),
-                    ),
-                  )
-                  .toList(),
-              onChanged: (newId) {
-                setState(() {
-                  _selectedPersonId = newId;
-                });
-              },
-            );
-          }),
-          const SizedBox(height: 10),
-          const Text("Choisir la couleur de votre tâche"),
-          const SizedBox(height: 10),
-          ColorsPicker(),
-          const SizedBox(height: 10),
-          DatePickerView(),
-          const SizedBox(height: 10),
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton(
-              style: FilledButton.styleFrom(
-                backgroundColor: AppColor.noir,
-                foregroundColor: AppColor.blanc,
-              ),
-              onPressed: _submit,
-              child: const Text(
-                "Valider",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-              ),
-            ),
-          ),
+          _buildSection(context, "En cours ...", pendingTasks),
+          _buildSection(context, "Terminées", completedTasks),
         ],
-      ),
-    );
+      );
+    });
   }
 }

@@ -66,27 +66,28 @@ class Tasks extends StatelessWidget {
               ),
             ],
           ),
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                    showDragHandle: false,
-                    useSafeArea: true,
-                    backgroundColor: Colors.transparent,
-                    context: context,
-                    isScrollControlled: true,
-                    builder: (context) => UpdateTask(idTask: task.id),
-                  );
-                },
-                icon: const Icon(Icons.update),
-              ),
-              IconButton(
-                onPressed: () => controller.deleteTask(task),
-                icon: const Icon(Icons.delete),
-              ),
-            ],
-          ),
+          if (!task.completed)
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      showDragHandle: false,
+                      useSafeArea: true,
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => UpdateTask(idTask: task.id),
+                    );
+                  },
+                  icon: const Icon(Icons.update),
+                ),
+                IconButton(
+                  onPressed: () => controller.deleteTask(task),
+                  icon: const Icon(Icons.delete),
+                ),
+              ],
+            ),
         ],
       ),
     );

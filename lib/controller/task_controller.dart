@@ -18,6 +18,7 @@ class TaskController extends GetxController {
   void onReady() {
     super.onReady();
     loadTasks();
+    filteredTaskByDate(DateTime.now().day);
   }
 
   Future<void> loadTasks() async {
@@ -214,6 +215,7 @@ class TaskController extends GetxController {
     Query<TaskEntity> query = ObjectBoxService.taskBox
         .query(TaskEntity_.category.equals(categoryId))
         .build();
+
     final taksCategories = query.find();
     for (TaskEntity task in taksCategories) {
       if (task.title == newTitle) {
@@ -223,5 +225,13 @@ class TaskController extends GetxController {
         return;
       }
     }
+  }
+
+  void filteredTaskByDate(int date) {
+    Query<TaskEntity> query = ObjectBoxService.taskBox
+        .query(TaskEntity_.date.equals(date))
+        .build();
+
+    categoryController.taksCategories.value = query.find();
   }
 }

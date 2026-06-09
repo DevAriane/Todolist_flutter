@@ -80,8 +80,6 @@ class _AddTasksPageState extends State<AddTasksPage> {
       _showMessage("Impossible d'enregistrer la tâche.");
       return;
     }
-
-    Navigator.of(context).pop();
   }
 
   @override
@@ -111,8 +109,12 @@ class _AddTasksPageState extends State<AddTasksPage> {
                 const SizedBox(height: 10),
                 TextField(
                   controller: _title,
+
+                  style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     hintText: "EX : Apprendre ObjectBox",
+
+                    hintStyle: const TextStyle(color: Colors.white70),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: const BorderSide(color: AppColor.bordure),
@@ -135,8 +137,11 @@ class _AddTasksPageState extends State<AddTasksPage> {
                 TextField(
                   controller: _description,
                   maxLines: 3,
+
+                  style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     hintText: "EX : Terminer l'intégration ObjectBox",
+                    hintStyle: const TextStyle(color: Colors.white70),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: const BorderSide(color: AppColor.bordure),
@@ -166,8 +171,12 @@ class _AddTasksPageState extends State<AddTasksPage> {
                     initialValue: hasSelectedCategory
                         ? _selectedCategoryId
                         : null,
-                    hint: const Text("Sélectionner une catégorie"),
+                    hint: const Text(
+                      "Sélectionner une catégorie",
+                      style: TextStyle(color: AppColor.blanc),
+                    ),
                     isExpanded: true,
+                    dropdownColor: Colors.black,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -187,9 +196,7 @@ class _AddTasksPageState extends State<AddTasksPage> {
                             value: category.id,
                             child: Text(
                               category.name,
-                              style: const TextStyle(
-                                color: AppColor.placeholder,
-                              ),
+                              style: const TextStyle(color: AppColor.blanc),
                             ),
                           ),
                         )
@@ -201,6 +208,7 @@ class _AddTasksPageState extends State<AddTasksPage> {
                     },
                   );
                 }),
+
                 const SizedBox(height: 10),
                 const Text(
                   "Sélectionner une personne",
@@ -215,8 +223,12 @@ class _AddTasksPageState extends State<AddTasksPage> {
 
                   return DropdownButtonFormField<int>(
                     initialValue: hasSelectedPerson ? _selectedPersonId : null,
-                    hint: const Text("Sélectionner une personne"),
+                    hint: const Text(
+                      "Sélectionner une personne",
+                      style: TextStyle(color: AppColor.blanc),
+                    ),
                     isExpanded: true,
+                    dropdownColor: Colors.black,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -234,7 +246,10 @@ class _AddTasksPageState extends State<AddTasksPage> {
                         .map(
                           (person) => DropdownMenuItem<int>(
                             value: person.id,
-                            child: Text(person.name),
+                            child: Text(
+                              person.name,
+                              style: const TextStyle(color: AppColor.blanc),
+                            ),
                           ),
                         )
                         .toList(),

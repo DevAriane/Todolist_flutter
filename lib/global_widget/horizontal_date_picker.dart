@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:getxtra/get.dart';
 import 'package:todolist_flutter/core/app_color.dart';
+import '../controller/task_controller.dart';
 
 class HorizontalDatePicker extends StatefulWidget {
   const HorizontalDatePicker({super.key});
@@ -9,6 +11,7 @@ class HorizontalDatePicker extends StatefulWidget {
 }
 
 class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
+  final TaskController controller = Get.find<TaskController>();
   DateTime selectedDate = DateTime.now();
 
   final List<DateTime> dates = List.generate(
@@ -42,6 +45,7 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
 
           return GestureDetector(
             onTap: () {
+              controller.filteredTaskByDate(selectedDate.day);
               setState(() {
                 selectedDate = date;
               });
