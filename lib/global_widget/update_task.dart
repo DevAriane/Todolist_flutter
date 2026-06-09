@@ -58,7 +58,6 @@ class _UpdateTaskState extends State<UpdateTask> {
     }
     _task = task;
 
-    // Remplir les champs
     _titleController.text = _task.title;
     _descController.text = _task.description ?? '';
     _selectedDate = _task.date;
@@ -276,11 +275,15 @@ class _UpdateTaskState extends State<UpdateTask> {
               children: [
                 const Text(
                   'Me rappeler',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: AppColor.noir,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Switch(
                   value: _remindMe,
                   onChanged: (val) => setState(() => _remindMe = val),
+                  activeThumbColor: AppColor.or,
                 ),
               ],
             ),
@@ -316,7 +319,7 @@ class _UpdateTaskState extends State<UpdateTask> {
             Obx(() {
               final persons = personController.persons;
               return DropdownButtonFormField<int>(
-                value: _selectedPersonId,
+                initialValue: _selectedPersonId,
                 hint: const Text('Choisir une personne'),
                 isExpanded: true,
                 items: persons.map((p) {
@@ -328,16 +331,55 @@ class _UpdateTaskState extends State<UpdateTask> {
                 onChanged: (id) => setState(() => _selectedPersonId = id),
               );
             }),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
 
             const Text(
-              'Couleur',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              'Choisir la couleur de la tâche',
+              style: TextStyle(color: AppColor.noir),
             ),
             const SizedBox(height: 8),
-            ColorsPicker(),
-            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  showColorPickerDialog(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColor.noir,
+                  foregroundColor: Colors.white,
+                ),
+                child: const Text(
+                  'Choisir une couleur',
+                  style: TextStyle(color: AppColor.blanc),
+                ),
+              ),
+            ),
 
+            Obx(
+              () => Container(
+                margin: const EdgeInsets.only(top: 8),
+                height: 40,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: colorController.selectedColor.value,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Center(
+                  child: Text(
+                    'Couleur sélectionnée',
+                    style: TextStyle(
+                      color:
+                          colorController.selectedColor.value
+                                  .computeLuminance() >
+                              0.5
+                          ? Colors.black
+                          : Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
             const Text(
               'Lien (optionnel)',
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -383,8 +425,18 @@ class _UpdateTaskState extends State<UpdateTask> {
             SizedBox(
               width: double.infinity,
               child: FilledButton(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(AppColor.noir),
+                ),
                 onPressed: _submit,
-                child: const Text('Mettre à jour'),
+                child: const Text(
+                  'Mettre à jour',
+                  style: TextStyle(
+                    color: AppColor.blanc,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 16),

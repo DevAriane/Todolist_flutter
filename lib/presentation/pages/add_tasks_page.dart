@@ -6,8 +6,8 @@ import 'package:intl/intl.dart';
 import '../../controller/task_controller.dart';
 import '../../controller/category_controller.dart';
 import '../../controller/person_controller.dart';
-import '../../controller/color_controller.dart'; // ← Ajout
-import '../../utils/color_picker.dart'; // ← pour showColorPickerDialog
+import '../../controller/color_controller.dart';
+import '../../utils/color_picker.dart';
 import '../../core/app_color.dart';
 
 class AddTasksPage extends StatefulWidget {
@@ -88,6 +88,24 @@ class _AddTasksPageState extends State<AddTasksPage> {
     }
   }
 
+  void _resetForm() {
+    _titleController.clear();
+    _descController.clear();
+    _linkController.clear();
+    _tagController.clear();
+
+    setState(() {
+      _selectedDate = DateTime.now();
+      final now = TimeOfDay.now();
+      _startTime = now;
+      _endTime = TimeOfDay(hour: now.hour + 1, minute: now.minute);
+      _remindMe = false;
+      _selectedCategoryId = null;
+      _selectedPersonId = null;
+      _photoFile = null;
+    });
+  }
+
   void _createTask() {
     if (_titleController.text.trim().isEmpty) {
       ScaffoldMessenger.of(
@@ -125,7 +143,11 @@ class _AddTasksPageState extends State<AddTasksPage> {
     );
 
     if (success) {
-      Get.back();
+      _resetForm();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Tâche créée avec succès !')),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Erreur lors de la création')),
@@ -145,7 +167,7 @@ class _AddTasksPageState extends State<AddTasksPage> {
           onPressed: () => Get.back(),
         ),
         title: const Text(
-          'Create New Task',
+          'Créer une nouvelle tâche',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -155,15 +177,14 @@ class _AddTasksPageState extends State<AddTasksPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Titre
-            const Text('Title', style: TextStyle(color: Colors.white70)),
+            const Text('Titre', style: TextStyle(color: AppColor.blanc)),
             const SizedBox(height: 8),
             TextField(
               controller: _titleController,
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: AppColor.blanc),
               decoration: InputDecoration(
-                hintText: 'Book reading',
-                hintStyle: const TextStyle(color: Colors.white38),
+                hintText: 'Lecture de livre',
+                hintStyle: const TextStyle(color: AppColor.blanc),
                 filled: true,
                 fillColor: Colors.grey[900],
                 border: OutlineInputBorder(
@@ -173,9 +194,30 @@ class _AddTasksPageState extends State<AddTasksPage> {
               ),
             ),
             const SizedBox(height: 20),
+            const Text(
+              'Description (Optionnelle)',
+              style: TextStyle(color: AppColor.blanc),
+            ),
+            const SizedBox(height: 8),
+            TextField(
+              controller: _descController,
+              maxLines: 3,
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                hintText:
+                    'Après avoir terminé un projet de design, je dois lire 60 pages...',
+                hintStyle: const TextStyle(color: AppColor.blanc),
+                filled: true,
+                fillColor: Colors.grey[900],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
 
-            // Date
-            const Text('Date', style: TextStyle(color: Colors.white70)),
+            const SizedBox(height: 20),
+            const Text('Date', style: TextStyle(color: AppColor.blanc)),
             const SizedBox(height: 8),
             GestureDetector(
               onTap: _pickDate,
@@ -194,7 +236,7 @@ class _AddTasksPageState extends State<AddTasksPage> {
                     Text(
                       _selectedDate != null
                           ? DateFormat('dd MMMM yyyy').format(_selectedDate!)
-                          : 'Select date',
+                          : 'Sélectionner une date',
                       style: const TextStyle(color: Colors.white),
                     ),
                     const Icon(Icons.calendar_today, color: Colors.white70),
@@ -204,8 +246,7 @@ class _AddTasksPageState extends State<AddTasksPage> {
             ),
             const SizedBox(height: 20),
 
-            // Time range
-            const Text('Time', style: TextStyle(color: Colors.white70)),
+            const Text('Heure', style: TextStyle(color: Colors.white70)),
             const SizedBox(height: 8),
             Row(
               children: [
@@ -224,7 +265,7 @@ class _AddTasksPageState extends State<AddTasksPage> {
                       child: Text(
                         _startTime != null
                             ? _startTime!.format(context)
-                            : 'Start',
+                            : 'Début',
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
@@ -246,7 +287,7 @@ class _AddTasksPageState extends State<AddTasksPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
-                        _endTime != null ? _endTime!.format(context) : 'End',
+                        _endTime != null ? _endTime!.format(context) : 'Fin',
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
@@ -256,25 +297,23 @@ class _AddTasksPageState extends State<AddTasksPage> {
             ),
             const SizedBox(height: 20),
 
-            // Remind me
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'Remind me',
-                  style: TextStyle(color: Colors.white70),
+                  'Me rappeler',
+                  style: TextStyle(color: AppColor.blanc),
                 ),
                 Switch(
                   value: _remindMe,
                   onChanged: (val) => setState(() => _remindMe = val),
-                  activeThumbColor: Colors.blue,
+                  activeThumbColor: AppColor.or,
                 ),
               ],
             ),
             const SizedBox(height: 20),
 
-            // Category
-            const Text('Category', style: TextStyle(color: Colors.white70)),
+            const Text('Catégorie', style: TextStyle(color: AppColor.blanc)),
             const SizedBox(height: 8),
             Obx(() {
               final categories = categoryController.categories;
@@ -291,9 +330,9 @@ class _AddTasksPageState extends State<AddTasksPage> {
                       });
                     },
                     backgroundColor: Colors.grey[800],
-                    selectedColor: Colors.blue,
+                    selectedColor: AppColor.or,
                     labelStyle: TextStyle(
-                      color: isSelected ? Colors.white : Colors.white70,
+                      color: isSelected ? AppColor.noir : AppColor.blanc,
                     ),
                   );
                 }).toList(),
@@ -301,10 +340,9 @@ class _AddTasksPageState extends State<AddTasksPage> {
             }),
             const SizedBox(height: 20),
 
-            // Person
             const Text(
-              'Assign to person',
-              style: TextStyle(color: Colors.white70),
+              'Attribuer à une personne',
+              style: TextStyle(color: AppColor.blanc),
             ),
             const SizedBox(height: 8),
             Obx(() {
@@ -312,8 +350,8 @@ class _AddTasksPageState extends State<AddTasksPage> {
               return DropdownButtonFormField<int>(
                 initialValue: _selectedPersonId,
                 hint: const Text(
-                  'Select a person',
-                  style: TextStyle(color: Colors.white70),
+                  'Sélectionner une personne',
+                  style: TextStyle(color: AppColor.blanc),
                 ),
                 isExpanded: true,
                 dropdownColor: Colors.grey[900],
@@ -341,10 +379,9 @@ class _AddTasksPageState extends State<AddTasksPage> {
             }),
             const SizedBox(height: 20),
 
-            // Choisir la couleur (dialog)
             const Text(
-              'Choose task color',
-              style: TextStyle(color: Colors.white70),
+              'Choisir la couleur de la tâche',
+              style: TextStyle(color: AppColor.blanc),
             ),
             const SizedBox(height: 8),
             SizedBox(
@@ -357,10 +394,10 @@ class _AddTasksPageState extends State<AddTasksPage> {
                   backgroundColor: Colors.grey[800],
                   foregroundColor: Colors.white,
                 ),
-                child: const Text('Pick a color'),
+                child: const Text('Choisir une couleur'),
               ),
             ),
-            // Aperçu de la couleur sélectionnée
+
             Obx(
               () => Container(
                 margin: const EdgeInsets.only(top: 8),
@@ -372,7 +409,7 @@ class _AddTasksPageState extends State<AddTasksPage> {
                 ),
                 child: Center(
                   child: Text(
-                    'Selected color',
+                    'Couleur sélectionnée',
                     style: TextStyle(
                       color:
                           colorController.selectedColor.value
@@ -388,34 +425,9 @@ class _AddTasksPageState extends State<AddTasksPage> {
 
             const SizedBox(height: 20),
 
-            // Description
             const Text(
-              'Description (Optional)',
-              style: TextStyle(color: Colors.white70),
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: _descController,
-              maxLines: 3,
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                hintText:
-                    'After completing a design project, I have to read 60 pages...',
-                hintStyle: const TextStyle(color: Colors.white38),
-                filled: true,
-                fillColor: Colors.grey[900],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // Link
-            const Text(
-              'Link (Optional)',
-              style: TextStyle(color: Colors.white70),
+              'Lien (Optionnel)',
+              style: TextStyle(color: AppColor.blanc),
             ),
             const SizedBox(height: 8),
             TextField(
@@ -423,7 +435,7 @@ class _AddTasksPageState extends State<AddTasksPage> {
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 hintText: 'www.castbox.com',
-                hintStyle: const TextStyle(color: Colors.white38),
+                hintStyle: const TextStyle(color: AppColor.blanc),
                 filled: true,
                 fillColor: Colors.grey[900],
                 border: OutlineInputBorder(
@@ -434,10 +446,9 @@ class _AddTasksPageState extends State<AddTasksPage> {
             ),
             const SizedBox(height: 20),
 
-            // Add photo
             const Text(
-              'Add photo (Optional)',
-              style: TextStyle(color: Colors.white70),
+              'Ajouter une photo (Optionnelle)',
+              style: TextStyle(color: AppColor.blanc),
             ),
             const SizedBox(height: 8),
             GestureDetector(
@@ -464,9 +475,9 @@ class _AddTasksPageState extends State<AddTasksPage> {
                             size: 40,
                           ),
                           const SizedBox(height: 8),
-                          Text(
-                            'Enter your photo',
-                            style: TextStyle(color: Colors.grey[500]),
+                          const Text(
+                            'Ajouter votre photo',
+                            style: TextStyle(color: AppColor.blanc),
                           ),
                         ],
                       ),
@@ -474,22 +485,25 @@ class _AddTasksPageState extends State<AddTasksPage> {
             ),
             const SizedBox(height: 30),
 
-            // Create task button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: _createTask,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
+                  backgroundColor: AppColor.blanc,
+                  foregroundColor: AppColor.noir,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
                 child: const Text(
-                  'Create task',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  'Créer la tâche',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.noir,
+                  ),
                 ),
               ),
             ),
