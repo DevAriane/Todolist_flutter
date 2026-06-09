@@ -45,7 +45,7 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
 
           return GestureDetector(
             onTap: () {
-              controller.filteredTaskByDate(selectedDate.day);
+              controller.filteredTaskByDate(selectedDate);
               setState(() {
                 selectedDate = date;
               });

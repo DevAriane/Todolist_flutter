@@ -18,7 +18,6 @@ class TaskController extends GetxController {
   void onReady() {
     super.onReady();
     loadTasks();
-    filteredTaskByDate(DateTime.now().day);
   }
 
   Future<void> loadTasks() async {
@@ -36,41 +35,54 @@ class TaskController extends GetxController {
 
       for (final json in remoteTasks) {
         final title = (json['title'] ?? '').toString().trim();
-        if (title.isEmpty) {
-          continue;
+        if (title.isEmpty) continue;
+
+        DateTime? parsedDate;
+        if (json['date'] != null && json['date'].toString().isNotEmpty) {
+          parsedDate = DateTime.tryParse(json['date'].toString());
+        }
+
+        Color? parsedColor;
+        if (json['dbColor'] != null && json['dbColor'] is int) {
+          parsedColor = Color(json['dbColor']);
         }
 
         final task = TaskEntity(
           title: title,
-          description: (json['description'] ?? '').toString().trim(),
+          description: json['description']?.toString().trim(),
           completed: json['completed'] ?? false,
+          color: parsedColor,
+          date: parsedDate,
+          startTime: json['startTime'] as String?,
+          endTime: json['endTime'] as String?,
+          remindMe: json['remindMe'] ?? false,
+          link: json['link'] as String? ?? "",
+          photoPath: json['photoPath'] as String? ?? "",
         );
 
         final apiCategoryId = json['categoryId'];
-
         if (apiCategoryId != null) {
           final existingCategory = ObjectBoxService.categoryBox.get(
             apiCategoryId,
           );
-
           if (existingCategory != null) {
             task.category.target = existingCategory;
           } else {
             debugPrint(
-              "Attention : La catégorie avec l'ID $apiCategoryId n'existe pas localement.",
+              "Attention : la catégorie ID $apiCategoryId n'existe pas localement.",
             );
           }
         }
 
         final apiPersonId = json['personId'];
-
         if (apiPersonId != null) {
           final existingPerson = ObjectBoxService.personBox.get(apiPersonId);
-
           if (existingPerson != null) {
             task.person.target = existingPerson;
           } else {
-            "Attention : la personne avec l'ID $apiPersonId n'existe pas localement";
+            debugPrint(
+              "Attention : la personne ID $apiPersonId n'existe pas localement.",
+            );
           }
         }
 
@@ -83,49 +95,57 @@ class TaskController extends GetxController {
       _refreshFilteredTasks();
       isLoading(false);
     }
+    print('Tâches en base : ${ObjectBoxService.taskBox.getAll().length}');
   }
 
-  bool addTask(
-    String title,
+  bool addTask({
+    required String title,
     String? description,
-    int categoryId,
-    int personId,
+    required int categoryId,
+    required int personId,
     Color? color,
     DateTime? date,
-  ) {
+    String? startTime,
+    String? endTime,
+    bool remindMe = false,
+    String? link,
+    String? photoPath,
+    List<String>? tags,
+  }) {
     verifyNameTask(title, categoryId);
 
     final trimmedTitle = title.trim();
-    if (trimmedTitle.isEmpty) {
-      return false;
-    }
+    if (trimmedTitle.isEmpty) return false;
 
     final existingCategory = ObjectBoxService.categoryBox.get(categoryId);
-
     if (existingCategory == null) {
-      debugPrint('Categorie non specifiee');
+      debugPrint('Catégorie non spécifiée');
       return false;
     }
 
-    final trimmedDescription = description?.trim();
+    final existingPerson = ObjectBoxService.personBox.get(personId);
+    if (existingPerson == null) {
+      debugPrint('Personne non spécifiée');
+      return false;
+    }
+
     final newTask = TaskEntity(
       title: trimmedTitle,
-      description: trimmedDescription == null || trimmedDescription.isEmpty
+      description: description?.trim().isEmpty == true
           ? null
-          : trimmedDescription,
+          : description?.trim(),
       color: color,
       date: date,
+      startTime: startTime,
+      endTime: endTime,
+      remindMe: remindMe,
+      link: link,
+      photoPath: photoPath,
+      tags: tags,
     );
 
     newTask.category.target = existingCategory;
-
-    final existingPersong = ObjectBoxService.personBox.get(personId);
-
-    if (existingPersong == null) {
-      debugPrint('Personne non specifiee');
-      return false;
-    }
-    newTask.person.target = existingPersong;
+    newTask.person.target = existingPerson;
 
     ObjectBoxService.taskBox.put(newTask);
     tasks.add(newTask);
@@ -158,47 +178,50 @@ class TaskController extends GetxController {
     int personId,
     Color? color,
     DateTime? date,
+    String? startTime,
+    String? endTime,
+    bool remindMe,
+    String? link,
+    String? photoPath,
   ) {
     verifyNameTask(newTitle, categoryId);
 
     final trimmedTitle = newTitle.trim();
-    if (trimmedTitle.isEmpty) {
-      return false;
-    }
+    if (trimmedTitle.isEmpty) return false;
 
     final task = ObjectBoxService.taskBox.get(taskId);
-    if (task == null) {
-      return false;
-    }
-
-    final trimmedDescription = description?.trim();
-    task.title = trimmedTitle;
-    task.description = trimmedDescription == null || trimmedDescription.isEmpty
-        ? null
-        : trimmedDescription;
+    if (task == null) return false;
 
     final existingCategory = ObjectBoxService.categoryBox.get(categoryId);
-
     if (existingCategory == null) {
-      debugPrint('Categorie non specifiee');
+      debugPrint('Catégorie non spécifiée');
       return false;
     }
 
+    final existingPerson = ObjectBoxService.personBox.get(personId);
+    if (existingPerson == null) {
+      debugPrint('Personne non spécifiée');
+      return false;
+    }
+
+    task.title = trimmedTitle;
+    task.description = description?.trim().isEmpty == true
+        ? null
+        : description?.trim();
+    task.color = color;
+    task.date = date;
+    task.startTime = startTime;
+    task.endTime = endTime;
+    task.remindMe = remindMe;
+    task.link = link;
+    task.photoPath = photoPath;
     task.category.target = existingCategory;
+    task.person.target = existingPerson;
 
-    final existingPersong = ObjectBoxService.personBox.get(personId);
-
-    if (existingPersong == null) {
-      debugPrint('Personne non specifiee');
-      return false;
-    }
-    task.person.target = existingPersong;
     ObjectBoxService.taskBox.put(task);
 
     final index = tasks.indexWhere((t) => t.id == taskId);
-    if (index != -1) {
-      tasks[index] = task;
-    }
+    if (index != -1) tasks[index] = task;
 
     tasks.refresh();
     _refreshFilteredTasks();
@@ -212,26 +235,48 @@ class TaskController extends GetxController {
   }
 
   void verifyNameTask(String newTitle, int categoryId) {
-    Query<TaskEntity> query = ObjectBoxService.taskBox
+    final query = ObjectBoxService.taskBox
         .query(TaskEntity_.category.equals(categoryId))
         .build();
-
-    final taksCategories = query.find();
-    for (TaskEntity task in taksCategories) {
+    final tasksInCategory = query.find();
+    for (final task in tasksInCategory) {
       if (task.title == newTitle) {
         debugPrint(
-          "dans une meme categorie on ne peut pas avoir deux taches avec le meme non",
+          "Dans une même catégorie, on ne peut pas avoir deux tâches avec le même nom.",
         );
-        return;
       }
     }
+    query.close();
   }
 
-  void filteredTaskByDate(int date) {
-    Query<TaskEntity> query = ObjectBoxService.taskBox
-        .query(TaskEntity_.date.equals(date))
+  void filteredTaskByDate(DateTime selectedDate) {
+    final startOfDay = DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      0,
+      0,
+      0,
+    );
+    final endOfDay = DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      23,
+      59,
+      59,
+    );
+
+    final query = ObjectBoxService.taskBox
+        .query(
+          TaskEntity_.date.between(
+            startOfDay.millisecondsSinceEpoch,
+            endOfDay.millisecondsSinceEpoch,
+          ),
+        )
         .build();
 
     categoryController.taksCategories.value = query.find();
+    query.close();
   }
 }

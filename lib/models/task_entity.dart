@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
-import './category_entity.dart';
-import './person_entity.dart';
+import 'category_entity.dart';
+import 'person_entity.dart';
 
 @Entity()
 class TaskEntity {
@@ -10,8 +10,17 @@ class TaskEntity {
   String title;
   String? description;
   bool completed;
+
   @Property(type: PropertyType.date)
   DateTime? date;
+
+  String? startTime;
+  String? endTime;
+
+  bool remindMe;
+  String? link;
+  String? photoPath;
+
   int? dbColor;
 
   final category = ToOne<CategoryEntity>();
@@ -22,6 +31,12 @@ class TaskEntity {
     this.completed = false,
     this.description,
     this.date,
+    this.startTime,
+    this.endTime,
+    this.remindMe = false,
+    this.link,
+    this.photoPath,
+    List<String>? tags,
     Color? color,
   }) {
     this.color = color;

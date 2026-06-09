@@ -24,7 +24,7 @@
     },
     {
       "id": "2:4761011152696546302",
-      "lastPropertyId": "8:8219946363973099018",
+      "lastPropertyId": "13:6950203644002621370",
       "name": "TaskEntity",
       "properties": [
         {
@@ -73,6 +73,31 @@
           "type": 11,
           "flags": 520,
           "relationTarget": "PersonEntity"
+        },
+        {
+          "id": "9:6689918664386175538",
+          "name": "startTime",
+          "type": 9
+        },
+        {
+          "id": "10:8092844947592630151",
+          "name": "endTime",
+          "type": 9
+        },
+        {
+          "id": "11:7959577696033183868",
+          "name": "remindMe",
+          "type": 1
+        },
+        {
+          "id": "12:3274143770576154110",
+          "name": "link",
+          "type": 9
+        },
+        {
+          "id": "13:6950203644002621370",
+          "name": "photoPath",
+          "type": 9
         }
       ],
       "relations": []

@@ -52,7 +52,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(2, 4761011152696546302),
     name: 'TaskEntity',
-    lastPropertyId: const obx_int.IdUid(8, 8219946363973099018),
+    lastPropertyId: const obx_int.IdUid(13, 6950203644002621370),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -108,6 +108,36 @@ final _entities = <obx_int.ModelEntity>[
         indexId: const obx_int.IdUid(2, 7819590626907652588),
         relationField: 'person',
         relationTarget: 'PersonEntity',
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 6689918664386175538),
+        name: 'startTime',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(10, 8092844947592630151),
+        name: 'endTime',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(11, 7959577696033183868),
+        name: 'remindMe',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(12, 3274143770576154110),
+        name: 'link',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(13, 6950203644002621370),
+        name: 'photoPath',
+        type: 9,
+        flags: 0,
       ),
     ],
     relations: <obx_int.ModelRelation>[],
@@ -255,7 +285,19 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final descriptionOffset = object.description == null
             ? null
             : fbb.writeString(object.description!);
-        fbb.startTable(9);
+        final startTimeOffset = object.startTime == null
+            ? null
+            : fbb.writeString(object.startTime!);
+        final endTimeOffset = object.endTime == null
+            ? null
+            : fbb.writeString(object.endTime!);
+        final linkOffset = object.link == null
+            ? null
+            : fbb.writeString(object.link!);
+        final photoPathOffset = object.photoPath == null
+            ? null
+            : fbb.writeString(object.photoPath!);
+        fbb.startTable(14);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, titleOffset);
         fbb.addBool(2, object.completed);
@@ -264,6 +306,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addInt64(5, object.date?.millisecondsSinceEpoch);
         fbb.addInt64(6, object.dbColor);
         fbb.addInt64(7, object.person.targetId);
+        fbb.addOffset(8, startTimeOffset);
+        fbb.addOffset(9, endTimeOffset);
+        fbb.addBool(10, object.remindMe);
+        fbb.addOffset(11, linkOffset);
+        fbb.addOffset(12, photoPathOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -290,12 +337,35 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final dateParam = dateValue == null
             ? null
             : DateTime.fromMillisecondsSinceEpoch(dateValue);
+        final startTimeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 20);
+        final endTimeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 22);
+        final remindMeParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          24,
+          false,
+        );
+        final linkParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 26);
+        final photoPathParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 28);
         final object =
             TaskEntity(
                 title: titleParam,
                 completed: completedParam,
                 description: descriptionParam,
                 date: dateParam,
+                startTime: startTimeParam,
+                endTime: endTimeParam,
+                remindMe: remindMeParam,
+                link: linkParam,
+                photoPath: photoPathParam,
               )
               ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
               ..dbColor = const fb.Int64Reader().vTableGetNullable(
@@ -425,6 +495,31 @@ class TaskEntity_ {
   /// See [TaskEntity.person].
   static final person = obx.QueryRelationToOne<TaskEntity, PersonEntity>(
     _entities[1].properties[7],
+  );
+
+  /// See [TaskEntity.startTime].
+  static final startTime = obx.QueryStringProperty<TaskEntity>(
+    _entities[1].properties[8],
+  );
+
+  /// See [TaskEntity.endTime].
+  static final endTime = obx.QueryStringProperty<TaskEntity>(
+    _entities[1].properties[9],
+  );
+
+  /// See [TaskEntity.remindMe].
+  static final remindMe = obx.QueryBooleanProperty<TaskEntity>(
+    _entities[1].properties[10],
+  );
+
+  /// See [TaskEntity.link].
+  static final link = obx.QueryStringProperty<TaskEntity>(
+    _entities[1].properties[11],
+  );
+
+  /// See [TaskEntity.photoPath].
+  static final photoPath = obx.QueryStringProperty<TaskEntity>(
+    _entities[1].properties[12],
   );
 }
 
