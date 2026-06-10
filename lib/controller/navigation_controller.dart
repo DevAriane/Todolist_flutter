@@ -10,7 +10,7 @@ class NavigationController extends GetxController {
 
   final List<Widget> pages = [
     Center(child: HomePages()),
-    Center(child: AddTasksPage()),
+    const Center(child: AddTasksPage()),
     Center(child: CalendarPage()),
     const Center(child: ProfilPages()),
   ];

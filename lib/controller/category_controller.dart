@@ -5,6 +5,7 @@ import 'package:todolist_flutter/objectbox.g.dart';
 import '../models/task_entity.dart';
 import '../services/api_service.dart';
 import '../services/objectbox_service.dart';
+import '../models/category_entity.dart';
 
 class CategoryController extends GetxController {
   final categories = <CategoryEntity>[].obs;

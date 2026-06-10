@@ -43,7 +43,7 @@
     },
     {
       "id": "3:8466330695056283468",
-      "lastPropertyId": "13:8972675162196709951",
+      "lastPropertyId": "14:5100381281245120836",
       "name": "TaskEntity",
       "properties": [
         {
@@ -117,13 +117,20 @@
           "type": 11,
           "flags": 520,
           "relationTarget": "PersonEntity"
+        },
+        {
+          "id": "14:5100381281245120836",
+          "name": "titleNormalized",
+          "indexId": "3:2060406241989216075",
+          "type": 9,
+          "flags": 2048
         }
       ],
       "relations": []
     }
   ],
   "lastEntityId": "3:8466330695056283468",
-  "lastIndexId": "2:1801742837880953976",
+  "lastIndexId": "3:2060406241989216075",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

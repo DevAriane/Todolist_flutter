@@ -80,7 +80,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(3, 8466330695056283468),
     name: 'TaskEntity',
-    lastPropertyId: const obx_int.IdUid(13, 8972675162196709951),
+    lastPropertyId: const obx_int.IdUid(14, 5100381281245120836),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -167,6 +167,13 @@ final _entities = <obx_int.ModelEntity>[
         relationField: 'person',
         relationTarget: 'PersonEntity',
       ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(14, 5100381281245120836),
+        name: 'titleNormalized',
+        type: 9,
+        flags: 2048,
+        indexId: const obx_int.IdUid(3, 2060406241989216075),
+      ),
     ],
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
@@ -217,7 +224,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
     generatorVersion: obx_int.GeneratorVersion.v2025_12_16,
     entities: _entities,
     lastEntityId: const obx_int.IdUid(3, 8466330695056283468),
-    lastIndexId: const obx_int.IdUid(2, 1801742837880953976),
+    lastIndexId: const obx_int.IdUid(3, 2060406241989216075),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
     retiredEntityUids: const [],
@@ -339,7 +346,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final photoPathOffset = object.photoPath == null
             ? null
             : fbb.writeString(object.photoPath!);
-        fbb.startTable(14);
+        final titleNormalizedOffset = object.titleNormalized == null
+            ? null
+            : fbb.writeString(object.titleNormalized!);
+        fbb.startTable(15);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, titleOffset);
         fbb.addOffset(2, descriptionOffset);
@@ -353,6 +363,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addInt64(10, object.dbColor);
         fbb.addInt64(11, object.category.targetId);
         fbb.addInt64(12, object.person.targetId);
+        fbb.addOffset(13, titleNormalizedOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -397,6 +408,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final photoPathParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGetNullable(buffer, rootOffset, 22);
+        final titleNormalizedParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 30);
         final object =
             TaskEntity(
                 title: titleParam,
@@ -408,6 +422,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
                 remindMe: remindMeParam,
                 link: linkParam,
                 photoPath: photoPathParam,
+                titleNormalized: titleNormalizedParam,
               )
               ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
               ..dbColor = const fb.Int64Reader().vTableGetNullable(
@@ -538,5 +553,10 @@ class TaskEntity_ {
   /// See [TaskEntity.person].
   static final person = obx.QueryRelationToOne<TaskEntity, PersonEntity>(
     _entities[2].properties[12],
+  );
+
+  /// See [TaskEntity.titleNormalized].
+  static final titleNormalized = obx.QueryStringProperty<TaskEntity>(
+    _entities[2].properties[13],
   );
 }

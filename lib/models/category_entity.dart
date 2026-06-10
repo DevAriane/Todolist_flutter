@@ -11,4 +11,8 @@ class CategoryEntity {
   final tasks = ToMany<TaskEntity>();
 
   CategoryEntity({required this.name});
+
+  factory CategoryEntity.fromJson(Map<String, dynamic> json) {
+    return CategoryEntity(name: json['name'] ?? json['title'] ?? 'Sans nom');
+  }
 }

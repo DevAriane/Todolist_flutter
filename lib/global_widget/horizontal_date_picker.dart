@@ -27,9 +27,10 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
     'Sat',
     'Sun',
   ];
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 100,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -37,15 +38,15 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         itemBuilder: (context, index) {
           final date = dates[index];
-
           final isSelected =
               date.day == selectedDate.day &&
               date.month == selectedDate.month &&
               date.year == selectedDate.year;
-
           return GestureDetector(
             onTap: () {
-              controller.filteredTaskByDate(selectedDate);
+              final taskController = Get.find<TaskController>();
+              taskController.selectedFilterDate.value = date;
+              taskController.applyFilters();
               setState(() {
                 selectedDate = date;
               });
@@ -66,7 +67,6 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-
                       color: isSelected ? Colors.black : Colors.white,
                     ),
                   ),

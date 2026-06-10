@@ -12,4 +12,8 @@ class PersonEntity {
   final tasks = ToMany<TaskEntity>();
 
   PersonEntity({required this.name});
+
+  factory PersonEntity.fromJson(Map<String, dynamic> json) {
+    return PersonEntity(name: json['name'] ?? 'Inconnu');
+  }
 }

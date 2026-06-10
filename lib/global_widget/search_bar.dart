@@ -24,6 +24,9 @@ class Searchbars extends StatelessWidget {
         onChanged: (value) {
           if (value.trim().isEmpty) {
             _searchController.resetSearch();
+          } else {
+            _searchController.searchQuery.value = value.trim();
+            _searchController.searchTask();
           }
         },
         decoration: InputDecoration(

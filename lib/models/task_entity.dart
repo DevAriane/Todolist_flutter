@@ -23,6 +23,9 @@ class TaskEntity {
 
   int? dbColor;
 
+  @Index()
+  String? titleNormalized;
+
   final category = ToOne<CategoryEntity>();
   final person = ToOne<PersonEntity>();
 
@@ -36,10 +39,33 @@ class TaskEntity {
     this.remindMe = false,
     this.link,
     this.photoPath,
-    List<String>? tags,
+    this.titleNormalized,
     Color? color,
   }) {
     this.color = color;
+  }
+
+  factory TaskEntity.fromJson(Map<String, dynamic> json) {
+    final task = TaskEntity(
+      title: json['title'] ?? 'Sans titre',
+      completed: json['completed'] ?? false,
+      description: json['description'],
+      date: json['date'] != null ? DateTime.parse(json['date']) : null,
+      startTime: json['startTime'],
+      endTime: json['endTime'],
+      remindMe: json['remindMe'] ?? false,
+      link: json['link'],
+      photoPath: json['photoPath'],
+      titleNormalized: json['title'] != null
+          ? (json['title'] as String).toLowerCase()
+          : null,
+    );
+    
+    if (json['dbColor'] != null) {
+      task.dbColor = int.parse(json['dbColor'].toString());
+    }
+    
+    return task;
   }
 
   @Transient()

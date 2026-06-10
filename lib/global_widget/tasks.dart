@@ -2,16 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:getxtra/get.dart';
 import '../core/app_color.dart';
 import '../controller/task_controller.dart';
-import '../controller/category_controller.dart';
 import './update_task.dart';
 import './details_tasks.dart';
-import 'package:intl/intl.dart';
 
 class Tasks extends StatelessWidget {
   Tasks({super.key});
 
   final TaskController controller = Get.find<TaskController>();
-  final CategoryController control = Get.find<CategoryController>();
+
+  String _getMonthName(int month) {
+    const months = [
+      'janvier',
+      'février',
+      'mars',
+      'avril',
+      'mai',
+      'juin',
+      'juillet',
+      'août',
+      'septembre',
+      'octobre',
+      'novembre',
+      'décembre',
+    ];
+    return months[month - 1];
+  }
+
+  String _formatDate(DateTime date) {
+    return '${date.day} ${_getMonthName(date.month)} ${date.year}';
+  }
 
   Widget _buildTaskItem(BuildContext context, dynamic task) {
     final hasDate = task.date != null;
@@ -53,8 +72,8 @@ class Tasks extends StatelessWidget {
                       const SizedBox(height: 5),
                       Text(
                         task.completed
-                            ? "Complétée le ${DateFormat('dd/MM/yyyy').format(task.date!)}"
-                            : "À faire le ${DateFormat('dd/MM/yyyy').format(task.date!)}",
+                            ? "Complétée le ${_formatDate(task.date)}"
+                            : "À faire le ${_formatDate(task.date)}",
                         style: const TextStyle(
                           color: AppColor.blanc,
                           fontSize: 12,
@@ -121,20 +140,34 @@ class Tasks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (controller.isLoading.value || control.isLoading.value) {
+      if (controller.isLoading.value) {
         return const Center(child: CircularProgressIndicator());
       }
 
-      if (control.taksCategories.isEmpty) {
-        return const Center(
-          child: Text("Aucune tâche", style: TextStyle(color: AppColor.blanc)),
+      final allTasks = controller.displayedTasks;
+      if (allTasks.isEmpty) {
+        final selectedDate = controller.selectedFilterDate.value;
+        final formattedDate = _formatDate(selectedDate);
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.inbox, size: 64, color: AppColor.blanc),
+              const SizedBox(height: 16),
+              Text(
+                'Vous n\'avez pas de tâche pour le $formattedDate',
+                style: const TextStyle(color: AppColor.blanc, fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         );
       }
 
-      final pendingTasks = control.taksCategories
+      final pendingTasks = allTasks
           .where((task) => task.completed == false)
           .toList();
-      final completedTasks = control.taksCategories
+      final completedTasks = allTasks
           .where((task) => task.completed == true)
           .toList();
 
