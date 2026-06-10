@@ -53,7 +53,7 @@ class Categories extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    controller.filteredTaks(0);
+                    controller.selectCategory(0);
                   },
                   child: Container(
                     width: 80,
@@ -83,7 +83,7 @@ class Categories extends StatelessWidget {
                       final category = categories[index];
                       return InkWell(
                         onTap: () {
-                          controller.filteredTaks(category.id);
+                          controller.selectCategory(category.id);
                         },
                         child: Container(
                           width: 80,

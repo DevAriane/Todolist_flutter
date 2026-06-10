@@ -70,17 +70,13 @@ class TaskController extends GetxController {
       if (localTasks.isNotEmpty) {
         tasks.value = localTasks;
         applyFilters();
-        isLoading(false);
       }
 
-      final remoteData = await _apiService.fetchTasks();
-      final List<Map<String, dynamic>> remoteTasks = remoteData
-          .cast<Map<String, dynamic>>();
-
-      if (remoteTasks.isNotEmpty) {
+      final remoteTasksJson = await _apiService.fetchTasks();
+      if (remoteTasksJson.isNotEmpty) {
         final List<TaskEntity> tasksToSave = [];
 
-        for (final json in remoteTasks) {
+        for (final json in remoteTasksJson) {
           final title = (json['title'] ?? '').toString().trim();
           if (title.isEmpty) continue;
 
@@ -157,11 +153,12 @@ class TaskController extends GetxController {
 
         tasks.value = ObjectBoxService.taskBox.getAll();
       }
+
+      applyFilters();
     } catch (e) {
-      debugPrint("Erreur lors de la synchronisation des tâches : $e");
+      debugPrint("Erreur lors du chargement des tâches : $e");
     } finally {
       isLoading(false);
-      applyFilters();
     }
   }
 
