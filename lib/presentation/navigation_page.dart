@@ -29,7 +29,7 @@ class NavigationPage extends StatelessWidget {
             BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Ajouter'),
             BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today),
-              label: 'Calendrier',
+              label: 'Defis',
             ),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
