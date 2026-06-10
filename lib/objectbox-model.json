@@ -4,18 +4,18 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:1742504074500695700",
-      "lastPropertyId": "2:4174542332423214221",
+      "id": "1:4591414988621851513",
+      "lastPropertyId": "2:297942203221847293",
       "name": "CategoryEntity",
       "properties": [
         {
-          "id": "1:7577360274018837738",
+          "id": "1:6606897176521244369",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:4174542332423214221",
+          "id": "2:297942203221847293",
           "name": "name",
           "type": 9
         }
@@ -23,107 +23,107 @@
       "relations": []
     },
     {
-      "id": "2:4761011152696546302",
-      "lastPropertyId": "13:6950203644002621370",
-      "name": "TaskEntity",
+      "id": "2:7691265301081398720",
+      "lastPropertyId": "2:4228620703439142405",
+      "name": "PersonEntity",
       "properties": [
         {
-          "id": "1:8152984547100857770",
+          "id": "1:3041772687066064263",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:3247349509410695571",
+          "id": "2:4228620703439142405",
+          "name": "name",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:8466330695056283468",
+      "lastPropertyId": "13:8972675162196709951",
+      "name": "TaskEntity",
+      "properties": [
+        {
+          "id": "1:6028198847404881400",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6039604309354184228",
           "name": "title",
           "type": 9
         },
         {
-          "id": "3:8904105584467488240",
+          "id": "3:1092364605583308202",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "4:5596549426527702967",
           "name": "completed",
           "type": 1
         },
         {
-          "id": "4:1044517154620211932",
+          "id": "5:2911990382794580769",
+          "name": "date",
+          "type": 10
+        },
+        {
+          "id": "6:295382349759176738",
+          "name": "startTime",
+          "type": 9
+        },
+        {
+          "id": "7:816333813847495278",
+          "name": "endTime",
+          "type": 9
+        },
+        {
+          "id": "8:2025817754415840546",
+          "name": "remindMe",
+          "type": 1
+        },
+        {
+          "id": "9:2769266197057361611",
+          "name": "link",
+          "type": 9
+        },
+        {
+          "id": "10:1534225896710723801",
+          "name": "photoPath",
+          "type": 9
+        },
+        {
+          "id": "11:8641778403632885138",
+          "name": "dbColor",
+          "type": 6
+        },
+        {
+          "id": "12:7474208566134426327",
           "name": "categoryId",
-          "indexId": "1:2974962879502558720",
+          "indexId": "1:7204527648223012526",
           "type": 11,
           "flags": 520,
           "relationTarget": "CategoryEntity"
         },
         {
-          "id": "5:5751274080126445439",
-          "name": "description",
-          "type": 9
-        },
-        {
-          "id": "6:8273818876350773588",
-          "name": "date",
-          "type": 10
-        },
-        {
-          "id": "7:1235058293433416291",
-          "name": "dbColor",
-          "type": 6
-        },
-        {
-          "id": "8:8219946363973099018",
+          "id": "13:8972675162196709951",
           "name": "personId",
-          "indexId": "2:7819590626907652588",
+          "indexId": "2:1801742837880953976",
           "type": 11,
           "flags": 520,
           "relationTarget": "PersonEntity"
-        },
-        {
-          "id": "9:6689918664386175538",
-          "name": "startTime",
-          "type": 9
-        },
-        {
-          "id": "10:8092844947592630151",
-          "name": "endTime",
-          "type": 9
-        },
-        {
-          "id": "11:7959577696033183868",
-          "name": "remindMe",
-          "type": 1
-        },
-        {
-          "id": "12:3274143770576154110",
-          "name": "link",
-          "type": 9
-        },
-        {
-          "id": "13:6950203644002621370",
-          "name": "photoPath",
-          "type": 9
-        }
-      ],
-      "relations": []
-    },
-    {
-      "id": "3:160033768349466157",
-      "lastPropertyId": "2:4970226742266615404",
-      "name": "PersonEntity",
-      "properties": [
-        {
-          "id": "1:3131630848226221813",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:4970226742266615404",
-          "name": "name",
-          "type": 9
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "3:160033768349466157",
-  "lastIndexId": "2:7819590626907652588",
+  "lastEntityId": "3:8466330695056283468",
+  "lastIndexId": "2:1801742837880953976",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

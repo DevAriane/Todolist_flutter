@@ -49,4 +49,21 @@ class PersonController extends GetxController {
       isLoading(false);
     }
   }
+
+  bool addPerson(String name) {
+  final trimmedName = name.trim();
+  if (trimmedName.isEmpty) return false;
+
+  final exists = persons.any(
+    (p) => p.name.toLowerCase() == trimmedName.toLowerCase(),
+  );
+  if (exists) return false;
+
+  final newPerson = PersonEntity(name: trimmedName);
+  final id = ObjectBoxService.personBox.put(newPerson);
+  if (id == 0) return false;
+
+  persons.value = ObjectBoxService.personBox.getAll();
+  return true;
+}
 }

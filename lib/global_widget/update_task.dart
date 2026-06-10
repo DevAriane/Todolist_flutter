@@ -4,12 +4,11 @@ import 'package:getxtra/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import '../controller/task_controller.dart';
+import '../controller/category_controller.dart';
+import '../controller/person_controller.dart';
+import '../controller/color_controller.dart';
 import '../core/app_color.dart';
 import '../models/task_entity.dart';
-import 'app_bottom_sheet.dart';
-import '../controller/category_controller.dart';
-import '../controller/color_controller.dart';
-import '../controller/person_controller.dart';
 import '../utils/color_picker.dart';
 
 class UpdateTask extends StatefulWidget {
@@ -21,7 +20,7 @@ class UpdateTask extends StatefulWidget {
 }
 
 class _UpdateTaskState extends State<UpdateTask> {
-  final TaskController controller = Get.find<TaskController>();
+  final TaskController taskController = Get.find<TaskController>();
   final CategoryController categoryController = Get.find<CategoryController>();
   final PersonController personController = Get.find<PersonController>();
   final ColorController colorController = Get.find<ColorController>();
@@ -33,7 +32,6 @@ class _UpdateTaskState extends State<UpdateTask> {
   final TextEditingController _linkController = TextEditingController();
   final TextEditingController _tagController = TextEditingController();
 
-  // État
   DateTime? _selectedDate;
   TimeOfDay? _startTime;
   TimeOfDay? _endTime;
@@ -46,7 +44,7 @@ class _UpdateTaskState extends State<UpdateTask> {
   @override
   void initState() {
     super.initState();
-    final task = controller.getTaskById(widget.idTask);
+    final task = taskController.getTaskById(widget.idTask);
     if (task == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ScaffoldMessenger.of(
@@ -126,15 +124,14 @@ class _UpdateTaskState extends State<UpdateTask> {
   }
 
   void _showMessage(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), backgroundColor: Colors.red),
+    );
   }
 
-  void _submit() async {
-    final title = _titleController.text.trim();
-    if (title.isEmpty) {
-      _showMessage('Le titre est obligatoire');
+  void _updateTask() async {
+    if (_titleController.text.trim().isEmpty) {
+      _showMessage('Veuillez entrer un titre');
       return;
     }
     if (_selectedCategoryId == null) {
@@ -148,9 +145,9 @@ class _UpdateTaskState extends State<UpdateTask> {
 
     setState(() => _isLoading = true);
 
-    final success = controller.updateTaskTitle(
+    final success = taskController.updateTaskTitle(
       widget.idTask,
-      title,
+      _titleController.text.trim(),
       _descController.text.trim(),
       _selectedCategoryId!,
       _selectedPersonId!,
@@ -166,6 +163,9 @@ class _UpdateTaskState extends State<UpdateTask> {
     setState(() => _isLoading = false);
 
     if (success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Tâche mise à jour avec succès !')),
+      );
       Navigator.pop(context);
     } else {
       _showMessage('Erreur lors de la mise à jour');
@@ -174,275 +174,412 @@ class _UpdateTaskState extends State<UpdateTask> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return const AppBottomSheet(
-        child: Center(child: CircularProgressIndicator()),
-      );
-    }
-
-    return AppBottomSheet(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('Titre', style: TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            TextField(
-              controller: _titleController,
-              decoration: InputDecoration(
-                hintText: 'Titre de la tâche',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            const Text('Date', style: TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            GestureDetector(
-              onTap: _pickDate,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 14,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColor.bordure),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      _selectedDate != null
-                          ? DateFormat('dd MMMM yyyy').format(_selectedDate!)
-                          : 'Sélectionner une date',
-                    ),
-                    const Icon(Icons.calendar_today),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            const Text('Heure', style: TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: _pickStartTime,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 14,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: AppColor.bordure),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(_startTime?.format(context) ?? 'Début'),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                const Text('—'),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: _pickEndTime,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 14,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: AppColor.bordure),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(_endTime?.format(context) ?? 'Fin'),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Me rappeler',
-                  style: TextStyle(
-                    color: AppColor.noir,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Switch(
-                  value: _remindMe,
-                  onChanged: (val) => setState(() => _remindMe = val),
-                  activeThumbColor: AppColor.or,
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-
-            const Text(
-              'Catégorie',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Obx(() {
-              final categories = categoryController.categories;
-              return DropdownButtonFormField<int>(
-                initialValue: _selectedCategoryId,
-                hint: const Text('Choisir une catégorie'),
-                isExpanded: true,
-                items: categories.map((cat) {
-                  return DropdownMenuItem<int>(
-                    value: cat.id,
-                    child: Text(cat.name),
-                  );
-                }).toList(),
-                onChanged: (id) => setState(() => _selectedCategoryId = id),
-              );
-            }),
-            const SizedBox(height: 16),
-
-            const Text(
-              'Personne',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Obx(() {
-              final persons = personController.persons;
-              return DropdownButtonFormField<int>(
-                initialValue: _selectedPersonId,
-                hint: const Text('Choisir une personne'),
-                isExpanded: true,
-                items: persons.map((p) {
-                  return DropdownMenuItem<int>(
-                    value: p.id,
-                    child: Text(p.name),
-                  );
-                }).toList(),
-                onChanged: (id) => setState(() => _selectedPersonId = id),
-              );
-            }),
-            const SizedBox(height: 8),
-
-            const Text(
-              'Choisir la couleur de la tâche',
-              style: TextStyle(color: AppColor.noir),
-            ),
-            const SizedBox(height: 8),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  showColorPickerDialog(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColor.noir,
-                  foregroundColor: Colors.white,
-                ),
-                child: const Text(
-                  'Choisir une couleur',
-                  style: TextStyle(color: AppColor.blanc),
-                ),
-              ),
-            ),
-
-            Obx(
-              () => Container(
-                margin: const EdgeInsets.only(top: 8),
-                height: 40,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: colorController.selectedColor.value,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Center(
-                  child: Text(
-                    'Couleur sélectionnée',
-                    style: TextStyle(
-                      color:
-                          colorController.selectedColor.value
-                                  .computeLuminance() >
-                              0.5
-                          ? Colors.black
-                          : Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Lien (optionnel)',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: _linkController,
-              decoration: InputDecoration(
-                hintText: 'https://...',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            const Text(
-              'Photo (optionnelle)',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            GestureDetector(
-              onTap: _pickPhoto,
-              child: Container(
-                height: 100,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColor.bordure),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: _photoFile != null
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.file(_photoFile!, fit: BoxFit.cover),
-                      )
-                    : const Center(
-                        child: Text('Appuyer pour ajouter une photo'),
-                      ),
-              ),
-            ),
-            const SizedBox(height: 24),
-
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(AppColor.noir),
-                ),
-                onPressed: _submit,
-                child: const Text(
-                  'Mettre à jour',
-                  style: TextStyle(
-                    color: AppColor.blanc,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-          ],
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Get.back(),
         ),
+        title: const Text(
+          'Modifier la tâche',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
       ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Titre', style: TextStyle(color: AppColor.blanc)),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: _titleController,
+                    style: const TextStyle(color: AppColor.blanc),
+                    decoration: InputDecoration(
+                      hintText: 'Lecture de livre',
+                      hintStyle: const TextStyle(color: AppColor.placeholder),
+                      filled: true,
+                      fillColor: Colors.grey[900],
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(color: Colors.white60),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(color: AppColor.bordure),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  const Text(
+                    'Description (Optionnelle)',
+                    style: TextStyle(color: AppColor.blanc),
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: _descController,
+                    maxLines: 3,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintText:
+                          'Après avoir terminé un projet de design, je dois lire 60 pages...',
+                      hintStyle: const TextStyle(color: AppColor.placeholder),
+                      filled: true,
+                      fillColor: Colors.grey[900],
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(color: Colors.white60),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(color: AppColor.bordure),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  const Text('Date', style: TextStyle(color: AppColor.blanc)),
+                  const SizedBox(height: 8),
+                  GestureDetector(
+                    onTap: _pickDate,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 14,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[900],
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: AppColor.bordure),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            _selectedDate != null
+                                ? DateFormat(
+                                    'dd MMMM yyyy',
+                                  ).format(_selectedDate!)
+                                : 'Sélectionner une date',
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          const Icon(
+                            Icons.calendar_today,
+                            color: Colors.white70,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  const Text('Heure', style: TextStyle(color: Colors.white70)),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: _pickStartTime,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 14,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[900],
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: AppColor.bordure),
+                            ),
+                            child: Text(
+                              _startTime != null
+                                  ? _startTime!.format(context)
+                                  : 'Début',
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      const Text('—', style: TextStyle(color: Colors.white70)),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: _pickEndTime,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 14,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[900],
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: AppColor.bordure),
+                            ),
+                            child: Text(
+                              _endTime != null
+                                  ? _endTime!.format(context)
+                                  : 'Fin',
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Me rappeler',
+                        style: TextStyle(color: AppColor.blanc),
+                      ),
+                      Switch(
+                        value: _remindMe,
+                        onChanged: (val) => setState(() => _remindMe = val),
+                        activeThumbColor: AppColor.or,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+
+                  const Text(
+                    'Catégorie',
+                    style: TextStyle(color: AppColor.blanc),
+                  ),
+                  const SizedBox(height: 8),
+                  Obx(() {
+                    final categories = categoryController.categories;
+                    return Wrap(
+                      spacing: 10,
+                      children: categories.map((cat) {
+                        final isSelected = _selectedCategoryId == cat.id;
+                        return ChoiceChip(
+                          label: Text(cat.name),
+                          selected: isSelected,
+                          onSelected: (selected) {
+                            setState(() {
+                              _selectedCategoryId = selected ? cat.id : null;
+                            });
+                          },
+                          backgroundColor: Colors.grey[800],
+                          selectedColor: AppColor.or,
+                          labelStyle: TextStyle(
+                            color: isSelected ? AppColor.noir : AppColor.blanc,
+                          ),
+                        );
+                      }).toList(),
+                    );
+                  }),
+                  const SizedBox(height: 20),
+
+                  const Text(
+                    'Attribuer à une personne',
+                    style: TextStyle(color: AppColor.blanc),
+                  ),
+                  const SizedBox(height: 8),
+                  Obx(() {
+                    final persons = personController.persons;
+                    return DropdownButtonFormField<int>(
+                      initialValue: _selectedPersonId,
+                      hint: const Text(
+                        'Sélectionner une personne',
+                        style: TextStyle(color: AppColor.blanc),
+                      ),
+                      isExpanded: true,
+                      dropdownColor: Colors.grey[900],
+                      style: const TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey[900],
+                        focusedBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(color: Colors.white60),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(color: AppColor.bordure),
+                        ),
+                      ),
+                      items: persons.map((person) {
+                        return DropdownMenuItem<int>(
+                          value: person.id,
+                          child: Text(person.name),
+                        );
+                      }).toList(),
+                      onChanged: (newId) {
+                        setState(() {
+                          _selectedPersonId = newId;
+                        });
+                      },
+                    );
+                  }),
+                  const SizedBox(height: 20),
+
+                  const Text(
+                    'Choisir la couleur de la tâche',
+                    style: TextStyle(color: AppColor.blanc),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: () => showColorPickerDialog(context),
+                          icon: const Icon(Icons.palette_outlined, size: 18),
+                          label: const Text('Choisir une couleur'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey[900],
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 14,
+                              horizontal: 16,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            elevation: 0,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Obx(() {
+                        final selectedColor =
+                            colorController.selectedColor.value;
+                        return Container(
+                          height: 44,
+                          width: 44,
+                          decoration: BoxDecoration(
+                            color: selectedColor,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: selectedColor.withAlpha(
+                                  (0.3 * 255).toInt(),
+                                ),
+                                blurRadius: 8,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                            border: Border.all(
+                              color: Colors.white.withAlpha(
+                                (0.2 * 255).toInt(),
+                              ),
+                              width: 2,
+                            ),
+                          ),
+                          child: Icon(
+                            Icons.check,
+                            size: 20,
+                            color: selectedColor.computeLuminance() > 0.5
+                                ? Colors.black87
+                                : Colors.white,
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+
+                  const Text(
+                    'Lien (Optionnel)',
+                    style: TextStyle(color: AppColor.blanc),
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: _linkController,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintText: 'www.castbox.com',
+                      hintStyle: const TextStyle(color: AppColor.placeholder),
+                      filled: true,
+                      fillColor: Colors.grey[900],
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(color: Colors.white60),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(color: AppColor.bordure),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  const Text(
+                    'Ajouter une photo (Optionnelle)',
+                    style: TextStyle(color: AppColor.blanc),
+                  ),
+                  const SizedBox(height: 8),
+                  GestureDetector(
+                    onTap: _pickPhoto,
+                    child: Container(
+                      height: 100,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[900],
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: AppColor.bordure),
+                      ),
+                      child: _photoFile != null
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.file(_photoFile!, fit: BoxFit.cover),
+                            )
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.add_photo_alternate,
+                                  color: Colors.grey[500],
+                                  size: 40,
+                                ),
+                                const SizedBox(height: 8),
+                                const Text(
+                                  'Ajouter votre photo',
+                                  style: TextStyle(color: AppColor.blanc),
+                                ),
+                              ],
+                            ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: _updateTask,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColor.blanc,
+                        foregroundColor: AppColor.noir,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: const Text(
+                        'Mettre à jour',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.noir,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
     );
   }
 }

@@ -9,6 +9,7 @@ import '../../controller/person_controller.dart';
 import '../../controller/color_controller.dart';
 import '../../utils/color_picker.dart';
 import '../../core/app_color.dart';
+import '../../global_widget/create_person.dart';
 
 class AddTasksPage extends StatefulWidget {
   const AddTasksPage({super.key});
@@ -184,12 +185,17 @@ class _AddTasksPageState extends State<AddTasksPage> {
               style: const TextStyle(color: AppColor.blanc),
               decoration: InputDecoration(
                 hintText: 'Lecture de livre',
-                hintStyle: const TextStyle(color: AppColor.blanc),
+                hintStyle: const TextStyle(color: AppColor.placeholder),
                 filled: true,
                 fillColor: Colors.grey[900],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
+                focusedBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  borderSide: BorderSide(color: Colors.white60),
+                ),
+
+                enabledBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  borderSide: BorderSide(color: AppColor.bordure),
                 ),
               ),
             ),
@@ -206,12 +212,17 @@ class _AddTasksPageState extends State<AddTasksPage> {
               decoration: InputDecoration(
                 hintText:
                     'Après avoir terminé un projet de design, je dois lire 60 pages...',
-                hintStyle: const TextStyle(color: AppColor.blanc),
+                hintStyle: const TextStyle(color: AppColor.placeholder),
                 filled: true,
                 fillColor: Colors.grey[900],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
+                focusedBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  borderSide: BorderSide(color: Colors.white60),
+                ),
+
+                enabledBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  borderSide: BorderSide(color: AppColor.bordure),
                 ),
               ),
             ),
@@ -229,6 +240,7 @@ class _AddTasksPageState extends State<AddTasksPage> {
                 decoration: BoxDecoration(
                   color: Colors.grey[900],
                   borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColor.bordure),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -261,6 +273,7 @@ class _AddTasksPageState extends State<AddTasksPage> {
                       decoration: BoxDecoration(
                         color: Colors.grey[900],
                         borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: AppColor.bordure),
                       ),
                       child: Text(
                         _startTime != null
@@ -285,6 +298,7 @@ class _AddTasksPageState extends State<AddTasksPage> {
                       decoration: BoxDecoration(
                         color: Colors.grey[900],
                         borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: AppColor.bordure),
                       ),
                       child: Text(
                         _endTime != null ? _endTime!.format(context) : 'Fin',
@@ -347,6 +361,53 @@ class _AddTasksPageState extends State<AddTasksPage> {
             const SizedBox(height: 8),
             Obx(() {
               final persons = personController.persons;
+
+              if (persons.isEmpty) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Aucune personne disponible',
+                      style: TextStyle(color: AppColor.blanc),
+                    ),
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () async {
+                          await Get.bottomSheet(
+                            const CreatePerson(),
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            enableDrag: true,
+                          );
+
+                          if (personController.persons.isNotEmpty) {
+                            setState(() {
+                              _selectedPersonId =
+                                  personController.persons.last.id;
+                            });
+                          }
+                        },
+                        icon: const Icon(
+                          Icons.person_add,
+                          color: AppColor.noir,
+                        ),
+                        label: const Text('Créer une personne'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColor.blanc,
+                          foregroundColor: AppColor.noir,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
+
               return DropdownButtonFormField<int>(
                 initialValue: _selectedPersonId,
                 hint: const Text(
@@ -359,9 +420,13 @@ class _AddTasksPageState extends State<AddTasksPage> {
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey[900],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
+                  focusedBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    borderSide: BorderSide(color: Colors.white60),
+                  ),
+                  enabledBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    borderSide: BorderSide(color: AppColor.bordure),
                   ),
                 ),
                 items: persons.map((person) {
@@ -384,43 +449,61 @@ class _AddTasksPageState extends State<AddTasksPage> {
               style: TextStyle(color: AppColor.blanc),
             ),
             const SizedBox(height: 8),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  showColorPickerDialog(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey[800],
-                  foregroundColor: Colors.white,
-                ),
-                child: const Text('Choisir une couleur'),
-              ),
-            ),
-
-            Obx(
-              () => Container(
-                margin: const EdgeInsets.only(top: 8),
-                height: 40,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: colorController.selectedColor.value,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Center(
-                  child: Text(
-                    'Couleur sélectionnée',
-                    style: TextStyle(
-                      color:
-                          colorController.selectedColor.value
-                                  .computeLuminance() >
-                              0.5
-                          ? Colors.black
-                          : Colors.white,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () => showColorPickerDialog(context),
+                    icon: const Icon(Icons.palette_outlined, size: 18),
+                    label: const Text('Choisir une couleur'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey[900],
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 14,
+                        horizontal: 16,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 0,
                     ),
                   ),
                 ),
-              ),
+
+                const SizedBox(width: 16),
+                Obx(() {
+                  final selectedColor = colorController.selectedColor.value;
+                  return Container(
+                    height: 44,
+                    width: 44,
+                    decoration: BoxDecoration(
+                      color: selectedColor,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: selectedColor.withAlpha((0.3 * 255).toInt()),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                      border: Border.all(
+                        color: Colors.white.withAlpha((0.2 * 255).toInt()),
+                        width: 2,
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.check,
+                      size: 20,
+
+                      color: selectedColor.computeLuminance() > 0.5
+                          ? Colors.black87
+                          : Colors.white,
+                    ),
+                  );
+                }),
+              ],
             ),
 
             const SizedBox(height: 20),
@@ -435,12 +518,17 @@ class _AddTasksPageState extends State<AddTasksPage> {
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 hintText: 'www.castbox.com',
-                hintStyle: const TextStyle(color: AppColor.blanc),
+                hintStyle: const TextStyle(color: AppColor.placeholder),
                 filled: true,
                 fillColor: Colors.grey[900],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
+                focusedBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  borderSide: BorderSide(color: Colors.white60),
+                ),
+
+                enabledBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  borderSide: BorderSide(color: AppColor.bordure),
                 ),
               ),
             ),
@@ -459,7 +547,7 @@ class _AddTasksPageState extends State<AddTasksPage> {
                 decoration: BoxDecoration(
                   color: Colors.grey[900],
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.grey[700]!),
+                  border: Border.all(color: AppColor.bordure),
                 ),
                 child: _photoFile != null
                     ? ClipRRect(

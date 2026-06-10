@@ -71,14 +71,7 @@ class Tasks extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    showModalBottomSheet(
-                      showDragHandle: false,
-                      useSafeArea: true,
-                      backgroundColor: Colors.transparent,
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (context) => UpdateTask(idTask: task.id),
-                    );
+                    Get.to(() => UpdateTask(idTask: task.id));
                   },
                   icon: const Icon(Icons.update),
                 ),
