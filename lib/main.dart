@@ -3,6 +3,7 @@ import 'package:todolist_flutter/core/app_color.dart';
 import 'package:todolist_flutter/presentation/pages/home_pages.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:getxtra/get.dart';
+import './presentation/pages/splash.dart';
 
 import 'controller/task_controller.dart';
 import 'controller/category_controller.dart';
@@ -12,7 +13,6 @@ import 'controller/search_controller.dart';
 import 'controller/person_controller.dart';
 import './services/objectbox_service.dart';
 import './controller/navigation_controller.dart';
-import './presentation/navigation_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         colorScheme: .fromSeed(seedColor: AppColor.blanc),
         textTheme: GoogleFonts.interTextTheme(),
       ),
-      home: NavigationPage(),
+      home:const Splash(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -1,0 +1,43 @@
+import 'package:flutter/material.dart';
+import 'package:getxtra/get.dart';
+import 'package:todolist_flutter/core/app_color.dart';
+import '../../global_widget/button.dart';
+import '../../core/image_ressource.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../auth/login.dart';
+
+class Onboarding extends StatelessWidget {
+  const Onboarding({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColor.backg,
+      appBar: AppBar(backgroundColor: AppColor.backg),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(ImageRessource.onboarding, height: 320),
+              const SizedBox(height: 80),
+              Text(
+                "Gérez et suivez vos tâches quotidiennes en toute simplicité grâce à cette mini-application",
+                style: GoogleFonts.inter(color: AppColor.blanc, fontSize: 16),
+              ),
+              const SizedBox(height: 20),
+              Positioned(
+                bottom: 0,
+                child: Button(
+                  name: "COMMENCER",
+                  onTap: () => Get.to(() => const Login()),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

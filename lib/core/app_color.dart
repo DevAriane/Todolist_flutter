@@ -8,4 +8,6 @@ class AppColor {
   static const Color bordure = Color(0xFF3D4150);
   static const Color placeholder = Color(0xFF6B7280);
   static const Color theme = Color(0xFF1E1E24);
+  static const Color backg = Color(0xFF1E2029);
+  static const Color buttonColor = Color(0xFFFECE2F);
 }
