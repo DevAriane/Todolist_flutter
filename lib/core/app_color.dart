@@ -10,4 +10,6 @@ class AppColor {
   static const Color theme = Color(0xFF1E1E24);
   static const Color backg = Color(0xFF1E2029);
   static const Color buttonColor = Color(0xFFFECE2F);
+  static const Color inputFond = Color(0xFF1E2029);
+  static const Color inputBorder = Color(0xFF595B6A);
 }

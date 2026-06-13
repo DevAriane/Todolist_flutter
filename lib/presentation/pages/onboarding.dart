@@ -31,7 +31,7 @@ class Onboarding extends StatelessWidget {
                 bottom: 0,
                 child: Button(
                   name: "COMMENCER",
-                  onTap: () => Get.to(() => const Login()),
+                  onTap: () => Get.to(() =>Login()),
                 ),
               ),
             ],
