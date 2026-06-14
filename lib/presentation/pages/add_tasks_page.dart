@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:getxtra/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:todolist_flutter/presentation/pages/home_pages.dart';
 import '../../controller/task_controller.dart';
 import '../../controller/category_controller.dart';
 import '../../controller/person_controller.dart';
@@ -149,6 +150,8 @@ class _AddTasksPageState extends State<AddTasksPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Tâche créée avec succès !')),
       );
+
+      Get.to(() => HomePages());
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Erreur lors de la création')),

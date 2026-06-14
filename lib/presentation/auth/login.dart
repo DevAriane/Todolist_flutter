@@ -7,6 +7,7 @@ import '../../core/app_color.dart';
 import '../../core/image_ressource.dart';
 import '../../global_widget/title.dart';
 import '../../global_widget/input_widget.dart';
+import '../navigation_page.dart';
 
 class Login extends StatelessWidget {
   Login({super.key});
@@ -98,7 +99,12 @@ class Login extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 30),
-                        Button(name: "SE CONNECTER", onTap: () {}),
+                        Button(
+                          name: "SE CONNECTER",
+                          onTap: () {
+                            Get.to(() => NavigationPage());
+                          },
+                        ),
                         const SizedBox(height: 100),
                         const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
