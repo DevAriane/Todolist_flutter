@@ -4,29 +4,40 @@ import 'package:getxtra/get.dart';
 class DatePickerController extends GetxController {
   var selectedDate = Rxn<DateTime>();
 
-  Future<void> chooseDate() async {
+  Future<void> chooseDate(BuildContext context) async {
     final maintenant = DateTime.now();
-
-    final DateTime demain = DateTime(
+    final aujourdHui = DateTime(
       maintenant.year,
       maintenant.month,
-      maintenant.day + 1,
+      maintenant.day,
     );
 
-    DateTime dateInitiale = selectedDate.value ?? demain;
-    if (dateInitiale.isBefore(demain)) {
-      dateInitiale = demain;
+    DateTime dateInitiale = selectedDate.value ?? aujourdHui;
+    if (dateInitiale.isBefore(aujourdHui)) {
+      dateInitiale = aujourdHui;
     }
 
     DateTime? pickedDate = await showDatePicker(
-      context: Get.context!,
+      context: context,
       initialDate: dateInitiale,
-      firstDate: demain,
+      firstDate: DateTime(2000),
       lastDate: DateTime(2100),
+      selectableDayPredicate: (DateTime day) {
+        return day.isAfter(aujourdHui) || day.isAtSameMomentAs(aujourdHui);
+      },
       helpText: 'Sélectionnez une date',
       cancelText: 'Annuler',
       confirmText: 'Valider',
     );
+
+    if (pickedDate != null && pickedDate.isBefore(aujourdHui)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Vous ne pouvez pas choisir une date passée'),
+        ),
+      );
+      return;
+    }
 
     if (pickedDate != null && pickedDate != selectedDate.value) {
       selectedDate.value = pickedDate;

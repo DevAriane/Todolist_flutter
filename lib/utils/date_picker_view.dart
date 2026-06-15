@@ -22,8 +22,9 @@ class DatePickerView extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 20),
+
         ElevatedButton(
-          onPressed: () => controller.chooseDate(),
+          onPressed: () => controller.chooseDate(context),
           child: const Text(
             'Choisir une date',
             style: TextStyle(color: AppColor.noir),

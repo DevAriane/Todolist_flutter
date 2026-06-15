@@ -10,10 +10,47 @@ class ColorsPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColorPicker(
-      color: controller.selectedColor.value,
-      onChanged: controller.changeColor,
-    );
+    return Obx(() {
+      final Color currentColor = controller.selectedColor.value;
+
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: currentColor,
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.grey.shade300, width: 2),
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            SliderPicker(
+              value: HSVColor.fromColor(currentColor).hue,
+              min: 0.0,
+              max: 360.0,
+              onChanged: (double hue) {
+                final newHsvColor = HSVColor.fromAHSV(1.0, hue, 1.0, 1.0);
+                controller.changeColor(newHsvColor.toColor());
+              },
+              colors: [
+                Colors.red,
+                Colors.yellow,
+                Colors.green,
+                Colors.cyan,
+                Colors.blue,
+                const Color(0xFFFF00FF),
+                Colors.red,
+              ],
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
 
