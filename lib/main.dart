@@ -13,12 +13,16 @@ import 'controller/search_controller.dart';
 import 'controller/person_controller.dart';
 import './services/objectbox_service.dart';
 import './controller/navigation_controller.dart';
+import 'controller/habit_controller.dart';
+import 'controller/category_habit_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ObjectBoxService.init();
 
   Get.lazyPut(() => CategoryController());
+  Get.lazyPut(() => CategoryHabitController());
+  Get.lazyPut(() => HabitController());
   Get.lazyPut(() => ColorController());
   Get.lazyPut(() => TaskController());
   Get.lazyPut(() => DatePickerController());

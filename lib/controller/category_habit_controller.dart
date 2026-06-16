@@ -1,13 +1,95 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:getxtra/get.dart';
+import 'package:todolist_flutter/controller/habit_controller.dart';
 import 'package:todolist_flutter/models/category_entity.dart';
 import 'package:todolist_flutter/models/category_habit_entity.dart';
 import 'package:todolist_flutter/objectbox.g.dart';
 import '../models/task_entity.dart';
 import '../services/api_service.dart';
 import '../services/objectbox_service.dart';
+import '../controller/color_controller.dart';
 
 class CategoryHabitController extends GetxController {
-  final CategoriesHabit = <CategoryHabitEntity>[].obs;
-  
+  final ColorController _colorController = Get.find<ColorController>();
+
+  final categoriesHabit = <CategoryHabitEntity>[].obs;
+  final isLoading = false.obs;
+  final selectedCategoryHabitId = 0.obs;
+  bool _isAlreadyLoading = false;
+
+  final ApiService _apiService = ApiService();
+
+  @override
+  void onReady() {
+    super.onReady();
+    loadsCategoriesHabit();
+  }
+
+  Future<void> loadsCategoriesHabit() async {
+    if (_isAlreadyLoading) return;
+    _isAlreadyLoading = true;
+
+    isLoading(true);
+
+    try {
+      final localCategoryHabits = ObjectBoxService.categoryHabitBox.getAll();
+      if (localCategoryHabits.isNotEmpty) {
+        categoriesHabit.value = localCategoryHabits;
+        return;
+      }
+
+      final remoteCategoriesHabit = await _apiService.fetchCategoriesHabit();
+      final List<CategoryHabitEntity> categoryHabitToSave = [];
+
+      for (final json in remoteCategoriesHabit) {
+        final name = (json['name'] ?? '').toString().trim();
+        final dbColor = (json['dbColor'] ?? '');
+        final icon = (json['icon'] ?? '').toString().trim();
+
+        categoryHabitToSave.add(
+          CategoryHabitEntity(name: name, dbColor: dbColor, icon: icon),
+        );
+      }
+
+      if (categoryHabitToSave.isNotEmpty) {
+        if (!ObjectBoxService.categoryHabitBox.isEmpty()) {
+          ObjectBoxService.categoryHabitBox.removeAll();
+        }
+
+        ObjectBoxService.categoryHabitBox.putMany(categoryHabitToSave);
+      }
+
+      categoriesHabit.value = ObjectBoxService.categoryHabitBox.getAll();
+    } catch (e) {
+      debugPrint('Erreur lors du chargement des categories : $e');
+    } finally {
+      isLoading(false);
+      _isAlreadyLoading = false;
+    }
+  }
+
+  bool addCategoryHabit(String name, String icon) {
+    final trimmedName = name.trim();
+    if (trimmedName.isEmpty) return false;
+
+    final alreadyExists = categoriesHabit.any(
+      (category) => category.name.toLowerCase() == trimmedName.toLowerCase(),
+    );
+    if (alreadyExists) return false;
+
+    final categoryHabit = CategoryHabitEntity(
+      name: name,
+      color: _colorController.selectedColor.value,
+      icon: icon,
+    );
+    ObjectBoxService.categoryHabitBox.put(categoryHabit);
+    categoriesHabit.add(categoryHabit);
+    return true;
+  }
+
+  void selectCategoryHabit(int categoryHabitId) {
+    selectedCategoryHabitId.value = categoryHabitId;
+    final habitController = Get.find<HabitController>();
+  }
 }

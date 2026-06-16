@@ -1,4 +1,4 @@
-import 'package:objectbox/objectbox.dart'; 
+import 'package:objectbox/objectbox.dart';
 import 'package:todolist_flutter/models/category_habit_entity.dart';
 
 @Entity()
@@ -11,6 +11,9 @@ class HabitEntity {
   final DateTime endDate;
   final bool isCompletedToday;
 
+  @Index()
+  String? titleNormalized;
+
   final categoryHabit = ToOne<CategoryHabitEntity>();
 
   HabitEntity({
@@ -19,5 +22,17 @@ class HabitEntity {
     required this.startDate,
     required this.endDate,
     required this.isCompletedToday,
+    this.titleNormalized,
   });
+
+  factory HabitEntity.fromJson(Map<String, dynamic> json) {
+    return HabitEntity(
+      title: json['title'] ?? "",
+      decription: json['description'] ?? "",
+      startDate: json['startDate'] ?? "",
+      endDate: json['endDate'] ?? "",
+      isCompletedToday: json['isCompletedToday'] ?? false,
+      titleNormalized: json['title'] ?? "",
+    );
+  }
 }

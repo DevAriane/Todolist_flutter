@@ -223,7 +223,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(5, 1913945916497946446),
     name: 'HabitEntity',
-    lastPropertyId: const obx_int.IdUid(7, 2079892542526941180),
+    lastPropertyId: const obx_int.IdUid(8, 1883727500310094674),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -270,6 +270,13 @@ final _entities = <obx_int.ModelEntity>[
         indexId: const obx_int.IdUid(4, 2227868741752588461),
         relationField: 'categoryHabit',
         relationTarget: 'CategoryHabitEntity',
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 1883727500310094674),
+        name: 'titleNormalized',
+        type: 9,
+        flags: 2048,
+        indexId: const obx_int.IdUid(5, 17584594513021882),
       ),
     ],
     relations: <obx_int.ModelRelation>[],
@@ -321,7 +328,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
     generatorVersion: obx_int.GeneratorVersion.v2025_12_16,
     entities: _entities,
     lastEntityId: const obx_int.IdUid(5, 1913945916497946446),
-    lastIndexId: const obx_int.IdUid(4, 2227868741752588461),
+    lastIndexId: const obx_int.IdUid(5, 17584594513021882),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
     retiredEntityUids: const [],
@@ -615,7 +622,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final decriptionOffset = object.decription == null
             ? null
             : fbb.writeString(object.decription!);
-        fbb.startTable(8);
+        final titleNormalizedOffset = object.titleNormalized == null
+            ? null
+            : fbb.writeString(object.titleNormalized!);
+        fbb.startTable(9);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, titleOffset);
         fbb.addOffset(2, decriptionOffset);
@@ -623,6 +633,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addInt64(4, object.endDate.millisecondsSinceEpoch);
         fbb.addBool(5, object.isCompletedToday);
         fbb.addInt64(6, object.categoryHabit.targetId);
+        fbb.addOffset(7, titleNormalizedOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -647,12 +658,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
           14,
           false,
         );
+        final titleNormalizedParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 18);
         final object = HabitEntity(
           title: titleParam,
           decription: decriptionParam,
           startDate: startDateParam,
           endDate: endDateParam,
           isCompletedToday: isCompletedTodayParam,
+          titleNormalized: titleNormalizedParam,
         )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
         object.categoryHabit.targetId = const fb.Int64Reader().vTableGet(
           buffer,
@@ -844,4 +859,9 @@ class HabitEntity_ {
       obx.QueryRelationToOne<HabitEntity, CategoryHabitEntity>(
         _entities[4].properties[6],
       );
+
+  /// See [HabitEntity.titleNormalized].
+  static final titleNormalized = obx.QueryStringProperty<HabitEntity>(
+    _entities[4].properties[7],
+  );
 }

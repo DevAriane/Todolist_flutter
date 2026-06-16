@@ -159,7 +159,7 @@
     },
     {
       "id": "5:1913945916497946446",
-      "lastPropertyId": "7:2079892542526941180",
+      "lastPropertyId": "8:1883727500310094674",
       "name": "HabitEntity",
       "properties": [
         {
@@ -200,13 +200,20 @@
           "type": 11,
           "flags": 520,
           "relationTarget": "CategoryHabitEntity"
+        },
+        {
+          "id": "8:1883727500310094674",
+          "name": "titleNormalized",
+          "indexId": "5:17584594513021882",
+          "type": 9,
+          "flags": 2048
         }
       ],
       "relations": []
     }
   ],
   "lastEntityId": "5:1913945916497946446",
-  "lastIndexId": "4:2227868741752588461",
+  "lastIndexId": "5:17584594513021882",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

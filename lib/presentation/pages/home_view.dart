@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter/core/app_color.dart';
 import 'package:todolist_flutter/global_widget/categories.dart';
+import 'package:todolist_flutter/global_widget/categories_habit.dart';
 import 'package:todolist_flutter/global_widget/horizontal_date_picker.dart';
 import 'package:todolist_flutter/global_widget/search_bar.dart';
 
@@ -38,7 +39,7 @@ class HomeView extends StatelessWidget {
               children: [
                 Searchbars(),
                 const SizedBox(height: 10),
-                Categories(),
+                CategoriesHabit(),
                 const SizedBox(height: 10),
               ],
             ),

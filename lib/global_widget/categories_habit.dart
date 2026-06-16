@@ -2,12 +2,14 @@ import 'package:flutter/material.dart' hide SearchController;
 import 'package:getxtra/get.dart';
 import 'package:todolist_flutter/global_widget/create_category_habit.dart';
 import '../core/app_color.dart';
-import '../controller/category_controller.dart';
+import '../controller/category_habit_controller.dart';
+import 'create_category.dart';
 
-class Categories extends StatelessWidget {
-  final CategoryController controller = Get.find<CategoryController>();
+class CategoriesHabit extends StatelessWidget {
+  final CategoryHabitController controller =
+      Get.find<CategoryHabitController>();
 
-  Categories({super.key});
+  CategoriesHabit({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class Categories extends StatelessWidget {
         SizedBox(
           height: 60,
           child: Obx(() {
-            final categories = controller.categories;
+            final categories = controller.categoriesHabit;
             if (categories.isEmpty) {
               return const Center(
                 child: Text(
@@ -53,12 +55,12 @@ class Categories extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    controller.selectCategory(0);
+                    controller.selectedCategoryHabitId(0);
                   },
                   child: Container(
                     width: 80,
                     decoration: BoxDecoration(
-                      color: controller.selectedCategoryId.value == 0
+                      color: controller.selectedCategoryHabitId.value == 0
                           ? Colors.blue
                           : Colors.grey[800],
                       borderRadius: BorderRadius.circular(5),
@@ -83,13 +85,13 @@ class Categories extends StatelessWidget {
                       final category = categories[index];
                       return InkWell(
                         onTap: () {
-                          controller.selectCategory(category.id);
+                          controller.selectCategoryHabit(category.id);
                         },
                         child: Container(
                           width: 80,
                           decoration: BoxDecoration(
                             color:
-                                controller.selectedCategoryId.value ==
+                                controller.selectedCategoryHabitId.value ==
                                     category.id
                                 ? Colors.blue
                                 : Colors.grey[800],

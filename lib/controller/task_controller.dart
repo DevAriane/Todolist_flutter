@@ -1,5 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:getxtra/get.dart';
+import 'package:todolist_flutter/models/category_entity.dart';
+import 'package:todolist_flutter/models/person_entity.dart';
 import 'package:todolist_flutter/objectbox.g.dart';
 import '../models/task_entity.dart';
 import '../services/api_service.dart';
@@ -15,6 +18,8 @@ class TaskController extends GetxController {
   final isLoading = false.obs;
   final selectedFilterDate = DateTime.now().obs;
   final displayedTasks = <TaskEntity>[].obs;
+
+  bool _isAlreadyLoading = false;
 
   final ApiService _apiService = ApiService();
 
@@ -61,6 +66,9 @@ class TaskController extends GetxController {
   }
 
   Future<void> loadTasks() async {
+    if (_isAlreadyLoading) return;
+    _isAlreadyLoading = true;
+
     isLoading(true);
     try {
       await categoryController.loadCategories();
@@ -76,11 +84,12 @@ class TaskController extends GetxController {
       if (remoteTasksJson.isNotEmpty) {
         final List<TaskEntity> tasksToSave = [];
 
+        final localCategories = ObjectBoxService.categoryBox.getAll();
+        final localPersons = ObjectBoxService.personBox.getAll();
+
         for (final json in remoteTasksJson) {
           final title = (json['title'] ?? '').toString().trim();
           if (title.isEmpty) continue;
-
-          final int apiId = json['id'] ?? 0;
 
           DateTime? parsedDate;
           if (json['date'] != null && json['date'].toString().isNotEmpty) {
@@ -92,10 +101,9 @@ class TaskController extends GetxController {
             parsedColor = Color(json['dbColor']);
           }
 
-          TaskEntity? task;
-          if (apiId != 0) {
-            task = ObjectBoxService.taskBox.get(apiId);
-          }
+          TaskEntity? task = tasks.firstWhereOrNull(
+            (t) => t.title.toLowerCase() == title.toLowerCase(),
+          );
 
           if (task != null) {
             task.title = title;
@@ -123,42 +131,40 @@ class TaskController extends GetxController {
               photoPath: json['photoPath'] as String? ?? "",
               titleNormalized: _normalize(title),
             );
-            if (apiId != 0) task.id = apiId;
           }
 
-          final apiCategoryId = json['categoryId'];
-          if (apiCategoryId != null) {
-            final existingCategory = ObjectBoxService.categoryBox.get(
-              apiCategoryId,
+          final apiCategoryName = json['categoryName']?.toString().trim();
+          if (apiCategoryName != null) {
+            final matchedCat = localCategories.firstWhereOrNull(
+              (c) => c.name.toLowerCase() == apiCategoryName.toLowerCase(),
             );
-            if (existingCategory != null) {
-              task.category.target = existingCategory;
-            }
+            if (matchedCat != null) task.category.target = matchedCat;
           }
 
-          final apiPersonId = json['personId'];
-          if (apiPersonId != null) {
-            final existingPerson = ObjectBoxService.personBox.get(apiPersonId);
-            if (existingPerson != null) {
-              task.person.target = existingPerson;
-            }
+          final apiPersonName = json['personName']?.toString().trim();
+          if (apiPersonName != null) {
+            final matchedPerson = localPersons.firstWhereOrNull(
+              (p) => p.name.toLowerCase() == apiPersonName.toLowerCase(),
+            );
+            if (matchedPerson != null) task.person.target = matchedPerson;
           }
 
           tasksToSave.add(task);
         }
 
         if (tasksToSave.isNotEmpty) {
+          ObjectBoxService.taskBox.removeAll();
           ObjectBoxService.taskBox.putMany(tasksToSave);
         }
 
         tasks.value = ObjectBoxService.taskBox.getAll();
       }
-
-      applyFilters();
     } catch (e) {
       debugPrint("Erreur lors du chargement des tâches : $e");
     } finally {
+      applyFilters();
       isLoading(false);
+      _isAlreadyLoading = false;
     }
   }
 
@@ -263,16 +269,10 @@ class TaskController extends GetxController {
     if (task == null) return false;
 
     final existingCategory = ObjectBoxService.categoryBox.get(categoryId);
-    if (existingCategory == null) {
-      debugPrint('Catégorie non spécifiée');
-      return false;
-    }
+    if (existingCategory == null) return false;
 
     final existingPerson = ObjectBoxService.personBox.get(personId);
-    if (existingPerson == null) {
-      debugPrint('Personne non spécifiée');
-      return false;
-    }
+    if (existingPerson == null) return false;
 
     task.title = trimmedTitle;
     task.description = description?.trim().isEmpty == true
