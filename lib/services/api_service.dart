@@ -23,4 +23,19 @@ class ApiService {
     final personsJson = response.data['record']['persons'] as List;
     return personsJson.cast<Map<String, dynamic>>();
   }
+
+  Future<List<Map<String, dynamic>>> fetchHabits() async {
+    const url = 'https://api.jsonbin.io/v3/b/6a228e79da38895dfe8b3a4f/latest';
+    final response = await _dio.get(url);
+    final habitsJson = response.data['record']['habits'] as List;
+    return habitsJson.cast<Map<String, dynamic>>();
+  }
+
+  Future<List<Map<String, dynamic>>> fetchCategoriesHabit() async {
+    const url = 'https://api.jsonbin.io/v3/b/6a228e79da38895dfe8b3a4f/latest';
+    final response = await _dio.get(url);
+    final categoryHabitsJson =
+        response.data['record']['categoryHabits'] as List;
+    return categoryHabitsJson.cast<Map<String, dynamic>>();
+  }
 }

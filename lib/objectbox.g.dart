@@ -15,6 +15,8 @@ import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_sync_flutter_libs/objectbox_sync_flutter_libs.dart';
 
 import 'models/category_entity.dart';
+import 'models/category_habit_entity.dart';
+import 'models/habit_entity.dart';
 import 'models/person_entity.dart';
 import 'models/task_entity.dart';
 
@@ -178,6 +180,101 @@ final _entities = <obx_int.ModelEntity>[
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
   ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(4, 5370743034397862256),
+    name: 'CategoryHabitEntity',
+    lastPropertyId: const obx_int.IdUid(4, 1275618507017315603),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 6947932574169972521),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 3130656328865708030),
+        name: 'name',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 4219398782557402520),
+        name: 'dbColor',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 1275618507017315603),
+        name: 'icon',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[
+      obx_int.ModelBacklink(
+        name: 'habits',
+        srcEntity: 'HabitEntity',
+        srcField: 'categoryHabit',
+      ),
+    ],
+  ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(5, 1913945916497946446),
+    name: 'HabitEntity',
+    lastPropertyId: const obx_int.IdUid(7, 2079892542526941180),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 1956169081802511650),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 9016253486301210344),
+        name: 'title',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 4229195105019603969),
+        name: 'decription',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 2252873426597226188),
+        name: 'startDate',
+        type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 6343411330423661416),
+        name: 'endDate',
+        type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 6543837992967459087),
+        name: 'isCompletedToday',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 2079892542526941180),
+        name: 'categoryHabitId',
+        type: 11,
+        flags: 520,
+        indexId: const obx_int.IdUid(4, 2227868741752588461),
+        relationField: 'categoryHabit',
+        relationTarget: 'CategoryHabitEntity',
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -223,8 +320,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
     // Typically, this is done with `dart run build_runner build`.
     generatorVersion: obx_int.GeneratorVersion.v2025_12_16,
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(3, 8466330695056283468),
-    lastIndexId: const obx_int.IdUid(3, 2060406241989216075),
+    lastEntityId: const obx_int.IdUid(5, 1913945916497946446),
+    lastIndexId: const obx_int.IdUid(4, 2227868741752588461),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
     retiredEntityUids: const [],
@@ -447,6 +544,126 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
+    CategoryHabitEntity: obx_int.EntityDefinition<CategoryHabitEntity>(
+      model: _entities[3],
+      toOneRelations: (CategoryHabitEntity object) => [],
+      toManyRelations: (CategoryHabitEntity object) => {
+        obx_int.RelInfo<HabitEntity>.toOneBacklink(
+          7,
+          object.id,
+          (HabitEntity srcObject) => srcObject.categoryHabit,
+        ): object.habits,
+      },
+      getId: (CategoryHabitEntity object) => object.id,
+      setId: (CategoryHabitEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (CategoryHabitEntity object, fb.Builder fbb) {
+        final nameOffset = fbb.writeString(object.name);
+        final iconOffset = object.icon == null
+            ? null
+            : fbb.writeString(object.icon!);
+        fbb.startTable(5);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, nameOffset);
+        fbb.addInt64(2, object.dbColor);
+        fbb.addOffset(3, iconOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final nameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 6, '');
+        final dbColorParam = const fb.Int64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          8,
+        );
+        final iconParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 10);
+        final object = CategoryHabitEntity(
+          name: nameParam,
+          dbColor: dbColorParam,
+          icon: iconParam,
+        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        obx_int.InternalToManyAccess.setRelInfo<CategoryHabitEntity>(
+          object.habits,
+          store,
+          obx_int.RelInfo<HabitEntity>.toOneBacklink(
+            7,
+            object.id,
+            (HabitEntity srcObject) => srcObject.categoryHabit,
+          ),
+        );
+        return object;
+      },
+    ),
+    HabitEntity: obx_int.EntityDefinition<HabitEntity>(
+      model: _entities[4],
+      toOneRelations: (HabitEntity object) => [object.categoryHabit],
+      toManyRelations: (HabitEntity object) => {},
+      getId: (HabitEntity object) => object.id,
+      setId: (HabitEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (HabitEntity object, fb.Builder fbb) {
+        final titleOffset = fbb.writeString(object.title);
+        final decriptionOffset = object.decription == null
+            ? null
+            : fbb.writeString(object.decription!);
+        fbb.startTable(8);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, titleOffset);
+        fbb.addOffset(2, decriptionOffset);
+        fbb.addInt64(3, object.startDate.millisecondsSinceEpoch);
+        fbb.addInt64(4, object.endDate.millisecondsSinceEpoch);
+        fbb.addBool(5, object.isCompletedToday);
+        fbb.addInt64(6, object.categoryHabit.targetId);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final titleParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 6, '');
+        final decriptionParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 8);
+        final startDateParam = DateTime.fromMillisecondsSinceEpoch(
+          const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0),
+        );
+        final endDateParam = DateTime.fromMillisecondsSinceEpoch(
+          const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0),
+        );
+        final isCompletedTodayParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          14,
+          false,
+        );
+        final object = HabitEntity(
+          title: titleParam,
+          decription: decriptionParam,
+          startDate: startDateParam,
+          endDate: endDateParam,
+          isCompletedToday: isCompletedTodayParam,
+        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        object.categoryHabit.targetId = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          16,
+          0,
+        );
+        object.categoryHabit.attach(store);
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -559,4 +776,72 @@ class TaskEntity_ {
   static final titleNormalized = obx.QueryStringProperty<TaskEntity>(
     _entities[2].properties[13],
   );
+}
+
+/// [CategoryHabitEntity] entity fields to define ObjectBox queries.
+class CategoryHabitEntity_ {
+  /// See [CategoryHabitEntity.id].
+  static final id = obx.QueryIntegerProperty<CategoryHabitEntity>(
+    _entities[3].properties[0],
+  );
+
+  /// See [CategoryHabitEntity.name].
+  static final name = obx.QueryStringProperty<CategoryHabitEntity>(
+    _entities[3].properties[1],
+  );
+
+  /// See [CategoryHabitEntity.dbColor].
+  static final dbColor = obx.QueryIntegerProperty<CategoryHabitEntity>(
+    _entities[3].properties[2],
+  );
+
+  /// See [CategoryHabitEntity.icon].
+  static final icon = obx.QueryStringProperty<CategoryHabitEntity>(
+    _entities[3].properties[3],
+  );
+
+  /// see [CategoryHabitEntity.habits]
+  static final habits =
+      obx.QueryBacklinkToMany<HabitEntity, CategoryHabitEntity>(
+        HabitEntity_.categoryHabit,
+      );
+}
+
+/// [HabitEntity] entity fields to define ObjectBox queries.
+class HabitEntity_ {
+  /// See [HabitEntity.id].
+  static final id = obx.QueryIntegerProperty<HabitEntity>(
+    _entities[4].properties[0],
+  );
+
+  /// See [HabitEntity.title].
+  static final title = obx.QueryStringProperty<HabitEntity>(
+    _entities[4].properties[1],
+  );
+
+  /// See [HabitEntity.decription].
+  static final decription = obx.QueryStringProperty<HabitEntity>(
+    _entities[4].properties[2],
+  );
+
+  /// See [HabitEntity.startDate].
+  static final startDate = obx.QueryDateProperty<HabitEntity>(
+    _entities[4].properties[3],
+  );
+
+  /// See [HabitEntity.endDate].
+  static final endDate = obx.QueryDateProperty<HabitEntity>(
+    _entities[4].properties[4],
+  );
+
+  /// See [HabitEntity.isCompletedToday].
+  static final isCompletedToday = obx.QueryBooleanProperty<HabitEntity>(
+    _entities[4].properties[5],
+  );
+
+  /// See [HabitEntity.categoryHabit].
+  static final categoryHabit =
+      obx.QueryRelationToOne<HabitEntity, CategoryHabitEntity>(
+        _entities[4].properties[6],
+      );
 }

@@ -127,10 +127,86 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "4:5370743034397862256",
+      "lastPropertyId": "4:1275618507017315603",
+      "name": "CategoryHabitEntity",
+      "properties": [
+        {
+          "id": "1:6947932574169972521",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3130656328865708030",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:4219398782557402520",
+          "name": "dbColor",
+          "type": 6
+        },
+        {
+          "id": "4:1275618507017315603",
+          "name": "icon",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:1913945916497946446",
+      "lastPropertyId": "7:2079892542526941180",
+      "name": "HabitEntity",
+      "properties": [
+        {
+          "id": "1:1956169081802511650",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:9016253486301210344",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:4229195105019603969",
+          "name": "decription",
+          "type": 9
+        },
+        {
+          "id": "4:2252873426597226188",
+          "name": "startDate",
+          "type": 10
+        },
+        {
+          "id": "5:6343411330423661416",
+          "name": "endDate",
+          "type": 10
+        },
+        {
+          "id": "6:6543837992967459087",
+          "name": "isCompletedToday",
+          "type": 1
+        },
+        {
+          "id": "7:2079892542526941180",
+          "name": "categoryHabitId",
+          "indexId": "4:2227868741752588461",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "CategoryHabitEntity"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "3:8466330695056283468",
-  "lastIndexId": "3:2060406241989216075",
+  "lastEntityId": "5:1913945916497946446",
+  "lastIndexId": "4:2227868741752588461",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

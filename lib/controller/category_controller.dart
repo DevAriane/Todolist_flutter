@@ -5,12 +5,14 @@ import 'package:todolist_flutter/objectbox.g.dart';
 import '../models/task_entity.dart';
 import '../services/api_service.dart';
 import '../services/objectbox_service.dart';
-import 'task_controller.dart'; // ← ajout
+import 'task_controller.dart';
 
 class CategoryController extends GetxController {
   final categories = <CategoryEntity>[].obs;
   final isLoading = false.obs;
   final selectedCategoryId = 0.obs;
+
+  bool _isAlreadyLoading = false;
 
   final ApiService _apiService = ApiService();
 
@@ -21,6 +23,9 @@ class CategoryController extends GetxController {
   }
 
   Future<void> loadCategories() async {
+    if (_isAlreadyLoading) return;
+    _isAlreadyLoading = true;
+
     isLoading(true);
     try {
       final localCategories = ObjectBoxService.categoryBox.getAll();
@@ -30,16 +35,29 @@ class CategoryController extends GetxController {
       }
 
       final remoteCategories = await _apiService.fetchCategories();
+      final List<CategoryEntity> categoriesToSave = [];
+
       for (final json in remoteCategories) {
         final name = (json['name'] ?? '').toString().trim();
         if (name.isEmpty) continue;
-        ObjectBoxService.categoryBox.put(CategoryEntity(name: name));
+
+        categoriesToSave.add(CategoryEntity(name: name));
       }
+
+      if (categoriesToSave.isNotEmpty) {
+        if (!ObjectBoxService.categoryBox.isEmpty()) {
+          ObjectBoxService.categoryBox.removeAll();
+        }
+
+        ObjectBoxService.categoryBox.putMany(categoriesToSave);
+      }
+
       categories.value = ObjectBoxService.categoryBox.getAll();
     } catch (e) {
       debugPrint('Erreur lors du chargement des categories : $e');
     } finally {
       isLoading(false);
+      _isAlreadyLoading = false;
     }
   }
 
