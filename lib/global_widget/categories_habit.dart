@@ -40,7 +40,7 @@ class CategoriesHabit extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         SizedBox(
-          height: 60,
+          height: 110,
           child: Obx(() {
             final categories = controller.categoriesHabit;
             if (categories.isEmpty) {
@@ -51,36 +51,44 @@ class CategoriesHabit extends StatelessWidget {
                 ),
               );
             }
-            return Row(
-              children: [
-                InkWell(
-                  onTap: () {
-                    controller.selectedCategoryHabitId(0);
-                  },
-                  child: Container(
-                    width: 80,
-                    decoration: BoxDecoration(
-                      color: controller.selectedCategoryHabitId.value == 0
-                          ? Colors.blue
-                          : Colors.grey[800],
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "Tout ",
-                        style: TextStyle(color: AppColor.blanc),
+            return SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      controller.selectedCategoryHabitId(0);
+                    },
+                    child: Container(
+                      width: 100,
+                      height: 98,
+                      decoration: BoxDecoration(
+                        color: AppColor.buttonColor,
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(
+                          color: controller.selectedCategoryHabitId.value == 0
+                              ? AppColor.blanc
+                              : Colors.transparent,
+                          width: 2.0,
+                        ),
+                      ),
+                      child: const Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text("Tout ", style: TextStyle(color: AppColor.noir)),
+                          SizedBox(height: 5),
+                          Icon(Icons.all_inbox, size: 60, color: AppColor.noir),
+                        ],
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: ListView.separated(
+                  const SizedBox(width: 10),
+                  ListView.separated(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemCount: categories.length,
                     separatorBuilder: (context, index) =>
-                        const SizedBox(width: 10),
+                        const SizedBox(width: 20),
                     itemBuilder: (context, index) {
                       final category = categories[index];
                       return InkWell(
@@ -88,27 +96,41 @@ class CategoriesHabit extends StatelessWidget {
                           controller.selectCategoryHabit(category.id);
                         },
                         child: Container(
-                          width: 80,
+                          width: 100,
+                          height: 98,
                           decoration: BoxDecoration(
-                            color:
-                                controller.selectedCategoryHabitId.value ==
-                                    category.id
-                                ? Colors.blue
-                                : Colors.grey[800],
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Center(
-                            child: Text(
-                              category.name,
-                              style: const TextStyle(color: AppColor.blanc),
+                            color: category.color ?? Colors.greenAccent,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color:
+                                  controller.selectedCategoryHabitId.value ==
+                                      category.id
+                                  ? AppColor.blanc
+                                  : Colors.transparent,
+                              width: 2.0,
                             ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                category.name,
+                                style: const TextStyle(color: AppColor.noir),
+                              ),
+                              const SizedBox(height: 5),
+                              Icon(
+                                category.iconData,
+                                size: 60,
+                                color: AppColor.noir,
+                              ),
+                            ],
                           ),
                         ),
                       );
                     },
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           }),
         ),

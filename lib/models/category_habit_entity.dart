@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart' show Color;
+import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
-import './habit_entity.dart';
+import 'package:todolist_flutter/global_widget/icon_list.dart';
+import 'habit_entity.dart';
 
 @Entity()
 class CategoryHabitEntity {
@@ -25,8 +25,8 @@ class CategoryHabitEntity {
 
   factory CategoryHabitEntity.fromJson(Map<String, dynamic> json) {
     return CategoryHabitEntity(
-      name: json['name'],
-      dbColor: json['color'],
+      name: json['name'] ?? '',
+      dbColor: json['dbColor'],
       icon: json['icon'],
     );
   }
@@ -44,4 +44,7 @@ class CategoryHabitEntity {
       dbColor = newColor.toARGB32();
     }
   }
+
+  @Transient()
+  IconData get iconData => getIconData(icon);
 }

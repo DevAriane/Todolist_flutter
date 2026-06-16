@@ -12,4 +12,5 @@ class AppColor {
   static const Color buttonColor = Color(0xFFFECE2F);
   static const Color inputFond = Color(0xFF1E2029);
   static const Color inputBorder = Color(0xFF595B6A);
+  static const Color habit = Color(0xFF2D2F3E);
 }

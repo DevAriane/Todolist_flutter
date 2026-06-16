@@ -29,8 +29,8 @@ class HabitEntity {
     return HabitEntity(
       title: json['title'] ?? "",
       decription: json['description'] ?? "",
-      startDate: json['startDate'] ?? "",
-      endDate: json['endDate'] ?? "",
+      startDate: json['startDate'] != null ? DateTime.parse(json['startDate']) : DateTime.now(),
+      endDate: json['endDate'] != null ? DateTime.parse(json['endDate']) : DateTime.now(),
       isCompletedToday: json['isCompletedToday'] ?? false,
       titleNormalized: json['title'] ?? "",
     );

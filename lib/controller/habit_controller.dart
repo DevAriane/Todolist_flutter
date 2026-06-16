@@ -8,8 +8,7 @@ import '../controller/color_controller.dart';
 class HabitController extends GetxController {
   final ColorController _colorController = Get.find<ColorController>();
 
-  final CategoryHabitController categoryHabit =
-      Get.find<CategoryHabitController>();
+  final CategoryHabitController categoryHabit = Get.find<CategoryHabitController>();
   final habits = <HabitEntity>[].obs;
   final isLoading = false.obs;
   final ApiService _apiService = ApiService();
@@ -19,6 +18,7 @@ class HabitController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    loadsHabit();
   }
 
   String _normalize(String input) {
@@ -56,7 +56,7 @@ class HabitController extends GetxController {
     isLoading(true);
 
     try {
-      await CategoryHabitController().loadsCategoriesHabit();
+      await categoryHabit.loadsCategoriesHabit();
 
       final localsHabit = ObjectBoxService.habitBox.getAll();
       if (localsHabit.isNotEmpty) {
@@ -66,16 +66,18 @@ class HabitController extends GetxController {
       final remoteHabitJson = await _apiService.fetchTasks();
       if (remoteHabitJson.isNotEmpty) {
         final List<HabitEntity> habitToSave = [];
-        final localCategoriesHabit = ObjectBoxService.categoryHabitBox.getAll();
 
         for (final json in remoteHabitJson) {
           final title = json['title'] ?? "";
           final description = json['description'] ?? "";
-          final startDate = json['startDate'] ?? "";
-          final endDate = json['endDate'] ?? "";
+          
+          final startDate = json['startDate'] != null ? DateTime.parse(json['startDate']) : DateTime.now();
+          final endDate = json['endDate'] != null ? DateTime.parse(json['endDate']) : DateTime.now();
+          
           final isCompletedToday = json['isCompletedToday'] ?? false;
           final titleNormalized = _normalize(title);
-          final apiCategortHabitId = json['categoryHabitId'];
+          final apiCategoryHabitId = json['categoryHabitId'];
+          
           final habit = HabitEntity(
             title: title,
             decription: description,
@@ -84,9 +86,10 @@ class HabitController extends GetxController {
             isCompletedToday: isCompletedToday,
             titleNormalized: titleNormalized,
           );
-          if (apiCategortHabitId != null) {
+          
+          if (apiCategoryHabitId != null) {
             final existingCategoryHabit = ObjectBoxService.categoryHabitBox.get(
-              apiCategortHabitId,
+              apiCategoryHabitId,
             );
 
             if (existingCategoryHabit != null) {
@@ -104,7 +107,7 @@ class HabitController extends GetxController {
         habits.value = ObjectBoxService.habitBox.getAll();
       }
     } catch (e) {
-      print(e);
+      print("Erreur lors du chargement des habitudes: $e");
     } finally {
       applyFilterHabit();
       isLoading(false);

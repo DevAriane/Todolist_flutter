@@ -69,7 +69,7 @@ class CategoryHabitController extends GetxController {
     }
   }
 
-  bool addCategoryHabit(String name, String icon) {
+  bool addCategoryHabit(String name, icon) {
     final trimmedName = name.trim();
     if (trimmedName.isEmpty) return false;
 
