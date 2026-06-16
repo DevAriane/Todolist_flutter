@@ -6,4 +6,5 @@ class ImageRessource {
   static const String logo = "assets/icons/CardChecklist.png";
   static const String auth = "assets/icons/ListCheck.png";
   static const String left = "assets/icons/ArrowLeftCircle.png";
+  static const String back = "assets/icons/ArrowLeft.png";
 }

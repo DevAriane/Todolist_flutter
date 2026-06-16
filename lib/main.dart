@@ -36,11 +36,11 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'TodoList',
       theme: ThemeData(
-        scaffoldBackgroundColor: AppColor.noir.withValues(alpha: 0.3),
+        scaffoldBackgroundColor: AppColor.backg,
         colorScheme: .fromSeed(seedColor: AppColor.blanc),
         textTheme: GoogleFonts.interTextTheme(),
       ),
-      home:const Splash(),
+      home: const Splash(),
       debugShowCheckedModeBanner: false,
     );
   }

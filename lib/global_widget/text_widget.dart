@@ -5,13 +5,19 @@ import 'package:todolist_flutter/core/app_color.dart';
 class TextWidget extends StatelessWidget {
   final String name;
   final Color color;
-  const TextWidget({super.key, required this.name, required this.color});
+  final VoidCallback? onTap;
+  const TextWidget({
+    super.key,
+    required this.name,
+    required this.color,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      name,
-      style: GoogleFonts.inter(color: color, fontSize: 16),
+    return InkWell(
+      onTap: onTap,
+      child: Text(name, style: GoogleFonts.inter(color: color, fontSize: 16)),
     );
   }
 }

@@ -24,7 +24,12 @@ class Signup extends StatelessWidget {
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.light,
         ),
-        leading: Image.asset(ImageRessource.left, height: 24),
+        leading: GestureDetector(
+          onTap: () {
+            Get.to(() => Login());
+          },
+          child: Image.asset(ImageRessource.left, height: 24),
+        ),
       ),
       body: SafeArea(
         child: Container(
@@ -114,18 +119,22 @@ class Signup extends StatelessWidget {
                           },
                         ),
                         const SizedBox(height: 100),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            TextWidget(
-                              name: "Avez-vous déja un compte ? ",
-                              color: AppColor.blanc,
-                            ),
-                            TextWidget(
-                              name: "Se connecter ",
-                              color: AppColor.buttonColor,
-                            ),
-                          ],
+                        const SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+
+                            children: [
+                              TextWidget(
+                                name: "Avez-vous déja un compte ? ",
+                                color: AppColor.blanc,
+                              ),
+                              TextWidget(
+                                name: "Se connecter ",
+                                color: AppColor.buttonColor,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),

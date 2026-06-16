@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todolist_flutter/core/image_ressource.dart';
+import 'package:todolist_flutter/presentation/pages/home_view.dart';
 import '../../core/app_color.dart';
 import '../../global_widget/search_bar.dart';
 import '../../global_widget/categories.dart';
@@ -19,20 +21,12 @@ class HomePages extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColor.backg,
         actionsPadding: const EdgeInsets.all(20),
-        centerTitle: true,
-        title: const Text(
-          "Zen List",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: AppColor.blanc,
-          ),
+        leading: GestureDetector(
+          onTap: () {
+            Get.to(() => const HomeView());
+          },
+          child: Image.asset(ImageRessource.back),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.menu, color: Colors.white),
-          onPressed: () {},
-        ),
-        actions: const [Icon(Icons.notifications_none, color: AppColor.blanc)],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -41,8 +35,6 @@ class HomePages extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Searchbars(),
-                const SizedBox(height: 10),
                 const HorizontalDatePicker(),
                 const SizedBox(height: 10),
                 Categories(),

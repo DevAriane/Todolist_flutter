@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:getxtra/get.dart';
 import 'package:todolist_flutter/global_widget/button.dart';
 import 'package:todolist_flutter/global_widget/text_widget.dart';
+import 'package:todolist_flutter/presentation/auth/signup.dart';
+import 'package:todolist_flutter/presentation/pages/onboarding.dart';
 import '../../core/app_color.dart';
 import '../../core/image_ressource.dart';
 import '../../global_widget/title.dart';
@@ -24,7 +26,12 @@ class Login extends StatelessWidget {
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.light,
         ),
-        leading: Image.asset(ImageRessource.left, height: 24),
+        leading: GestureDetector(
+          onTap: () {
+            Get.to(() => const Onboarding());
+          },
+          child: Image.asset(ImageRessource.left, height: 24),
+        ),
       ),
       body: SafeArea(
         child: Container(
@@ -106,16 +113,19 @@ class Login extends StatelessWidget {
                           },
                         ),
                         const SizedBox(height: 100),
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            TextWidget(
+                            const TextWidget(
                               name: "Avez-vous déja un compte ? ",
                               color: AppColor.blanc,
                             ),
                             TextWidget(
                               name: "S’inscrire",
                               color: AppColor.buttonColor,
+                              onTap: () {
+                                Get.to(() => Signup());
+                              },
                             ),
                           ],
                         ),
