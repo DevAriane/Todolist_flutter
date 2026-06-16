@@ -15,9 +15,9 @@ class HomePages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.noir,
+      backgroundColor: AppColor.backg,
       appBar: AppBar(
-        backgroundColor: AppColor.noir,
+        backgroundColor: AppColor.backg,
         actionsPadding: const EdgeInsets.all(20),
         centerTitle: true,
         title: const Text(

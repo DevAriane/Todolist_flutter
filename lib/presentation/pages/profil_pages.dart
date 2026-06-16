@@ -10,7 +10,7 @@ class ProfilPages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.noir,
+      backgroundColor: AppColor.backg,
       appBar: AppBar(
         backgroundColor: AppColor.placeholder,
         systemOverlayStyle: const SystemUiOverlayStyle(

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:getxtra/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:todolist_flutter/global_widget/date_picker_widget.dart';
+import 'package:todolist_flutter/global_widget/textfield_widget.dart';
 import 'package:todolist_flutter/presentation/pages/home_pages.dart';
 import '../../controller/task_controller.dart';
 import '../../controller/category_controller.dart';
@@ -11,6 +13,7 @@ import '../../controller/color_controller.dart';
 import '../../utils/color_picker.dart';
 import '../../core/app_color.dart';
 import '../../global_widget/create_person.dart';
+import '../../global_widget/heure_widget.dart';
 
 class AddTasksPage extends StatefulWidget {
   const AddTasksPage({super.key});
@@ -30,7 +33,7 @@ class _AddTasksPageState extends State<AddTasksPage> {
   final TextEditingController _linkController = TextEditingController();
   final TextEditingController _tagController = TextEditingController();
 
-  DateTime? _selectedDate;
+  DateTime? _selectedDate = DateTime.now();
   TimeOfDay? _startTime;
   TimeOfDay? _endTime;
   bool _remindMe = false;
@@ -57,30 +60,97 @@ class _AddTasksPageState extends State<AddTasksPage> {
   }
 
   Future<void> _pickDate() async {
+    final now = DateTime.now();
+
+    final initialDate = (_selectedDate != null && _selectedDate!.isAfter(now))
+        ? _selectedDate!
+        : now;
+
     final picked = await showDatePicker(
       context: context,
-      initialDate: _selectedDate!,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+      initialDate: initialDate,
+      firstDate: DateTime(now.year, now.month, now.day),
+      lastDate: DateTime(now.year + 5),
     );
-    if (picked != null) setState(() => _selectedDate = picked);
+
+    if (picked != null) {
+      setState(() => _selectedDate = picked);
+    }
   }
 
-  Future<void> _pickStartTime() async {
-    final picked = await showTimePicker(
-      context: context,
-      initialTime: _startTime!,
-    );
-    if (picked != null) setState(() => _startTime = picked);
-  }
+Future<void> _pickStartTime() async {
+  final picked = await showTimePicker(
+    context: context,
+    initialTime: _startTime ?? TimeOfDay.now(),
+  );
 
-  Future<void> _pickEndTime() async {
-    final picked = await showTimePicker(
-      context: context,
-      initialTime: _endTime!,
-    );
-    if (picked != null) setState(() => _endTime = picked);
+  if (picked != null) {
+    final now = DateTime.now();
+    
+    if (_selectedDate != null &&
+        _selectedDate!.year == now.year &&
+        _selectedDate!.month == now.month &&
+        _selectedDate!.day == now.day) {
+      
+      final currentMinutes = now.hour * 60 + now.minute;
+      final pickedMinutes = picked.hour * 60 + picked.minute;
+
+      if (pickedMinutes < currentMinutes) {
+        _showError('L\'heure de début est déjà passée !');
+        return; 
+      }
+    }
+
+    setState(() => _startTime = picked);
   }
+}
+
+Future<void> _pickEndTime() async {
+  final picked = await showTimePicker(
+    context: context,
+    initialTime: _endTime ?? TimeOfDay.now(),
+  );
+
+  if (picked != null) {
+    final now = DateTime.now();
+
+    if (_selectedDate != null &&
+        _selectedDate!.year == now.year &&
+        _selectedDate!.month == now.month &&
+        _selectedDate!.day == now.day) {
+      
+      final currentMinutes = now.hour * 60 + now.minute;
+      final pickedMinutes = picked.hour * 60 + picked.minute;
+
+      if (pickedMinutes < currentMinutes) {
+        _showError('L\'heure de fin est déjà passée !');
+        return;
+      }
+    }
+
+    if (_startTime != null) {
+      final startMinutes = _startTime!.hour * 60 + _startTime!.minute;
+      final endMinutes = picked.hour * 60 + picked.minute;
+
+      if (endMinutes <= startMinutes) {
+        _showError("'L\'heure de fin doit être après l'heure de début !'");
+        return;
+      }
+    }
+
+    setState(() => _endTime = picked);
+  }
+}
+
+void _showError(String message) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message),
+      backgroundColor: Colors.redAccent,
+      behavior: SnackBarBehavior.floating,
+    ),
+  );
+}
 
   Future<void> _pickPhoto() async {
     final picker = ImagePicker();
@@ -162,7 +232,7 @@ class _AddTasksPageState extends State<AddTasksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColor.backg,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -183,134 +253,43 @@ class _AddTasksPageState extends State<AddTasksPage> {
           children: [
             const Text('Titre', style: TextStyle(color: AppColor.blanc)),
             const SizedBox(height: 8),
-            TextField(
+            TextfieldWidget(
               controller: _titleController,
-              style: const TextStyle(color: AppColor.blanc),
-              decoration: InputDecoration(
-                hintText: 'Lecture de livre',
-                hintStyle: const TextStyle(color: AppColor.placeholder),
-                filled: true,
-                fillColor: Colors.grey[900],
-                focusedBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  borderSide: BorderSide(color: Colors.white60),
-                ),
-
-                enabledBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  borderSide: BorderSide(color: AppColor.bordure),
-                ),
-              ),
+              name: "Lecture de livre",
+              line: 1,
             ),
+
             const SizedBox(height: 20),
             const Text(
               'Description (Optionnelle)',
               style: TextStyle(color: AppColor.blanc),
             ),
             const SizedBox(height: 8),
-            TextField(
+            TextfieldWidget(
               controller: _descController,
-              maxLines: 3,
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                hintText:
-                    'Après avoir terminé un projet de design, je dois lire 60 pages...',
-                hintStyle: const TextStyle(color: AppColor.placeholder),
-                filled: true,
-                fillColor: Colors.grey[900],
-                focusedBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  borderSide: BorderSide(color: Colors.white60),
-                ),
-
-                enabledBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  borderSide: BorderSide(color: AppColor.bordure),
-                ),
-              ),
+              name:
+                  "Après avoir terminé un projet de design, je dois lire 60 pages...",
+              line: 3,
             ),
 
             const SizedBox(height: 20),
             const Text('Date', style: TextStyle(color: AppColor.blanc)),
             const SizedBox(height: 8),
-            GestureDetector(
-              onTap: _pickDate,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 14,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.grey[900],
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColor.bordure),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      _selectedDate != null
-                          ? DateFormat('dd MMMM yyyy').format(_selectedDate!)
-                          : 'Sélectionner une date',
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                    const Icon(Icons.calendar_today, color: Colors.white70),
-                  ],
-                ),
-              ),
+            DatePickerWidget(
+              selectedDate: _selectedDate,
+              onDateSelected: (newDate) {
+                setState(() {
+                  _selectedDate = newDate;
+                });
+              },
             ),
-            const SizedBox(height: 20),
 
-            const Text('Heure', style: TextStyle(color: Colors.white70)),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: _pickStartTime,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 14,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[900],
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppColor.bordure),
-                      ),
-                      child: Text(
-                        _startTime != null
-                            ? _startTime!.format(context)
-                            : 'Début',
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                const Text('—', style: TextStyle(color: Colors.white70)),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: _pickEndTime,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 14,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[900],
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppColor.bordure),
-                      ),
-                      child: Text(
-                        _endTime != null ? _endTime!.format(context) : 'Fin',
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            const SizedBox(height: 20),
+            HeureWidget(
+              pickStartTime: _pickStartTime,
+              startTime: _startTime,
+              pickEndTime: _pickEndTime,
+              endTime: _endTime,
             ),
             const SizedBox(height: 20),
 

@@ -26,10 +26,11 @@ class NavigationPage extends StatelessWidget {
           onTap: controller.changeIndex,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Accueil'),
+            BottomNavigationBarItem(icon: Icon(Icons.task), label: 'Tache'),
             BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Ajouter'),
             BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today),
-              label: 'Defis',
+              label: 'Calendrier ',
             ),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
