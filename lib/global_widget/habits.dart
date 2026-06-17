@@ -11,6 +11,35 @@ class Habits extends StatelessWidget {
 
   final HabitController controller = Get.find<HabitController>();
 
+  void _openDialog(BuildContext context, habit) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Supprimer ?'),
+          content: const Text('Voulez-vous vraiment supprimer ?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Annuler'),
+            ),
+            TextButton(
+              onPressed: () {
+                controller.deleteHabit(habit);
+                Navigator.pop(context);
+              },
+              child: const Text(
+                'Supprimer',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -53,70 +82,80 @@ class Habits extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextWidget(name: habit.title, color: AppColor.blanc),
-                      const SizedBox(height: 5),
+                  child: InkWell(
+                    onTap: () {
+                      showModalBottomSheet(
+                        showDragHandle: true,
+                        useSafeArea: true,
+                        backgroundColor: Colors.transparent,
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (context) {
+                          return HabitDetails(habit: habit);
+                        },
+                      );
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextWidget(name: habit.title, color: AppColor.blanc),
+                        const SizedBox(height: 5),
 
-                      Row(
-                        children: [
-                          const TextWidget(
-                            name: "Completée",
-                            color: AppColor.blanc,
-                          ),
-                          const SizedBox(width: 5),
-                          TextWidget(
-                            name:
-                                "${habit.completedDaysCount}/${habit.totalDaysChallenge}",
-                            color: AppColor.blanc,
-                          ),
-                        ],
-                      ),
+                        Row(
+                          children: [
+                            const TextWidget(
+                              name: "Completée",
+                              color: AppColor.blanc,
+                            ),
+                            const SizedBox(width: 5),
+                            TextWidget(
+                              name:
+                                  "${habit.completedDaysCount}/${habit.totalDaysChallenge}",
+                              color: AppColor.blanc,
+                            ),
+                          ],
+                        ),
 
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: LinearProgressIndicator(
-                              value: habit.progressRatio,
-                              backgroundColor: const Color(0xFF838995),
-                              valueColor: const AlwaysStoppedAnimation<Color>(
-                                AppColor.buttonColor,
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: LinearProgressIndicator(
+                                value: habit.progressRatio,
+                                backgroundColor: const Color(0xFF838995),
+                                valueColor: const AlwaysStoppedAnimation<Color>(
+                                  AppColor.buttonColor,
+                                ),
+                                minHeight: 6,
+                                borderRadius: BorderRadius.circular(3),
                               ),
-                              minHeight: 6,
-                              borderRadius: BorderRadius.circular(3),
                             ),
-                          ),
 
-                          const SizedBox(width: 10),
+                            const SizedBox(width: 10),
 
-                          Text(
-                            "${(habit.progressRatio * 100).toInt()}%",
-                            style: const TextStyle(
-                              color: AppColor.buttonColor,
-                              fontSize: 16,
+                            Text(
+                              "${(habit.progressRatio * 100).toInt()}%",
+                              style: const TextStyle(
+                                color: AppColor.buttonColor,
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    showModalBottomSheet(
-                      showDragHandle: true,
-                      useSafeArea: true,
-                      backgroundColor: Colors.transparent,
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (context) {
-                        return const HabitDetails();
-                      },
-                    );
+
+                IconButton(
+                  onPressed: () {
+                    _openDialog(context, habit);
                   },
-                  child: Image.asset(ImageRessource.tree, height: 24),
+                  icon: const Icon(
+                    Icons.delete,
+                    size: 24,
+                    color: AppColor.blanc,
+                  ),
                 ),
               ],
             ),

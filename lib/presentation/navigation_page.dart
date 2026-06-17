@@ -28,10 +28,6 @@ class NavigationPage extends StatelessWidget {
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Accueil'),
             BottomNavigationBarItem(icon: Icon(Icons.task), label: 'Tache'),
             BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Ajouter'),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today),
-              label: 'Calendrier ',
-            ),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
         ),

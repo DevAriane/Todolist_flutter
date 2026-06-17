@@ -60,14 +60,14 @@ class Categories extends StatelessWidget {
                     width: 80,
                     decoration: BoxDecoration(
                       color: controller.selectedCategoryId.value == 0
-                          ? Colors.blue
+                          ? AppColor.buttonColor
                           : Colors.grey[800],
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: const Center(
                       child: Text(
                         "Tout ",
-                        style: TextStyle(color: AppColor.blanc),
+                        style: TextStyle(color: AppColor.noir),
                       ),
                     ),
                   ),

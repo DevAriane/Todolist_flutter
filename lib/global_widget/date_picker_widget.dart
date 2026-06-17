@@ -43,17 +43,20 @@ class DatePickerWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: AppColor.bordure),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              selectedDate != null
-                  ? DateFormat('dd MMMM yyyy').format(selectedDate!)
-                  : 'Sélectionner une date',
-              style: const TextStyle(color: Colors.white),
-            ),
-            const Icon(Icons.calendar_today, color: Colors.white70),
-          ],
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                selectedDate != null
+                    ? DateFormat('dd MMMM yyyy').format(selectedDate!)
+                    : 'Sélectionner une date',
+                style: const TextStyle(color: Colors.white),
+              ),
+              const Icon(Icons.calendar_today, color: Colors.white70),
+            ],
+          ),
         ),
       ),
     );

@@ -13,7 +13,6 @@ class NavigationController extends GetxController {
     Center(child: HomeView()),
     Center(child: HomePages()),
     const Center(child: AddTasksPage()),
-    Center(child: CalendarPage()),
     const Center(child: ProfilPages()),
   ];
 

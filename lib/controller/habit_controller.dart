@@ -1,13 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:getxtra/get.dart';
+import 'package:todolist_flutter/objectbox.g.dart';
 import 'package:todolist_flutter/services/api_service.dart';
 import 'package:todolist_flutter/services/objectbox_service.dart';
 import './category_habit_controller.dart';
 import '../models/habit_entity.dart';
-import '../controller/color_controller.dart';
 
 class HabitController extends GetxController {
-  final ColorController _colorController = Get.find<ColorController>();
-
   final CategoryHabitController categoryHabit =
       Get.find<CategoryHabitController>();
   final habits = <HabitEntity>[].obs;
@@ -87,7 +86,6 @@ class HabitController extends GetxController {
             decription: description,
             startDate: startDate,
             endDate: endDate,
-
             titleNormalized: titleNormalized,
           );
 
@@ -130,5 +128,54 @@ class HabitController extends GetxController {
 
     ObjectBoxService.habitBox.put(habit);
     habits.refresh();
+  }
+
+  void verifyNameHabit(String newTitle, int categoryHabitId) {
+    final query = ObjectBoxService.habitBox
+        .query(HabitEntity_.categoryHabit.equals(categoryHabitId))
+        .build();
+    final habitsInCategory = query.find();
+    for (final habit in habitsInCategory) {
+      if (habit.title == newTitle) {
+        debugPrint("Doublon détecté dans cette catégorie.");
+      }
+    }
+    query.close();
+  }
+
+  bool addHabits({
+    required String title,
+    String? description,
+    required int categoryHabitId,
+    required DateTime startDate,
+    required DateTime endDate,
+  }) {
+    verifyNameHabit(title, categoryHabitId);
+
+    final newHabit = HabitEntity(
+      title: title,
+      decription: description,
+      startDate: startDate,
+      endDate: endDate,
+      titleNormalized: _normalize(title),
+    );
+
+    final existingCategoryHabit = ObjectBoxService.categoryHabitBox.get(
+      categoryHabitId,
+    );
+    if (existingCategoryHabit != null) {
+      newHabit.categoryHabit.target = existingCategoryHabit;
+    }
+
+    ObjectBoxService.habitBox.put(newHabit);
+    habits.insert(0, newHabit);
+    applyFilterHabit();
+    return true;
+  }
+
+  void deleteHabit(HabitEntity habit) {
+    ObjectBoxService.habitBox.remove(habit.id);
+    habits.remove(habit);
+    applyFilterHabit();
   }
 }
