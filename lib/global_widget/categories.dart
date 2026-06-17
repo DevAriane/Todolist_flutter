@@ -23,7 +23,7 @@ class Categories extends StatelessWidget {
             IconButton(
               onPressed: () {
                 showModalBottomSheet(
-                  showDragHandle: false,
+                  showDragHandle: true,
                   useSafeArea: true,
                   backgroundColor: Colors.transparent,
                   context: context,

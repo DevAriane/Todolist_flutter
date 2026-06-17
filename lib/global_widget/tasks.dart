@@ -53,7 +53,7 @@ class Tasks extends StatelessWidget {
               InkWell(
                 onTap: () {
                   showModalBottomSheet(
-                    showDragHandle: false,
+                    showDragHandle: true,
                     useSafeArea: true,
                     backgroundColor: Colors.transparent,
                     context: context,

@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:todolist_flutter/global_widget/date_picker_widget.dart';
 import 'package:todolist_flutter/global_widget/textfield_widget.dart';
+import 'package:todolist_flutter/presentation/navigation_page.dart';
 import 'package:todolist_flutter/presentation/pages/home_pages.dart';
 import '../../controller/task_controller.dart';
 import '../../controller/category_controller.dart';
@@ -78,79 +79,77 @@ class _AddTasksPageState extends State<AddTasksPage> {
     }
   }
 
-Future<void> _pickStartTime() async {
-  final picked = await showTimePicker(
-    context: context,
-    initialTime: _startTime ?? TimeOfDay.now(),
-  );
+  Future<void> _pickStartTime() async {
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: _startTime ?? TimeOfDay.now(),
+    );
 
-  if (picked != null) {
-    final now = DateTime.now();
-    
-    if (_selectedDate != null &&
-        _selectedDate!.year == now.year &&
-        _selectedDate!.month == now.month &&
-        _selectedDate!.day == now.day) {
-      
-      final currentMinutes = now.hour * 60 + now.minute;
-      final pickedMinutes = picked.hour * 60 + picked.minute;
+    if (picked != null) {
+      final now = DateTime.now();
 
-      if (pickedMinutes < currentMinutes) {
-        _showError('L\'heure de début est déjà passée !');
-        return; 
+      if (_selectedDate != null &&
+          _selectedDate!.year == now.year &&
+          _selectedDate!.month == now.month &&
+          _selectedDate!.day == now.day) {
+        final currentMinutes = now.hour * 60 + now.minute;
+        final pickedMinutes = picked.hour * 60 + picked.minute;
+
+        if (pickedMinutes < currentMinutes) {
+          _showError('L\'heure de début est déjà passée !');
+          return;
+        }
       }
-    }
 
-    setState(() => _startTime = picked);
+      setState(() => _startTime = picked);
+    }
   }
-}
 
-Future<void> _pickEndTime() async {
-  final picked = await showTimePicker(
-    context: context,
-    initialTime: _endTime ?? TimeOfDay.now(),
-  );
+  Future<void> _pickEndTime() async {
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: _endTime ?? TimeOfDay.now(),
+    );
 
-  if (picked != null) {
-    final now = DateTime.now();
+    if (picked != null) {
+      final now = DateTime.now();
 
-    if (_selectedDate != null &&
-        _selectedDate!.year == now.year &&
-        _selectedDate!.month == now.month &&
-        _selectedDate!.day == now.day) {
-      
-      final currentMinutes = now.hour * 60 + now.minute;
-      final pickedMinutes = picked.hour * 60 + picked.minute;
+      if (_selectedDate != null &&
+          _selectedDate!.year == now.year &&
+          _selectedDate!.month == now.month &&
+          _selectedDate!.day == now.day) {
+        final currentMinutes = now.hour * 60 + now.minute;
+        final pickedMinutes = picked.hour * 60 + picked.minute;
 
-      if (pickedMinutes < currentMinutes) {
-        _showError('L\'heure de fin est déjà passée !');
-        return;
+        if (pickedMinutes < currentMinutes) {
+          _showError('L\'heure de fin est déjà passée !');
+          return;
+        }
       }
-    }
 
-    if (_startTime != null) {
-      final startMinutes = _startTime!.hour * 60 + _startTime!.minute;
-      final endMinutes = picked.hour * 60 + picked.minute;
+      if (_startTime != null) {
+        final startMinutes = _startTime!.hour * 60 + _startTime!.minute;
+        final endMinutes = picked.hour * 60 + picked.minute;
 
-      if (endMinutes <= startMinutes) {
-        _showError("'L\'heure de fin doit être après l'heure de début !'");
-        return;
+        if (endMinutes <= startMinutes) {
+          _showError("'L\'heure de fin doit être après l'heure de début !'");
+          return;
+        }
       }
-    }
 
-    setState(() => _endTime = picked);
+      setState(() => _endTime = picked);
+    }
   }
-}
 
-void _showError(String message) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(message),
-      backgroundColor: Colors.redAccent,
-      behavior: SnackBarBehavior.floating,
-    ),
-  );
-}
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.redAccent,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
 
   Future<void> _pickPhoto() async {
     final picker = ImagePicker();
@@ -238,7 +237,7 @@ void _showError(String message) {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Get.back(),
+          onPressed: () => Get.to(() => NavigationPage()),
         ),
         title: const Text(
           'Créer une nouvelle tâche',

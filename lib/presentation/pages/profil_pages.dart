@@ -23,12 +23,8 @@ class ProfilPages extends StatelessWidget {
           icon: const Icon(Icons.notifications_none, color: AppColor.blanc),
         ),
         actions: const [
-          Icon(Icons.update, color: AppColor.blanc),
-          SizedBox(width: 5),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Icon(Icons.menu, color: AppColor.blanc),
-          ),
+          Icon(Icons.edit, color: AppColor.blanc),
+          SizedBox(width: 20),
         ],
       ),
       body: SingleChildScrollView(

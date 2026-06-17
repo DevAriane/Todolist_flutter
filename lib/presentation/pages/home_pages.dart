@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:todolist_flutter/core/image_ressource.dart';
+import 'package:todolist_flutter/presentation/navigation_page.dart';
 import 'package:todolist_flutter/presentation/pages/home_view.dart';
 import '../../core/app_color.dart';
 import '../../global_widget/search_bar.dart';
@@ -16,36 +18,33 @@ class HomePages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.backg,
-      appBar: AppBar(
-        backgroundColor: AppColor.backg,
-        actionsPadding: const EdgeInsets.all(20),
-        leading: GestureDetector(
-          onTap: () {
-            Get.to(() => const HomeView());
-          },
-          child: Image.asset(ImageRessource.back),
-        ),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const HorizontalDatePicker(),
-                const SizedBox(height: 10),
-                Categories(),
-                const SizedBox(height: 10),
-                const Text(
-                  "Tâches à effectuer",
-                  style: TextStyle(color: AppColor.blanc),
-                ),
-                const SizedBox(height: 10),
-                Tasks(),
-              ],
+      child: Scaffold(
+        backgroundColor: AppColor.backg,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const HorizontalDatePicker(),
+                  const SizedBox(height: 10),
+                  Categories(),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Tâches à effectuer",
+                    style: TextStyle(color: AppColor.blanc),
+                  ),
+                  const SizedBox(height: 10),
+                  Tasks(),
+                ],
+              ),
             ),
           ),
         ),

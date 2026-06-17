@@ -32,32 +32,27 @@ class SearchbarsHabit extends StatelessWidget {
         decoration: InputDecoration(
           hintText: "Rechercher...",
           hintStyle: const TextStyle(color: AppColor.placeholder),
-          prefixIcon: const Icon(
-            Icons.search,
-            color: AppColor.placeholder,
-            size: 50,
-          ),
           border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(vertical: 12.0),
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 12.0,
+            horizontal: 10,
+          ),
           suffixIcon: Padding(
             padding: const EdgeInsets.all(2.0),
-            child: Container(
-              height: 10,
-              decoration: const BoxDecoration(
-                color: AppColor.or,
-                shape: BoxShape.circle,
+            child: IconButton(
+              icon: const Icon(
+                Icons.search,
+                color: AppColor.buttonColor,
+                size: 40,
               ),
-              child: IconButton(
-                icon: const Icon(Icons.tune, color: AppColor.noir, size: 15.0),
-                onPressed: () {
-                  if (_search.text.trim().isNotEmpty) {
-                    _searchController.searchQuery.value = _search.text.trim();
-                    _searchController.searchHabit();
-                  } else {
-                    _searchController.resetSearchHabit();
-                  }
-                },
-              ),
+              onPressed: () {
+                if (_search.text.trim().isNotEmpty) {
+                  _searchController.searchQuery.value = _search.text.trim();
+                  _searchController.searchHabit();
+                } else {
+                  _searchController.resetSearchHabit();
+                }
+              },
             ),
           ),
         ),

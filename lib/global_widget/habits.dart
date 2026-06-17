@@ -67,7 +67,7 @@ class Habits extends StatelessWidget {
                 GestureDetector(
                                onTap: () {
                 showModalBottomSheet(
-                  showDragHandle: false,
+                  showDragHandle: true,
                   useSafeArea: true,
                   backgroundColor: Colors.transparent,
                   context: context,
