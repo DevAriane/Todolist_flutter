@@ -159,7 +159,7 @@
     },
     {
       "id": "5:1913945916497946446",
-      "lastPropertyId": "8:1883727500310094674",
+      "lastPropertyId": "9:2608709700328976441",
       "name": "HabitEntity",
       "properties": [
         {
@@ -189,11 +189,6 @@
           "type": 10
         },
         {
-          "id": "6:6543837992967459087",
-          "name": "isCompletedToday",
-          "type": 1
-        },
-        {
           "id": "7:2079892542526941180",
           "name": "categoryHabitId",
           "indexId": "4:2227868741752588461",
@@ -207,6 +202,11 @@
           "indexId": "5:17584594513021882",
           "type": 9,
           "flags": 2048
+        },
+        {
+          "id": "9:2608709700328976441",
+          "name": "completedDates",
+          "type": 30
         }
       ],
       "relations": []
@@ -220,7 +220,9 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    6543837992967459087
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

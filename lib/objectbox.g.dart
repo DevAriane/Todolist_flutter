@@ -223,7 +223,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(5, 1913945916497946446),
     name: 'HabitEntity',
-    lastPropertyId: const obx_int.IdUid(8, 1883727500310094674),
+    lastPropertyId: const obx_int.IdUid(9, 2608709700328976441),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -257,12 +257,6 @@ final _entities = <obx_int.ModelEntity>[
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(6, 6543837992967459087),
-        name: 'isCompletedToday',
-        type: 1,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
         id: const obx_int.IdUid(7, 2079892542526941180),
         name: 'categoryHabitId',
         type: 11,
@@ -277,6 +271,12 @@ final _entities = <obx_int.ModelEntity>[
         type: 9,
         flags: 2048,
         indexId: const obx_int.IdUid(5, 17584594513021882),
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 2608709700328976441),
+        name: 'completedDates',
+        type: 30,
+        flags: 0,
       ),
     ],
     relations: <obx_int.ModelRelation>[],
@@ -333,7 +333,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
     lastSequenceId: const obx_int.IdUid(0, 0),
     retiredEntityUids: const [],
     retiredIndexUids: const [],
-    retiredPropertyUids: const [],
+    retiredPropertyUids: const [6543837992967459087],
     retiredRelationUids: const [],
     modelVersion: 5,
     modelVersionParserMinimum: 5,
@@ -625,15 +625,18 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final titleNormalizedOffset = object.titleNormalized == null
             ? null
             : fbb.writeString(object.titleNormalized!);
-        fbb.startTable(9);
+        final completedDatesOffset = fbb.writeList(
+          object.completedDates.map(fbb.writeString).toList(growable: false),
+        );
+        fbb.startTable(10);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, titleOffset);
         fbb.addOffset(2, decriptionOffset);
         fbb.addInt64(3, object.startDate.millisecondsSinceEpoch);
         fbb.addInt64(4, object.endDate.millisecondsSinceEpoch);
-        fbb.addBool(5, object.isCompletedToday);
         fbb.addInt64(6, object.categoryHabit.targetId);
         fbb.addOffset(7, titleNormalizedOffset);
+        fbb.addOffset(8, completedDatesOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -652,12 +655,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final endDateParam = DateTime.fromMillisecondsSinceEpoch(
           const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0),
         );
-        final isCompletedTodayParam = const fb.BoolReader().vTableGet(
-          buffer,
-          rootOffset,
-          14,
-          false,
-        );
+        final completedDatesParam = const fb.ListReader<String>(
+          fb.StringReader(asciiOptimization: true),
+          lazy: false,
+        ).vTableGet(buffer, rootOffset, 20, []);
         final titleNormalizedParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGetNullable(buffer, rootOffset, 18);
@@ -666,7 +667,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           decription: decriptionParam,
           startDate: startDateParam,
           endDate: endDateParam,
-          isCompletedToday: isCompletedTodayParam,
+          completedDates: completedDatesParam,
           titleNormalized: titleNormalizedParam,
         )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
         object.categoryHabit.targetId = const fb.Int64Reader().vTableGet(
@@ -849,19 +850,19 @@ class HabitEntity_ {
     _entities[4].properties[4],
   );
 
-  /// See [HabitEntity.isCompletedToday].
-  static final isCompletedToday = obx.QueryBooleanProperty<HabitEntity>(
-    _entities[4].properties[5],
-  );
-
   /// See [HabitEntity.categoryHabit].
   static final categoryHabit =
       obx.QueryRelationToOne<HabitEntity, CategoryHabitEntity>(
-        _entities[4].properties[6],
+        _entities[4].properties[5],
       );
 
   /// See [HabitEntity.titleNormalized].
   static final titleNormalized = obx.QueryStringProperty<HabitEntity>(
+    _entities[4].properties[6],
+  );
+
+  /// See [HabitEntity.completedDates].
+  static final completedDates = obx.QueryStringVectorProperty<HabitEntity>(
     _entities[4].properties[7],
   );
 }

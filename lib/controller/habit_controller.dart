@@ -79,7 +79,6 @@ class HabitController extends GetxController {
               ? DateTime.parse(json['endDate'])
               : DateTime.now();
 
-          final isCompletedToday = json['isCompletedToday'] ?? false;
           final titleNormalized = _normalize(title);
           final apiCategoryHabitId = json['categoryHabitId'];
 
@@ -88,7 +87,7 @@ class HabitController extends GetxController {
             decription: description,
             startDate: startDate,
             endDate: endDate,
-            isCompletedToday: isCompletedToday,
+
             titleNormalized: titleNormalized,
           );
 
