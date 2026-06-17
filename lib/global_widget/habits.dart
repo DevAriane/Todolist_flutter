@@ -43,6 +43,7 @@ class Habits extends StatelessWidget {
                   width: 60,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
+                    border: Border.all(color: AppColor.blanc),
                   ),
                   child: Icon(
                     habit.categoryHabit.target?.iconData,
@@ -57,27 +58,66 @@ class Habits extends StatelessWidget {
                     children: [
                       TextWidget(name: habit.title, color: AppColor.blanc),
                       const SizedBox(height: 5),
-                      const TextWidget(
-                        name: "Completée",
-                        color: AppColor.blanc,
+
+                      Row(
+                        children: [
+                          const TextWidget(
+                            name: "Completée",
+                            color: AppColor.blanc,
+                          ),
+                          const SizedBox(width: 5),
+                          TextWidget(
+                            name:
+                                "${habit.completedDaysCount}/${habit.totalDaysChallenge}",
+                            color: AppColor.blanc,
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: LinearProgressIndicator(
+                              value: habit.progressRatio,
+                              backgroundColor: const Color(0xFF838995),
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                AppColor.buttonColor,
+                              ),
+                              minHeight: 6,
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+
+                          const SizedBox(width: 10),
+
+                          Text(
+                            "${(habit.progressRatio * 100).toInt()}%",
+                            style: const TextStyle(
+                              color: AppColor.buttonColor,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
                 GestureDetector(
-                               onTap: () {
-                showModalBottomSheet(
-                  showDragHandle: true,
-                  useSafeArea: true,
-                  backgroundColor: Colors.transparent,
-                  context: context,
-                  isScrollControlled: true,
-                  builder: (context) {
-                    return const HabitDetails();
+                  onTap: () {
+                    showModalBottomSheet(
+                      showDragHandle: true,
+                      useSafeArea: true,
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) {
+                        return const HabitDetails();
+                      },
+                    );
                   },
-                );
-              },
-                  child: Image.asset(ImageRessource.tree, height: 24)),
+                  child: Image.asset(ImageRessource.tree, height: 24),
+                ),
               ],
             ),
           );

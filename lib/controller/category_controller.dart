@@ -72,7 +72,7 @@ class CategoryController extends GetxController {
 
     final category = CategoryEntity(name: trimmedName);
     ObjectBoxService.categoryBox.put(category);
-    categories.add(category);
+    categories.insert(0, category);
     return true;
   }
 

@@ -118,4 +118,17 @@ class HabitController extends GetxController {
       _isAlreadyLoading = false;
     }
   }
+
+  void toggleHabitCompletion(HabitEntity habit) {
+    final todayStr = DateTime.now().toIso8601String().split('T')[0];
+
+    if (habit.completedDates.contains(todayStr)) {
+      habit.completedDates.remove(todayStr);
+    } else {
+      habit.completedDates.add(todayStr);
+    }
+
+    ObjectBoxService.habitBox.put(habit);
+    habits.refresh();
+  }
 }

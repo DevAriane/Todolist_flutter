@@ -211,7 +211,7 @@ class TaskController extends GetxController {
     newTask.person.target = existingPerson;
 
     ObjectBoxService.taskBox.put(newTask);
-    tasks.add(newTask);
+    tasks.insert(0, newTask);
     applyFilters();
     return true;
   }

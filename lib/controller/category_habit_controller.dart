@@ -84,7 +84,8 @@ class CategoryHabitController extends GetxController {
       icon: icon,
     );
     ObjectBoxService.categoryHabitBox.put(categoryHabit);
-    categoriesHabit.add(categoryHabit);
+    categoriesHabit.insert(0,categoryHabit);
+
     return true;
   }
 
