@@ -8,7 +8,8 @@ import '../controller/color_controller.dart';
 class HabitController extends GetxController {
   final ColorController _colorController = Get.find<ColorController>();
 
-  final CategoryHabitController categoryHabit = Get.find<CategoryHabitController>();
+  final CategoryHabitController categoryHabit =
+      Get.find<CategoryHabitController>();
   final habits = <HabitEntity>[].obs;
   final isLoading = false.obs;
   final ApiService _apiService = ApiService();
@@ -63,21 +64,25 @@ class HabitController extends GetxController {
         habits.value = localsHabit;
       }
 
-      final remoteHabitJson = await _apiService.fetchTasks();
+      final remoteHabitJson = await _apiService.fetchHabits();
       if (remoteHabitJson.isNotEmpty) {
         final List<HabitEntity> habitToSave = [];
 
         for (final json in remoteHabitJson) {
           final title = json['title'] ?? "";
           final description = json['description'] ?? "";
-          
-          final startDate = json['startDate'] != null ? DateTime.parse(json['startDate']) : DateTime.now();
-          final endDate = json['endDate'] != null ? DateTime.parse(json['endDate']) : DateTime.now();
-          
+
+          final startDate = json['startDate'] != null
+              ? DateTime.parse(json['startDate'])
+              : DateTime.now();
+          final endDate = json['endDate'] != null
+              ? DateTime.parse(json['endDate'])
+              : DateTime.now();
+
           final isCompletedToday = json['isCompletedToday'] ?? false;
           final titleNormalized = _normalize(title);
           final apiCategoryHabitId = json['categoryHabitId'];
-          
+
           final habit = HabitEntity(
             title: title,
             decription: description,
@@ -86,7 +91,7 @@ class HabitController extends GetxController {
             isCompletedToday: isCompletedToday,
             titleNormalized: titleNormalized,
           );
-          
+
           if (apiCategoryHabitId != null) {
             final existingCategoryHabit = ObjectBoxService.categoryHabitBox.get(
               apiCategoryHabitId,

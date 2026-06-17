@@ -67,8 +67,7 @@ class _IconPickerState extends State<IconPicker> {
 
             return GridView.builder(
               shrinkWrap: true,
-              physics:
-                  const NeverScrollableScrollPhysics(), // Empêche le conflit avec le SingleChildScrollView parent
+              physics: const NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: crossAxisCount,
                 childAspectRatio: 1.0,

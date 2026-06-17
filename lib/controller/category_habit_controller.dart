@@ -91,5 +91,6 @@ class CategoryHabitController extends GetxController {
   void selectCategoryHabit(int categoryHabitId) {
     selectedCategoryHabitId.value = categoryHabitId;
     final habitController = Get.find<HabitController>();
+    habitController.applyFilterHabit();
   }
 }

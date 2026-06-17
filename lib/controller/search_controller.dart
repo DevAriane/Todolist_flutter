@@ -20,6 +20,7 @@ class SearchController extends GetxController {
   void onReady() {
     super.onReady();
     migrateExistingTasks();
+    migrateExistingHabits();
   }
 
   String _normalize(String input) {

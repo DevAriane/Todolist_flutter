@@ -17,7 +17,8 @@ class CreateCategoryHabit extends StatefulWidget {
 
 class _CreateCategoryState extends State<CreateCategoryHabit> {
   final ColorController _colorController = Get.find<ColorController>();
-  final CategoryHabitController controller = Get.find<CategoryHabitController>();
+  final CategoryHabitController controller =
+      Get.find<CategoryHabitController>();
   final TextEditingController _nameCategory = TextEditingController();
 
   String? _selectedIcon;
@@ -29,9 +30,9 @@ class _CreateCategoryState extends State<CreateCategoryHabit> {
   }
 
   void _showMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   void _submit() {
@@ -53,115 +54,104 @@ class _CreateCategoryState extends State<CreateCategoryHabit> {
   @override
   Widget build(BuildContext context) {
     return AppBottomSheet(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          
-          Flexible(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Entrez le nom de la catégorie",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Entrez le nom de la catégorie",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: 10),
+            TextField(
+              controller: _nameCategory,
+              decoration: InputDecoration(
+                hintText: "EX : Études",
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(color: AppColor.bordure),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(
+                    color: AppColor.bordure,
+                    width: 2,
                   ),
-                  const SizedBox(height: 10),
-                  TextField(
-                    controller: _nameCategory,
-                    decoration: InputDecoration(
-                      hintText: "EX : Études",
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: AppColor.bordure),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(
-                          color: AppColor.bordure,
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    'Choisir la couleur',
-                    style: TextStyle(color: AppColor.blanc),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: ElevatedButton.icon(
-                          onPressed: () => showColorPickerDialog(context),
-                          icon: const Icon(Icons.palette_outlined, size: 18),
-                          label: const Text('Choisir une couleur'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.grey[900],
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 14,
-                              horizontal: 16,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            elevation: 0,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Obx(() {
-                        final selectedColor = _colorController.selectedColor.value;
-                        return Container(
-                          height: 44,
-                          width: 44,
-                          decoration: BoxDecoration(
-                            color: selectedColor,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: selectedColor.withAlpha((0.3 * 255).toInt()),
-                                blurRadius: 8,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                            border: Border.all(
-                              color: Colors.white.withAlpha((0.2 * 255).toInt()),
-                              width: 2,
-                            ),
-                          ),
-                          child: Icon(
-                            Icons.check,
-                            size: 20,
-                            color: selectedColor.computeLuminance() > 0.5
-                                ? Colors.black87
-                                : Colors.white,
-                          ),
-                        );
-                      }),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  IconPicker(
-                    initialIcon: _selectedIcon,
-                    onIconSelected: (iconName) {
-                      setState(() {
-                        _selectedIcon = iconName.isNotEmpty ? iconName : null;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                ],
+                ),
               ),
             ),
-          ),
-          
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: SizedBox(
+            const SizedBox(height: 10),
+            const Text(
+              'Choisir la couleur',
+              style: TextStyle(color: AppColor.blanc),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () => showColorPickerDialog(context),
+                    icon: const Icon(Icons.palette_outlined, size: 18),
+                    label: const Text('Choisir une couleur'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey[900],
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 14,
+                        horizontal: 16,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 0,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Obx(() {
+                  final selectedColor = _colorController.selectedColor.value;
+                  return Container(
+                    height: 44,
+                    width: 44,
+                    decoration: BoxDecoration(
+                      color: selectedColor,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: selectedColor.withAlpha((0.3 * 255).toInt()),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                      border: Border.all(
+                        color: Colors.white.withAlpha((0.2 * 255).toInt()),
+                        width: 2,
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.check,
+                      size: 20,
+                      color: selectedColor.computeLuminance() > 0.5
+                          ? Colors.black87
+                          : Colors.white,
+                    ),
+                  );
+                }),
+              ],
+            ),
+            const SizedBox(height: 10),
+            IconPicker(
+              initialIcon: _selectedIcon,
+              onIconSelected: (iconName) {
+                setState(() {
+                  _selectedIcon = iconName.isNotEmpty ? iconName : null;
+                });
+              },
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
               width: double.infinity,
               child: FilledButton(
                 style: FilledButton.styleFrom(
@@ -176,8 +166,8 @@ class _CreateCategoryState extends State<CreateCategoryHabit> {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

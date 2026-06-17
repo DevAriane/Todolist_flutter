@@ -57,7 +57,7 @@ class CategoriesHabit extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      controller.selectedCategoryHabitId(0);
+                      controller.selectCategoryHabit(0);
                     },
                     child: Container(
                       width: 100,

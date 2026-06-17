@@ -5,6 +5,7 @@ import 'package:todolist_flutter/global_widget/categories_habit.dart';
 import 'package:todolist_flutter/global_widget/habits.dart';
 import 'package:todolist_flutter/global_widget/horizontal_date_picker.dart';
 import 'package:todolist_flutter/global_widget/search_bar.dart';
+import 'package:todolist_flutter/global_widget/search_bar_habit.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -38,7 +39,7 @@ class HomeView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Searchbars(),
+                SearchbarsHabit(),
                 const SizedBox(height: 10),
                 CategoriesHabit(),
                 const SizedBox(height: 10),
