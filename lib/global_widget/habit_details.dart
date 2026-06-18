@@ -130,7 +130,7 @@ class HabitDetails extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  "${(ratio * 100).toInt()}%",
+                  "${(ratio * 100).toStringAsFixed(2)}%",
                   style: const TextStyle(
                     color: AppColor.noir,
                     fontSize: 24,
@@ -147,7 +147,7 @@ class HabitDetails extends StatelessWidget {
                     value: ratio,
                     backgroundColor: Colors.grey[800],
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      isDoneToday ? Colors.green : AppColor.buttonColor,
+                      isDoneToday ? AppColor.buttonColor : AppColor.inputBorder,
                     ),
                     minHeight: 8,
                     borderRadius: BorderRadius.circular(4),
@@ -177,29 +177,28 @@ class HabitDetails extends StatelessWidget {
                   isDoneToday
                       ? Icons.check_circle
                       : Icons.radio_button_unchecked,
-                  color: isDoneToday ? Colors.green : AppColor.noir,
+                  color: isDoneToday ? AppColor.noir : AppColor.noir,
                 ),
                 label: Text(
                   isDoneToday
                       ? "Validé pour aujourd'hui"
                       : "Marquer comme fait aujourd'hui",
                   style: TextStyle(
-                    color: isDoneToday ? Colors.green : AppColor.noir,
+                    color: isDoneToday ? AppColor.noir : AppColor.noir,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   side: BorderSide(
-                    color: isDoneToday ? Colors.green : AppColor.bordure,
+                    color: isDoneToday
+                        ? AppColor.buttonColor
+                        : AppColor.bordure,
                     width: 1.5,
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  backgroundColor: isDoneToday
-                      ? Colors.green.withValues(alpha: 0.05)
-                      : Colors.transparent,
                 ),
               ),
             ),

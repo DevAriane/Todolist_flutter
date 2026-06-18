@@ -134,7 +134,7 @@ class Habits extends StatelessWidget {
                             const SizedBox(width: 10),
 
                             Text(
-                              "${(habit.progressRatio * 100).toInt()}%",
+                              "${(habit.progressRatio * 100).toStringAsFixed(2)}%",
                               style: const TextStyle(
                                 color: AppColor.buttonColor,
                                 fontSize: 16,

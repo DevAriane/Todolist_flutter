@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:getxtra/get.dart';
+import 'package:getxtra/get.dart'; 
 import 'package:todolist_flutter/core/app_color.dart';
 import '../../global_widget/button.dart';
 import '../../core/image_ressource.dart';
@@ -13,27 +13,36 @@ class Onboarding extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.backg,
-      appBar: AppBar(backgroundColor: AppColor.backg),
+      appBar: AppBar(
+        backgroundColor: AppColor.backg,
+        elevation: 0, 
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(ImageRessource.onboarding, height: 320),
-              const SizedBox(height: 80),
-              Text(
-                "Gérez et suivez vos tâches quotidiennes en toute simplicité grâce à cette mini-application",
-                style: GoogleFonts.inter(color: AppColor.blanc, fontSize: 16),
-              ),
-              const SizedBox(height: 20),
-              Positioned(
-                bottom: 0,
-                child: Button(
-                  name: "COMMENCER",
-                  onTap: () => Get.to(() =>Login()),
+              Expanded(
+                flex: 3,
+                child: Center(
+                  child: Image.asset(ImageRessource.onboarding, height: 320),
                 ),
               ),
+
+              const SizedBox(height: 20),
+
+              Text(
+                "Gérez et suivez vos tâches quotidiennes en toute simplicité grâce à cette mini-application",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(color: AppColor.blanc, fontSize: 16),
+              ),
+
+              const Spacer(),
+
+              Button(name: "COMMENCER", onTap: () => Get.to(() => Login())),
+
+              const SizedBox(height: 10),
             ],
           ),
         ),

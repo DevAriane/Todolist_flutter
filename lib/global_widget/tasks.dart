@@ -47,7 +47,7 @@ class Tasks extends StatelessWidget {
                 margin: const EdgeInsets.only(right: 12),
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(15)),
-                  color: task.color ?? Colors.blue,
+                  color: task.color ?? AppColor.buttonColor,
                 ),
               ),
               InkWell(
@@ -92,11 +92,11 @@ class Tasks extends StatelessWidget {
                   onPressed: () {
                     Get.to(() => UpdateTask(idTask: task.id));
                   },
-                  icon: const Icon(Icons.update),
+                  icon: const Icon(Icons.edit, color: AppColor.blanc),
                 ),
                 IconButton(
                   onPressed: () => controller.deleteTask(task),
-                  icon: const Icon(Icons.delete),
+                  icon: const Icon(Icons.delete, color: AppColor.blanc),
                 ),
               ],
             ),

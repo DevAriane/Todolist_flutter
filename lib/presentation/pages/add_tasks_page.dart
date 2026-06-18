@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:getxtra/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:todolist_flutter/controller/navigation_controller.dart';
 import 'package:todolist_flutter/global_widget/date_picker_widget.dart';
 import 'package:todolist_flutter/global_widget/textfield_widget.dart';
 import 'package:todolist_flutter/presentation/navigation_page.dart';
@@ -211,7 +212,8 @@ class _AddTasksPageState extends State<AddTasksPage>
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Tâche créée avec succès !')),
       );
-      Get.to(() => HomePages());
+      final navigationController = Get.find<NavigationController>();
+      navigationController.changeIndex(1);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Erreur lors de la création')),
@@ -226,10 +228,6 @@ class _AddTasksPageState extends State<AddTasksPage>
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Get.to(() => NavigationPage()),
-        ),
         title: const Text(
           'Nouvelle tâche',
           style: TextStyle(
