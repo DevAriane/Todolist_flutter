@@ -25,25 +25,18 @@ class AppDrawer extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           children: [
             ListTile(
-              leading: const Icon(Icons.repeat),
-              title: const Text('Habitudes'),
-              onTap: () => Get.off(() => Habits()),
-            ),
-            ListTile(
-              leading: const Icon(Icons.category),
-              title: const Text('Catégories'),
-              onTap: () => Get.off(() => Categories()),
-            ),
-            ListTile(
-              leading: const Icon(Icons.star_half),
-              title: const Text('Cat. Habitudes'),
-              onTap: () => Get.off(() => CategoriesHabit()),
-            ),
-            const Divider(),
-            ListTile(
               leading: const Icon(Icons.person_add),
               title: const Text('Créer Personne'),
-              onTap: () => Get.off(() => const CreatePerson()),
+              onTap: () {
+                showModalBottomSheet(
+                  showDragHandle: true,
+                  useSafeArea: true,
+                  backgroundColor: Colors.transparent,
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) => const CreatePerson(),
+                );
+              },
             ),
             ListTile(
               leading: const Icon(Icons.add_circle_outline),

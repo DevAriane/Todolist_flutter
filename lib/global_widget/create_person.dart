@@ -58,7 +58,7 @@ class _CreatePersonState extends State<CreatePerson> {
           TextField(
             controller: _namePerson,
             decoration: InputDecoration(
-              hintText: "EX : Jean Dupont",
+              hintText: "EX : Claire",
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: const BorderSide(color: AppColor.bordure),

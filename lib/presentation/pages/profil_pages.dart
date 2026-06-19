@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/app_color.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import "../../core/image_ressource.dart";
 
 class ProfilPages extends StatelessWidget {
@@ -13,6 +12,7 @@ class ProfilPages extends StatelessWidget {
       backgroundColor: AppColor.backg,
       appBar: AppBar(
         backgroundColor: AppColor.placeholder,
+        elevation: 0,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: AppColor.placeholder,
           statusBarIconBrightness: Brightness.light,
@@ -22,210 +22,227 @@ class ProfilPages extends StatelessWidget {
           onPressed: () {},
           icon: const Icon(Icons.notifications_none, color: AppColor.blanc),
         ),
-        actions: const [
-          Icon(Icons.edit, color: AppColor.blanc),
-          SizedBox(width: 20),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.edit, color: AppColor.blanc, size: 22),
+          ),
+          const SizedBox(width: 8),
         ],
       ),
       body: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            children: [
-              Stack(
-                clipBehavior: Clip.none,
-                alignment: Alignment.topCenter,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 90,
-                    decoration: const BoxDecoration(
-                      color: AppColor.placeholder,
-                      borderRadius: BorderRadius.vertical(
-                        bottom: Radius.circular(50),
-                      ),
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: 100,
+                  decoration: const BoxDecoration(
+                    color: AppColor.placeholder,
+                    borderRadius: BorderRadius.vertical(
+                      bottom: Radius.circular(32),
                     ),
                   ),
-                  Positioned(
-                    top: 10,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset(ImageRessource.avatar, height: 110),
-                        const Text(
-                          "ARIANE STAR",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 28,
-                            color: AppColor.blanc,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 4),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.2),
+                              blurRadius: 10,
+                              offset: const Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.asset(
+                            ImageRessource.avatar,
+                            height: 100,
+                            width: 100,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        const Text(
-                          "arianestar@gmail.com | 671092083",
-                          style: TextStyle(color: AppColor.blanc),
+                      ),
+                      const SizedBox(height: 12),
+                      const Text(
+                        "ARIANE STAR",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                          color: AppColor.blanc,
+                          letterSpacing: 0.5,
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        "arianestar@gmail.com  •  671092083",
+                        style: TextStyle(
+                          color: AppColor.blanc.withValues(alpha: 0.7),
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
                   ),
+                ),
+              ],
+            ),
 
-                  Positioned(
-                    top: 200,
-                    left: 0,
-                    right: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: AppColor.bordure,
-                          borderRadius: BorderRadiusDirectional.all(
-                            Radius.circular(5),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              _buildSection(
-                                context,
-                                Icons.tab,
-                                "Modifier le profil",
-                                "",
-                              ),
-                              const SizedBox(height: 15),
-                              _buildSection(
-                                context,
-                                Icons.notifications_none,
-                                "Notifications",
-                                "ON",
-                              ),
-                              const SizedBox(height: 15),
-                              _buildSection(
-                                context,
-                                Icons.language,
-                                "Langage",
-                                "Francais",
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+            const SizedBox(height: 24),
 
-                  Positioned(
-                    top: 330,
-                    left: 0,
-                    right: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: AppColor.bordure,
-                          borderRadius: BorderRadiusDirectional.all(
-                            Radius.circular(5),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              _buildSection(
-                                context,
-                                Icons.security,
-                                "Securite",
-                                "",
-                              ),
-                              const SizedBox(height: 15),
-                              _buildSection(
-                                context,
-                                Icons.light_mode,
-                                "Theme",
-                                "clair",
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  Positioned(
-                    top: 420,
-                    left: 0,
-                    right: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: AppColor.bordure,
-                          borderRadius: BorderRadiusDirectional.all(
-                            Radius.circular(5),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              _buildSection(
-                                context,
-                                Icons.help,
-                                "Aide et support ",
-                                "",
-                              ),
-                              const SizedBox(height: 15),
-                              _buildSection(
-                                context,
-                                Icons.contact_emergency,
-                                "Nous contacter ",
-                                "",
-                              ),
-                              const SizedBox(height: 15),
-                              _buildSection(
-                                context,
-                                Icons.private_connectivity,
-                                "Confidentialite ",
-                                "",
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+            _buildGroupContainer([
+              _buildSectionItem(
+                icon: Icons.person_outline,
+                title: "Modifier le profil",
+                actionWidget: const SizedBox.shrink(),
+                onTap: () {},
               ),
-              const SizedBox(height: 60),
-            ],
-          ),
+              _buildSectionItem(
+                icon: Icons.notifications_none,
+                title: "Notifications",
+                actionWidget: const Text(
+                  "ON",
+                  style: TextStyle(
+                    color: AppColor.or,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () {},
+              ),
+              _buildSectionItem(
+                icon: Icons.language,
+                title: "Langue",
+                actionWidget: const Text(
+                  "Français",
+                  style: TextStyle(color: AppColor.or, fontSize: 14),
+                ),
+                onTap: () {},
+              ),
+            ]),
+
+            _buildGroupContainer([
+              _buildSectionItem(
+                icon: Icons.security,
+                title: "Sécurité",
+                actionWidget: const SizedBox.shrink(),
+                onTap: () {},
+              ),
+              _buildSectionItem(
+                icon: Icons.light_mode_outlined,
+                title: "Thème",
+                actionWidget: const Text(
+                  "Sombre",
+                  style: TextStyle(color: AppColor.or, fontSize: 14),
+                ),
+                onTap: () {},
+              ),
+            ]),
+
+            _buildGroupContainer([
+              _buildSectionItem(
+                icon: Icons.help_outline,
+                title: "Aide et support",
+                actionWidget: const SizedBox.shrink(),
+                onTap: () {},
+              ),
+              _buildSectionItem(
+                icon: Icons.contact_emergency_outlined,
+                title: "Nous contacter",
+                actionWidget: const SizedBox.shrink(),
+                onTap: () {},
+              ),
+              _buildSectionItem(
+                icon: Icons.privacy_tip_outlined,
+                title: "Confidentialité",
+                actionWidget: const SizedBox.shrink(),
+                onTap: () {},
+              ),
+            ]),
+
+            const SizedBox(height: 32),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildSection(
-    BuildContext context,
-    IconData icon,
-    String title,
-    String? action,
-  ) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-      children: [
-        Row(
-          children: [
-            Icon(icon, color: AppColor.blanc, size: 17),
-            const SizedBox(width: 8),
-            Text(
-              title,
-              style: const TextStyle(color: AppColor.blanc, fontSize: 16),
+  Widget _buildGroupContainer(List<Widget> children) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColor.bordure,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
             ),
           ],
         ),
-        Text(action!, style: const TextStyle(color: AppColor.or, fontSize: 14)),
-      ],
+        child: ListView.separated(
+          shrinkWrap: true,
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: children.length,
+          separatorBuilder: (context, index) => Divider(
+            color: AppColor.backg.withValues(alpha: 0.4),
+            thickness: 1,
+            indent: 16,
+            endIndent: 16,
+          ),
+          itemBuilder: (context, index) => children[index],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSectionItem({
+    required IconData icon,
+    required String title,
+    required Widget actionWidget,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        child: Row(
+          children: [
+            Icon(icon, color: AppColor.blanc, size: 22),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  color: AppColor.blanc,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            actionWidget,
+            const SizedBox(width: 6),
+            Icon(
+              Icons.chevron_right,
+              color: AppColor.blanc.withValues(alpha: 0.3),
+              size: 20,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
