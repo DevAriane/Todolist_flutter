@@ -34,7 +34,8 @@ class CategoryHabitEntity {
   @Transient()
   Color? get color {
     if (dbColor == null) return null;
-    return Color(dbColor!);
+
+    return Color(dbColor!.toSigned(32));
   }
 
   set color(Color? newColor) {

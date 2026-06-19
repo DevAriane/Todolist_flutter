@@ -41,14 +41,23 @@ class CategoryHabitController extends GetxController {
 
       final remoteCategoriesHabit = await _apiService.fetchCategoriesHabit();
       final List<CategoryHabitEntity> categoryHabitToSave = [];
-
       for (final json in remoteCategoriesHabit) {
         final name = (json['name'] ?? '').toString().trim();
-        final dbColor = (json['dbColor'] ?? '');
         final icon = (json['icon'] ?? '').toString().trim();
 
+        final rawColor = json['dbColor'];
+        int? parsedColor;
+
+        if (rawColor != null) {
+          if (rawColor is num) {
+            parsedColor = rawColor.toInt();
+          } else if (rawColor is String && rawColor.isNotEmpty) {
+            parsedColor = int.tryParse(rawColor);
+          }
+        }
+
         categoryHabitToSave.add(
-          CategoryHabitEntity(name: name, dbColor: dbColor, icon: icon),
+          CategoryHabitEntity(name: name, dbColor: parsedColor, icon: icon),
         );
       }
 
@@ -84,7 +93,7 @@ class CategoryHabitController extends GetxController {
       icon: icon,
     );
     ObjectBoxService.categoryHabitBox.put(categoryHabit);
-    categoriesHabit.insert(0,categoryHabit);
+    categoriesHabit.insert(0, categoryHabit);
 
     return true;
   }
