@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:getxtra/get.dart';
 import '../../core/app_color.dart';
 import "../../core/image_ressource.dart";
+import '../../controller/user_controller.dart';
 
 class ProfilPages extends StatelessWidget {
-  const ProfilPages({super.key});
+  ProfilPages({super.key});
+
+  final UserController _userController = Get.find<UserController>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,149 +34,181 @@ class ProfilPages extends StatelessWidget {
           const SizedBox(width: 8),
         ],
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Container(
+      body: Obx(() {
+        final user = _userController.unUtilisateur.value;
+
+        if (user == null) {
+          return const CircularProgressIndicator();
+        }
+
+        return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 100,
+                    decoration: const BoxDecoration(
+                      color: AppColor.placeholder,
+                      borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(32),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.white, width: 4),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.2),
+                                blurRadius: 10,
+                                offset: const Offset(0, 5),
+                              ),
+                            ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.asset(
+                              ImageRessource.avatar,
+                              height: 100,
+                              width: 100,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          user.name,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                            color: AppColor.blanc,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          user.email,
+                          style: TextStyle(
+                            color: AppColor.blanc.withValues(alpha: 0.7),
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 24),
+
+              _buildGroupContainer([
+                _buildSectionItem(
+                  icon: Icons.person_outline,
+                  title: "Modifier le profil",
+                  actionWidget: const SizedBox.shrink(),
+                  onTap: () {},
+                ),
+                _buildSectionItem(
+                  icon: Icons.notifications_none,
+                  title: "Notifications",
+                  actionWidget: const Text(
+                    "ON",
+                    style: TextStyle(
+                      color: AppColor.or,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onTap: () {},
+                ),
+                _buildSectionItem(
+                  icon: Icons.language,
+                  title: "Langue",
+                  actionWidget: const Text(
+                    "Français",
+                    style: TextStyle(color: AppColor.or, fontSize: 14),
+                  ),
+                  onTap: () {},
+                ),
+              ]),
+
+              _buildGroupContainer([
+                _buildSectionItem(
+                  icon: Icons.security,
+                  title: "Sécurité",
+                  actionWidget: const SizedBox.shrink(),
+                  onTap: () {},
+                ),
+                _buildSectionItem(
+                  icon: Icons.light_mode_outlined,
+                  title: "Thème",
+                  actionWidget: const Text(
+                    "Sombre",
+                    style: TextStyle(color: AppColor.or, fontSize: 14),
+                  ),
+                  onTap: () {},
+                ),
+              ]),
+
+              _buildGroupContainer([
+                _buildSectionItem(
+                  icon: Icons.help_outline,
+                  title: "Aide et support",
+                  actionWidget: const SizedBox.shrink(),
+                  onTap: () {},
+                ),
+                _buildSectionItem(
+                  icon: Icons.contact_emergency_outlined,
+                  title: "Nous contacter",
+                  actionWidget: const SizedBox.shrink(),
+                  onTap: () {},
+                ),
+                _buildSectionItem(
+                  icon: Icons.privacy_tip_outlined,
+                  title: "Confidentialité",
+                  actionWidget: const SizedBox.shrink(),
+                  onTap: () {},
+                ),
+              ]),
+              const SizedBox(height: 10),
+
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: SizedBox(
                   width: double.infinity,
-                  height: 100,
-                  decoration: const BoxDecoration(
-                    color: AppColor.placeholder,
-                    borderRadius: BorderRadius.vertical(
-                      bottom: Radius.circular(32),
+                  child: FilledButton(
+                    style: FilledButton.styleFrom(
+                      backgroundColor: AppColor.buttonColor,
+                      foregroundColor: AppColor.noir,
+                    ),
+                    onPressed: () {
+                      _userController.deconnexion();
+                    },
+                    child: const Text(
+                      "Deconnexion",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 4),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.2),
-                              blurRadius: 10,
-                              offset: const Offset(0, 5),
-                            ),
-                          ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.asset(
-                            ImageRessource.avatar,
-                            height: 100,
-                            width: 100,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      const Text(
-                        "ARIANE STAR",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                          color: AppColor.blanc,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        "arianestar@gmail.com  •  671092083",
-                        style: TextStyle(
-                          color: AppColor.blanc.withValues(alpha: 0.7),
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
 
-            const SizedBox(height: 24),
-
-            _buildGroupContainer([
-              _buildSectionItem(
-                icon: Icons.person_outline,
-                title: "Modifier le profil",
-                actionWidget: const SizedBox.shrink(),
-                onTap: () {},
-              ),
-              _buildSectionItem(
-                icon: Icons.notifications_none,
-                title: "Notifications",
-                actionWidget: const Text(
-                  "ON",
-                  style: TextStyle(
-                    color: AppColor.or,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onTap: () {},
-              ),
-              _buildSectionItem(
-                icon: Icons.language,
-                title: "Langue",
-                actionWidget: const Text(
-                  "Français",
-                  style: TextStyle(color: AppColor.or, fontSize: 14),
-                ),
-                onTap: () {},
-              ),
-            ]),
-
-            _buildGroupContainer([
-              _buildSectionItem(
-                icon: Icons.security,
-                title: "Sécurité",
-                actionWidget: const SizedBox.shrink(),
-                onTap: () {},
-              ),
-              _buildSectionItem(
-                icon: Icons.light_mode_outlined,
-                title: "Thème",
-                actionWidget: const Text(
-                  "Sombre",
-                  style: TextStyle(color: AppColor.or, fontSize: 14),
-                ),
-                onTap: () {},
-              ),
-            ]),
-
-            _buildGroupContainer([
-              _buildSectionItem(
-                icon: Icons.help_outline,
-                title: "Aide et support",
-                actionWidget: const SizedBox.shrink(),
-                onTap: () {},
-              ),
-              _buildSectionItem(
-                icon: Icons.contact_emergency_outlined,
-                title: "Nous contacter",
-                actionWidget: const SizedBox.shrink(),
-                onTap: () {},
-              ),
-              _buildSectionItem(
-                icon: Icons.privacy_tip_outlined,
-                title: "Confidentialité",
-                actionWidget: const SizedBox.shrink(),
-                onTap: () {},
-              ),
-            ]),
-
-            const SizedBox(height: 32),
-          ],
-        ),
-      ),
+              const SizedBox(height: 32),
+            ],
+          ),
+        );
+      }),
     );
   }
 

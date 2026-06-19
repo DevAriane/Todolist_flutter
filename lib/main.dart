@@ -15,6 +15,7 @@ import './services/objectbox_service.dart';
 import './controller/navigation_controller.dart';
 import 'controller/habit_controller.dart';
 import 'controller/category_habit_controller.dart';
+import './controller/user_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +33,7 @@ Future<void> main() async {
   Get.lazyPut(() => PersonController());
   Get.lazyPut(() => SearchController());
   Get.lazyPut(() => NavigationController());
+  Get.lazyPut(() => UserController());
 
   runApp(const MyApp());
 }

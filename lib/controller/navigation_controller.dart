@@ -13,7 +13,7 @@ class NavigationController extends GetxController {
     Center(child: HomeView()),
     Center(child: HomePages()),
     const Center(child: AddTasksPage()),
-    const Center(child: ProfilPages()),
+    Center(child: ProfilPages()),
   ];
 
   void changeIndex(int index) {
