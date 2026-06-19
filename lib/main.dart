@@ -4,7 +4,8 @@ import 'package:todolist_flutter/presentation/pages/home_pages.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:getxtra/get.dart';
 import './presentation/pages/splash.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'controller/task_controller.dart';
 import 'controller/category_controller.dart';
 import './controller/color_controller.dart';
@@ -18,6 +19,9 @@ import 'controller/category_habit_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   await ObjectBoxService.init();
 
   Get.lazyPut(() => CategoryController());
