@@ -8,11 +8,26 @@ import '../../core/app_color.dart';
 import '../../core/image_ressource.dart';
 import '../../global_widget/title.dart';
 import '../../global_widget/input_widget.dart';
+import '../../services/authService.dart';
 
 class Signup extends StatelessWidget {
   Signup({super.key});
+  final Authservice _authService = Authservice();
   final TextEditingController _name = TextEditingController();
+  final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
+
+  void handleSubmit(String nom, String email, String password) async {
+    bool success = await _authService.inscrireEtEnregistrerUtilisateur(
+      nom: nom,
+      email: email,
+      password: password,
+    );
+
+    if (success) {
+      Get.to(() => Login());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +91,7 @@ class Signup extends StatelessWidget {
                         const SizedBox(height: 15),
                         InputWidget(
                           name: "example@gmail.com",
-                          editing: _name,
+                          editing: _email,
                           onTap: () {},
                         ),
                         const SizedBox(height: 15),
@@ -92,30 +107,15 @@ class Signup extends StatelessWidget {
                           icon: const Icon(Icons.visibility_off),
                         ),
                         const SizedBox(height: 15),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Icon(Icons.crop_square),
-                                TextWidget(
-                                  name: "Se rappeller",
-                                  color: AppColor.blanc,
-                                ),
-                              ],
-                            ),
-                            TextWidget(
-                              name: "Oublié",
-                              color: AppColor.buttonColor,
-                            ),
-                          ],
-                        ),
+
                         const SizedBox(height: 30),
                         Button(
                           name: "S'incrire",
                           onTap: () {
-                            Get.to(() => Login());
+                            final name = _name.text.trim();
+                            final email = _email.text.trim();
+                            final password = _password.text.trim();
+                            handleSubmit(name, email, password);
                           },
                         ),
                         const SizedBox(height: 100),

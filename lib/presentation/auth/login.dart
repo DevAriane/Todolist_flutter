@@ -10,11 +10,43 @@ import '../../core/image_ressource.dart';
 import '../../global_widget/title.dart';
 import '../../global_widget/input_widget.dart';
 import '../navigation_page.dart';
+import '../../services/authService.dart';
 
-class Login extends StatelessWidget {
-  Login({super.key});
-  final TextEditingController _name = TextEditingController();
+class Login extends StatefulWidget {
+  const Login({super.key});
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final Authservice _authService = Authservice();
+  final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _email.dispose();
+    _password.dispose();
+    super.dispose();
+  }
+
+  void handleSubmit(String email, String password) async {
+    if (email.isNotEmpty && password.isNotEmpty) {
+      final success = _authService.connecterUtilisateur(
+        email: email,
+        password: password,
+      );
+      if (success != null) {
+        Get.to(() => NavigationPage());
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +102,7 @@ class Login extends StatelessWidget {
                         const SizedBox(height: 15),
                         InputWidget(
                           name: "example@gmail.com",
-                          editing: _name,
+                          editing: _email,
                           onTap: () {},
                         ),
                         const SizedBox(height: 15),
@@ -109,7 +141,9 @@ class Login extends StatelessWidget {
                         Button(
                           name: "SE CONNECTER",
                           onTap: () {
-                            Get.to(() => NavigationPage());
+                            final email = _email.text.trim();
+                            final password = _password.text.trim();
+                            handleSubmit(email, password);
                           },
                         ),
                         const SizedBox(height: 100),

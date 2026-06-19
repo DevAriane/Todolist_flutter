@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart' hide SearchController;
 import 'package:todolist_flutter/core/app_color.dart';
-import 'package:todolist_flutter/presentation/pages/home_pages.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:getxtra/get.dart';
 import './presentation/pages/splash.dart';
@@ -33,6 +32,7 @@ Future<void> main() async {
   Get.lazyPut(() => PersonController());
   Get.lazyPut(() => SearchController());
   Get.lazyPut(() => NavigationController());
+
   runApp(const MyApp());
 }
 
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
       title: 'TodoList',
       theme: ThemeData(
         scaffoldBackgroundColor: AppColor.backg,
-        colorScheme: .fromSeed(seedColor: AppColor.blanc),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColor.blanc),
         textTheme: GoogleFonts.interTextTheme(),
       ),
       home: const Splash(),

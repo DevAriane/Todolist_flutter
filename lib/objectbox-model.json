@@ -4,18 +4,18 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:4591414988621851513",
-      "lastPropertyId": "2:297942203221847293",
+      "id": "1:258467578308120814",
+      "lastPropertyId": "2:3434188758865994090",
       "name": "CategoryEntity",
       "properties": [
         {
-          "id": "1:6606897176521244369",
+          "id": "1:3660050729231478980",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:297942203221847293",
+          "id": "2:3434188758865994090",
           "name": "name",
           "type": 9
         }
@@ -23,134 +23,28 @@
       "relations": []
     },
     {
-      "id": "2:7691265301081398720",
-      "lastPropertyId": "2:4228620703439142405",
-      "name": "PersonEntity",
-      "properties": [
-        {
-          "id": "1:3041772687066064263",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:4228620703439142405",
-          "name": "name",
-          "type": 9
-        }
-      ],
-      "relations": []
-    },
-    {
-      "id": "3:8466330695056283468",
-      "lastPropertyId": "14:5100381281245120836",
-      "name": "TaskEntity",
-      "properties": [
-        {
-          "id": "1:6028198847404881400",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:6039604309354184228",
-          "name": "title",
-          "type": 9
-        },
-        {
-          "id": "3:1092364605583308202",
-          "name": "description",
-          "type": 9
-        },
-        {
-          "id": "4:5596549426527702967",
-          "name": "completed",
-          "type": 1
-        },
-        {
-          "id": "5:2911990382794580769",
-          "name": "date",
-          "type": 10
-        },
-        {
-          "id": "6:295382349759176738",
-          "name": "startTime",
-          "type": 9
-        },
-        {
-          "id": "7:816333813847495278",
-          "name": "endTime",
-          "type": 9
-        },
-        {
-          "id": "8:2025817754415840546",
-          "name": "remindMe",
-          "type": 1
-        },
-        {
-          "id": "9:2769266197057361611",
-          "name": "link",
-          "type": 9
-        },
-        {
-          "id": "10:1534225896710723801",
-          "name": "photoPath",
-          "type": 9
-        },
-        {
-          "id": "11:8641778403632885138",
-          "name": "dbColor",
-          "type": 6
-        },
-        {
-          "id": "12:7474208566134426327",
-          "name": "categoryId",
-          "indexId": "1:7204527648223012526",
-          "type": 11,
-          "flags": 520,
-          "relationTarget": "CategoryEntity"
-        },
-        {
-          "id": "13:8972675162196709951",
-          "name": "personId",
-          "indexId": "2:1801742837880953976",
-          "type": 11,
-          "flags": 520,
-          "relationTarget": "PersonEntity"
-        },
-        {
-          "id": "14:5100381281245120836",
-          "name": "titleNormalized",
-          "indexId": "3:2060406241989216075",
-          "type": 9,
-          "flags": 2048
-        }
-      ],
-      "relations": []
-    },
-    {
-      "id": "4:5370743034397862256",
-      "lastPropertyId": "4:1275618507017315603",
+      "id": "2:2691166086964178853",
+      "lastPropertyId": "4:1497658286781622707",
       "name": "CategoryHabitEntity",
       "properties": [
         {
-          "id": "1:6947932574169972521",
+          "id": "1:2983561686253371310",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:3130656328865708030",
+          "id": "2:89689874670840089",
           "name": "name",
           "type": 9
         },
         {
-          "id": "3:4219398782557402520",
+          "id": "3:5286666725379635747",
           "name": "dbColor",
           "type": 6
         },
         {
-          "id": "4:1275618507017315603",
+          "id": "4:1497658286781622707",
           "name": "icon",
           "type": 9
         }
@@ -158,71 +52,204 @@
       "relations": []
     },
     {
-      "id": "5:1913945916497946446",
-      "lastPropertyId": "9:2608709700328976441",
+      "id": "3:6169898339383363107",
+      "lastPropertyId": "8:4955020036013894006",
       "name": "HabitEntity",
       "properties": [
         {
-          "id": "1:1956169081802511650",
+          "id": "1:796168658888021990",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:9016253486301210344",
+          "id": "2:3315047994796779104",
           "name": "title",
           "type": 9
         },
         {
-          "id": "3:4229195105019603969",
+          "id": "3:6147767419687151095",
           "name": "decription",
           "type": 9
         },
         {
-          "id": "4:2252873426597226188",
+          "id": "4:485651572650239871",
           "name": "startDate",
           "type": 10
         },
         {
-          "id": "5:6343411330423661416",
+          "id": "5:5932732860641082069",
           "name": "endDate",
           "type": 10
         },
         {
-          "id": "7:2079892542526941180",
-          "name": "categoryHabitId",
-          "indexId": "4:2227868741752588461",
-          "type": 11,
-          "flags": 520,
-          "relationTarget": "CategoryHabitEntity"
+          "id": "6:6989564961340980059",
+          "name": "completedDates",
+          "type": 30
         },
         {
-          "id": "8:1883727500310094674",
+          "id": "7:8200298196769170103",
           "name": "titleNormalized",
-          "indexId": "5:17584594513021882",
+          "indexId": "1:8995001790287783673",
           "type": 9,
           "flags": 2048
         },
         {
-          "id": "9:2608709700328976441",
-          "name": "completedDates",
-          "type": 30
+          "id": "8:4955020036013894006",
+          "name": "categoryHabitId",
+          "indexId": "2:5023962031150758328",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "CategoryHabitEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:258664332136309005",
+      "lastPropertyId": "2:2894189841108523830",
+      "name": "PersonEntity",
+      "properties": [
+        {
+          "id": "1:314137050449319978",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2894189841108523830",
+          "name": "name",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:2582996058083176268",
+      "lastPropertyId": "14:4316857501031466446",
+      "name": "TaskEntity",
+      "properties": [
+        {
+          "id": "1:8701301962143679773",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3501631553805197421",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:9139123331299842276",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "4:3484189896844500899",
+          "name": "completed",
+          "type": 1
+        },
+        {
+          "id": "5:775564345394024172",
+          "name": "date",
+          "type": 10
+        },
+        {
+          "id": "6:4421760234688812077",
+          "name": "startTime",
+          "type": 9
+        },
+        {
+          "id": "7:814308066586031143",
+          "name": "endTime",
+          "type": 9
+        },
+        {
+          "id": "8:4640821182170592472",
+          "name": "remindMe",
+          "type": 1
+        },
+        {
+          "id": "9:3114883308219794922",
+          "name": "link",
+          "type": 9
+        },
+        {
+          "id": "10:4423808615917897014",
+          "name": "photoPath",
+          "type": 9
+        },
+        {
+          "id": "11:3842383286394470075",
+          "name": "dbColor",
+          "type": 6
+        },
+        {
+          "id": "12:5743181701468134273",
+          "name": "titleNormalized",
+          "indexId": "3:8276999183379737546",
+          "type": 9,
+          "flags": 2048
+        },
+        {
+          "id": "13:9183316186775258175",
+          "name": "categoryId",
+          "indexId": "4:4914818170090263943",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "CategoryEntity"
+        },
+        {
+          "id": "14:4316857501031466446",
+          "name": "personId",
+          "indexId": "5:1540410859966560212",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "PersonEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:1094954342680622764",
+      "lastPropertyId": "4:6930470527319907180",
+      "name": "UserModel",
+      "properties": [
+        {
+          "id": "1:500890921695203464",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6331173670036010366",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:1536704503833762026",
+          "name": "email",
+          "type": 9
+        },
+        {
+          "id": "4:6930470527319907180",
+          "name": "uid",
+          "type": 9
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "5:1913945916497946446",
-  "lastIndexId": "5:17584594513021882",
+  "lastEntityId": "6:1094954342680622764",
+  "lastIndexId": "5:1540410859966560212",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [
-    6543837992967459087
-  ],
+  "retiredPropertyUids": [],
   "retiredRelationUids": [],
   "version": 1
 }
