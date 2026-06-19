@@ -20,6 +20,7 @@ dependencies:
   intl: ^0.20.2
   image_picker: ^1.2.2
   flutter_svg: ^2.3.0
+  flutter_launcher_icons: ^0.14.4
 
 
 dev_dependencies:
@@ -29,6 +30,12 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   build_runner: ^2.15.0
   objectbox_generator: any
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/chat.png" 
+  min_sdk_android: 21 
 
 flutter:
   uses-material-design: true
