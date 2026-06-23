@@ -14,7 +14,12 @@ class CategoryController extends GetxController {
 
   bool _isAlreadyLoading = false;
 
-  final ApiService _apiService = ApiService();
+  final ApiService _apiService;
+  final Box<CategoryEntity> _categoryBox;
+
+  CategoryController({ApiService? apiService, Box<CategoryEntity>? categoryBox})
+    : _apiService = apiService ?? ApiService(),
+      _categoryBox = categoryBox ?? ObjectBoxService.categoryBox;
 
   @override
   void onReady() {
@@ -28,7 +33,7 @@ class CategoryController extends GetxController {
 
     isLoading(true);
     try {
-      final localCategories = ObjectBoxService.categoryBox.getAll();
+      final localCategories = _categoryBox.getAll();
       if (localCategories.isNotEmpty) {
         categories.value = localCategories;
         return;
@@ -45,14 +50,14 @@ class CategoryController extends GetxController {
       }
 
       if (categoriesToSave.isNotEmpty) {
-        if (!ObjectBoxService.categoryBox.isEmpty()) {
-          ObjectBoxService.categoryBox.removeAll();
+        if (!_categoryBox.isEmpty()) {
+          _categoryBox.removeAll();
         }
 
-        ObjectBoxService.categoryBox.putMany(categoriesToSave);
+        _categoryBox.putMany(categoriesToSave);
       }
 
-      categories.value = ObjectBoxService.categoryBox.getAll();
+      categories.value = _categoryBox.getAll();
     } catch (e) {
       debugPrint('Erreur lors du chargement des categories : $e');
     } finally {
@@ -71,7 +76,7 @@ class CategoryController extends GetxController {
     if (alreadyExists) return false;
 
     final category = CategoryEntity(name: trimmedName);
-    ObjectBoxService.categoryBox.put(category);
+    _categoryBox.put(category);
     categories.insert(0, category);
     return true;
   }

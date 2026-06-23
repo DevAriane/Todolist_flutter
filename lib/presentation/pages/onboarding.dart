@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:getxtra/get.dart'; 
+import 'package:getxtra/get.dart';
 import 'package:todolist_flutter/core/app_color.dart';
 import '../../global_widget/button.dart';
 import '../../core/image_ressource.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../auth/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../navigation_page.dart';
 
 class Onboarding extends StatelessWidget {
   const Onboarding({super.key});
+
+  void verifierSessionEtNaviguer() {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      Get.offAll(() => NavigationPage());
+    } else {
+      Get.to(() => const Login());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.backg,
-      appBar: AppBar(
-        backgroundColor: AppColor.backg,
-        elevation: 0, 
-      ),
+      appBar: AppBar(backgroundColor: AppColor.backg, elevation: 0),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -39,8 +48,7 @@ class Onboarding extends StatelessWidget {
               ),
 
               const Spacer(),
-
-              Button(name: "COMMENCER", onTap: () => Get.to(() => Login())),
+              Button(name: "COMMENCER", onTap: verifierSessionEtNaviguer),
 
               const SizedBox(height: 10),
             ],

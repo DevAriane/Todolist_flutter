@@ -145,6 +145,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
+  code_builder:
+    dependency: transitive
+    description:
+      name: code_builder
+      sha256: "6a6cab2ba4680d6423f34a9b972a4c9a94ebe1b62ecec4e1a1f2cba91fd1319d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.11.1"
   collection:
     dependency: transitive
     description:
@@ -384,6 +392,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  fluttertest:
+    dependency: "direct main"
+    description:
+      name: fluttertest
+      sha256: b163c8f4321588832c2c25c970520155e7da93f7c2b907f32208aed52db9d0ee
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   getxtra:
     dependency: "direct main"
     description:
@@ -425,7 +441,7 @@ packages:
     source: hosted
     version: "2.0.2"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       sha256: "87721a4a50b19c7f1d49001e51409bddc46303966ce89a65af4f4e6004896412"
@@ -632,6 +648,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  mockito:
+    dependency: "direct dev"
+    description:
+      name: mockito
+      sha256: eff30d002f0c8bf073b6f929df4483b543133fcafce056870163587b03f1d422
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.6.4"
   objectbox:
     dependency: "direct main"
     description:
@@ -901,6 +925,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  uni_links:
+    dependency: transitive
+    description:
+      name: uni_links
+      sha256: "051098acfc9e26a9fde03b487bef5d3d228ca8f67693480c6f33fd4fbb8e2b6e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.1"
+  uni_links_platform_interface:
+    dependency: transitive
+    description:
+      name: uni_links_platform_interface
+      sha256: "929cf1a71b59e3b7c2d8a2605a9cf7e0b125b13bc858e55083d88c62722d4507"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
+  uni_links_web:
+    dependency: transitive
+    description:
+      name: uni_links_web
+      sha256: "7539db908e25f67de2438e33cc1020b30ab94e66720b5677ba6763b25f6394df"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   vector_graphics:
     dependency: transitive
     description:

@@ -24,16 +24,16 @@ Future<void> main() async {
 
   await ObjectBoxService.init();
 
-  Get.lazyPut(() => CategoryController());
-  Get.lazyPut(() => CategoryHabitController());
-  Get.lazyPut(() => HabitController());
-  Get.lazyPut(() => ColorController());
-  Get.lazyPut(() => TaskController());
-  Get.lazyPut(() => DatePickerController());
-  Get.lazyPut(() => PersonController());
-  Get.lazyPut(() => SearchController());
-  Get.lazyPut(() => NavigationController());
-  Get.lazyPut(() => UserController());
+  Get.lazyPut(() => CategoryController(), fenix: true);
+  Get.lazyPut(() => CategoryHabitController(), fenix: true);
+  Get.lazyPut(() => HabitController(), fenix: true);
+  Get.lazyPut(() => ColorController(), fenix: true);
+  Get.lazyPut(() => TaskController(), fenix: true);
+  Get.lazyPut(() => DatePickerController(), fenix: true);
+  Get.lazyPut(() => PersonController(), fenix: true);
+  Get.lazyPut(() => SearchController(), fenix: true);
+  Get.lazyPut(() => NavigationController(), fenix: true);
+  Get.lazyPut(() => UserController(), fenix: true);
 
   runApp(const MyApp());
 }

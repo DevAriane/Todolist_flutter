@@ -4,6 +4,7 @@ import 'package:getxtra/get.dart';
 import 'package:todolist_flutter/global_widget/button.dart';
 import 'package:todolist_flutter/global_widget/text_widget.dart';
 import 'package:todolist_flutter/presentation/auth/login.dart';
+import 'package:todolist_flutter/presentation/navigation_page.dart';
 import '../../core/app_color.dart';
 import '../../core/image_ressource.dart';
 import '../../global_widget/title.dart';
@@ -16,18 +17,6 @@ class Signup extends StatelessWidget {
   final TextEditingController _name = TextEditingController();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
-
-  void handleSubmit(String nom, String email, String password) async {
-    bool success = await _authService.inscrireEtEnregistrerUtilisateur(
-      nom: nom,
-      email: email,
-      password: password,
-    );
-
-    if (success) {
-      Get.to(() => Login());
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,11 +100,28 @@ class Signup extends StatelessWidget {
                         const SizedBox(height: 30),
                         Button(
                           name: "S'incrire",
-                          onTap: () {
-                            final name = _name.text.trim();
+                          onTap: () async {
+                            final nom = _name.text.trim();
                             final email = _email.text.trim();
                             final password = _password.text.trim();
-                            handleSubmit(name, email, password);
+
+                            final String? erreur = await _authService
+                                .inscrireEtEnregistrerUtilisateur(
+                                  nom: nom,
+                                  email: email,
+                                  password: password,
+                                );
+
+                            if (erreur == null) {
+                              Get.offAll(() => NavigationPage());
+                            } else {
+                              Get.snackbar(
+                                "Erreur d'inscription",
+                                erreur,
+                                backgroundColor: Colors.redAccent,
+                                colorText: Colors.white,
+                              );
+                            }
                           },
                         ),
                         const SizedBox(height: 100),

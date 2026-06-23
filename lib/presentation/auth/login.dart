@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:getxtra/get.dart';
 import 'package:todolist_flutter/global_widget/button.dart';
 import 'package:todolist_flutter/global_widget/text_widget.dart';
+import 'package:todolist_flutter/models/user_model.dart';
 import 'package:todolist_flutter/presentation/auth/signup.dart';
 import 'package:todolist_flutter/presentation/pages/onboarding.dart';
 import '../../core/app_color.dart';
@@ -38,13 +39,31 @@ class _LoginState extends State<Login> {
 
   void handleSubmit(String email, String password) async {
     if (email.isNotEmpty && password.isNotEmpty) {
-      final success = _authService.connecterUtilisateur(
+      final result = await _authService.connecterUtilisateur(
         email: email,
         password: password,
       );
-      if (success != null) {
-        Get.to(() => NavigationPage());
+
+      if (result is UserModel) {
+        Get.offAll(() => NavigationPage());
+      } else if (result is String) {
+        Get.snackbar(
+          "Erreur de connexion",
+          result,
+          snackPosition: SnackPosition.bottom,
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 4),
+        );
       }
+    } else {
+      Get.snackbar(
+        "Champs vides",
+        "Veuillez remplir tous les champs obligatoires.",
+        snackPosition: SnackPosition.bottom,
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
+      );
     }
   }
 

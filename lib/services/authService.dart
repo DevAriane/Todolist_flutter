@@ -1,13 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todolist_flutter/objectbox.g.dart';
 import '../models/user_model.dart';
-import '../main.dart';
 import './objectbox_service.dart';
 
 class Authservice {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<bool> inscrireEtEnregistrerUtilisateur({
+  Future<String?> inscrireEtEnregistrerUtilisateur({
     required String nom,
     required String email,
     required String password,
@@ -28,16 +27,24 @@ class Authservice {
         );
 
         ObjectBoxService.userBox.put(newUser);
-        return true;
+        return null;
       }
-      return false;
+      return "Une erreur inconnue est survenue.";
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        return "Cette adresse email est déjà associée à un compte.";
+      } else if (e.code == 'weak-password') {
+        return "Le mot de passe est trop faible.";
+      } else if (e.code == 'invalid-email') {
+        return "Le format de l'adresse email est incorrect.";
+      }
+      return e.message;
     } catch (e) {
-      print(e);
-      return false;
+      return e.toString();
     }
   }
 
-  Future<UserModel?> connecterUtilisateur({
+  Future<dynamic> connecterUtilisateur({
     required String email,
     required String password,
   }) async {
@@ -54,19 +61,20 @@ class Authservice {
             .query(UserModel_.uid.equals(firebaseUser.uid))
             .build()
             .findFirst();
-        return profilTrouve;
+
+        return profilTrouve ??
+            UserModel(name: "Utilisateur", email: email, uid: firebaseUser.uid);
       }
-      return null;
+      return "Impossible de récupérer le profil.";
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('Aucun utilisateur trouvé pour cet e-mail.');
+      if (e.code == 'user-not-found' || e.code == 'invalid-credential') {
+        return "Aucun compte ne correspond à cet email ou mot de passe incorrect.";
       } else if (e.code == 'wrong-password') {
-        print('Mot de passe incorrect.');
+        return "Mot de passe incorrect.";
       }
-      return null;
+      return e.message;
     } catch (e) {
-      print(e);
-      return null;
+      return e.toString();
     }
   }
 }
