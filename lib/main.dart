@@ -16,6 +16,7 @@ import './controller/navigation_controller.dart';
 import 'controller/habit_controller.dart';
 import 'controller/category_habit_controller.dart';
 import './controller/user_controller.dart';
+import './controller/todo_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +35,7 @@ Future<void> main() async {
   Get.lazyPut(() => SearchController(), fenix: true);
   Get.lazyPut(() => NavigationController(), fenix: true);
   Get.lazyPut(() => UserController(), fenix: true);
+  Get.lazyPut(() => TodoController(), fenix: true);
 
   runApp(const MyApp());
 }

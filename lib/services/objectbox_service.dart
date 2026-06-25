@@ -7,6 +7,7 @@ import '../models/person_entity.dart';
 import '../models/habit_entity.dart';
 import '../models/category_habit_entity.dart';
 import '../models/user_model.dart';
+import '../models/todo.dart';
 
 class ObjectBoxService {
   static late Store store;
@@ -16,6 +17,7 @@ class ObjectBoxService {
   static late Box<HabitEntity> habitBox;
   static late Box<CategoryHabitEntity> categoryHabitBox;
   static late Box<UserModel> userBox;
+  static late Box<Todo> todoBox;
 
   static Future<void> init() async {
     final dir = await getApplicationDocumentsDirectory();
@@ -26,5 +28,6 @@ class ObjectBoxService {
     categoryHabitBox = store.box<CategoryHabitEntity>();
     habitBox = store.box<HabitEntity>();
     userBox = store.box<UserModel>();
+    todoBox = store.box<Todo>();
   }
 }

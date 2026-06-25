@@ -5,11 +5,15 @@ class TextfieldWidget extends StatefulWidget {
   final TextEditingController controller;
   final String name;
   final int? line;
+  final VoidCallback? ontap;
+  final IconData? icon;
   const TextfieldWidget({
     super.key,
     required this.controller,
     required this.name,
     this.line,
+    this.ontap,
+    this.icon,
   });
 
   @override
@@ -32,6 +36,12 @@ class _TextfieldWidgetState extends State<TextfieldWidget> {
           borderRadius: BorderRadius.all(Radius.circular(5)),
           borderSide: BorderSide(color: Colors.white60),
         ),
+        suffixIcon: widget.icon != null
+            ? IconButton(
+                onPressed: widget.ontap,
+                icon: Icon(widget.icon, color: AppColor.blanc, size: 24),
+              )
+            : null,
 
         enabledBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(5)),

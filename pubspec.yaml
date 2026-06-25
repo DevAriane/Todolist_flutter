@@ -23,7 +23,6 @@ dependencies:
   flutter_launcher_icons: ^0.14.4
   firebase_core: ^4.11.0
   firebase_auth: ^6.5.3
-  fluttertest: ^0.0.1
   http: ^1.6.0
 
 
@@ -32,9 +31,11 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^6.0.0
-  build_runner: ^2.15.0
+  build_runner: ^2.4.0
   objectbox_generator: any
   mockito: ^5.6.4
+  integration_test:
+    sdk: flutter
 
 flutter_launcher_icons:
   android: "launcher_icon"
