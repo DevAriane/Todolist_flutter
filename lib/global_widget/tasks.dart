@@ -4,6 +4,7 @@ import '../core/app_color.dart';
 import '../controller/task_controller.dart';
 import './update_task.dart';
 import './details_tasks.dart';
+import '../routes/app_routes.dart';
 
 class Tasks extends StatelessWidget {
   Tasks({super.key});
@@ -90,7 +91,7 @@ class Tasks extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    Get.to(() => UpdateTask(idTask: task.id));
+                    Get.toNamed(AppRoutes.updateTask);
                   },
                   icon: const Icon(Icons.edit, color: AppColor.blanc),
                 ),

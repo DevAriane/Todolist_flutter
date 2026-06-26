@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:getxtra/get.dart';
 import 'package:todolist_flutter/core/app_color.dart';
+import 'package:todolist_flutter/routes/app_routes.dart';
 import '../../global_widget/button.dart';
 import '../../core/image_ressource.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,7 +16,7 @@ class Onboarding extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-      Get.offAll(() => NavigationPage());
+      Get.offAllNamed(AppRoutes.navigation);
     } else {
       Get.to(() => const Login());
     }

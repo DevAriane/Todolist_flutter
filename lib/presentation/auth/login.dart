@@ -6,6 +6,7 @@ import 'package:todolist_flutter/global_widget/text_widget.dart';
 import 'package:todolist_flutter/models/user_model.dart';
 import 'package:todolist_flutter/presentation/auth/signup.dart';
 import 'package:todolist_flutter/presentation/pages/onboarding.dart';
+import 'package:todolist_flutter/routes/app_routes.dart';
 import '../../core/app_color.dart';
 import '../../core/image_ressource.dart';
 import '../../global_widget/title.dart';
@@ -45,7 +46,7 @@ class _LoginState extends State<Login> {
       );
 
       if (result is UserModel) {
-        Get.offAll(() => NavigationPage());
+        Get.offAllNamed(AppRoutes.navigation);
       } else if (result is String) {
         Get.snackbar(
           "Erreur de connexion",

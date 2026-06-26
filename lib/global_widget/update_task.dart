@@ -4,6 +4,7 @@ import 'package:getxtra/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:todolist_flutter/presentation/pages/home_pages.dart';
+import 'package:todolist_flutter/routes/app_routes.dart';
 import '../controller/task_controller.dart';
 import '../controller/category_controller.dart';
 import '../controller/person_controller.dart';
@@ -167,7 +168,7 @@ class _UpdateTaskState extends State<UpdateTask> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Tâche mise à jour avec succès !')),
       );
-      Get.to(() => HomePages());
+      Get.toNamed(AppRoutes.homePages);
     } else {
       _showMessage('Erreur lors de la mise à jour');
     }

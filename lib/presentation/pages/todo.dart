@@ -4,6 +4,7 @@ import 'package:todolist_flutter/core/app_color.dart';
 import 'package:todolist_flutter/global_widget/text_widget.dart';
 import 'package:todolist_flutter/global_widget/textfield_widget.dart';
 import 'package:todolist_flutter/presentation/pages/detailTodo.dart';
+import 'package:todolist_flutter/routes/app_routes.dart';
 import '../../controller/todo_controller.dart';
 
 class Todo extends StatelessWidget {
@@ -40,15 +41,17 @@ class Todo extends StatelessWidget {
                         minWidth: 16,
                         minHeight: 16,
                       ),
-                      child: Text(
-                        _todocontroller.todos.length.toString(),
-                        style: const TextStyle(
-                          color: Colors.red,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                      child: _todocontroller.todos.length > 0
+                          ? Text(
+                              _todocontroller.todos.length.toString(),
+                              style: const TextStyle(
+                                color: Colors.red,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            )
+                          : const Text(""),
                     ),
                   ),
                 ],
@@ -110,7 +113,7 @@ class Todo extends StatelessWidget {
                           _todocontroller.toggleTodo(todo.id);
                         },
                         onTap: () {
-                          Get.to(() => Detailtodo(todo: todo));
+                          Get.toNamed(AppRoutes.todoDetails);
                         },
                         onDelete: () {
                           _todocontroller.deleteTodo(todo.id);
