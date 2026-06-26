@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:getxtra/get.dart';
-import 'package:todolist_flutter/models/category_entity.dart';
-import 'package:todolist_flutter/models/person_entity.dart';
+import 'package:get/get.dart';
 import 'package:todolist_flutter/objectbox.g.dart';
 import '../models/task_entity.dart';
 import '../services/api_service.dart';

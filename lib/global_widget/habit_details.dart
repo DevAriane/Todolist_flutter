@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:todolist_flutter/core/app_color.dart';
 import 'package:todolist_flutter/global_widget/app_bottom_sheet.dart';

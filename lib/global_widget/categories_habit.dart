@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart' hide SearchController;
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 import 'package:todolist_flutter/global_widget/create_category_habit.dart';
 import '../core/app_color.dart';
 import '../controller/category_habit_controller.dart';
-import 'create_category.dart';
 
 class CategoriesHabit extends StatelessWidget {
   final CategoryHabitController controller =
@@ -24,7 +23,7 @@ class CategoriesHabit extends StatelessWidget {
             IconButton(
               onPressed: () {
                 showModalBottomSheet(
-                  showDragHandle:true,
+                  showDragHandle: true,
                   useSafeArea: true,
                   backgroundColor: Colors.transparent,
                   context: context,

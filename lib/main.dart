@@ -3,9 +3,7 @@ import 'package:todolist_flutter/binding/initial_binding.dart';
 import 'package:todolist_flutter/core/app_color.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:getxtra/get.dart' hide Get, GetMaterialApp;
 import 'package:todolist_flutter/routes/app_pages.dart';
-import './presentation/pages/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import './services/objectbox_service.dart';
@@ -36,7 +34,6 @@ class MyApp extends StatelessWidget {
       initialBinding: InitialBinding(),
       initialRoute: AppPages.intial,
       getPages: AppPages.routes,
-      home: const Splash(),
       debugShowCheckedModeBanner: false,
     );
   }

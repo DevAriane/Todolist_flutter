@@ -1,4 +1,4 @@
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 import 'package:todolist_flutter/models/todo.dart';
 import '../services/objectbox_service.dart';
 

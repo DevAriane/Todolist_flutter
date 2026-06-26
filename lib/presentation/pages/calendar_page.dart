@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:getxtra/get.dart';
-import '../../global_widget/horizontal_date_picker.dart';
+import 'package:get/get.dart';
 import '../../controller/task_controller.dart';
 
 class CalendarPage extends StatelessWidget {

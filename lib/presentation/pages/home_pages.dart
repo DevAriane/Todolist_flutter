@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:todolist_flutter/core/image_ressource.dart';
-import 'package:todolist_flutter/presentation/navigation_page.dart';
-import 'package:todolist_flutter/presentation/pages/home_view.dart';
+import 'package:get/get.dart';
 import '../../core/app_color.dart';
-import '../../global_widget/search_bar.dart';
 import '../../global_widget/categories.dart';
 import '../../global_widget/tasks.dart';
 import '../../global_widget/horizontal_date_picker.dart';
 import '../../controller/task_controller.dart';
-import 'package:getxtra/get.dart';
 
 class HomePages extends StatelessWidget {
   HomePages({super.key});

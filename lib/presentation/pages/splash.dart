@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:todolist_flutter/core/app_color.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:getxtra/get.dart';
-import './onboarding.dart';
+import 'package:todolist_flutter/routes/app_routes.dart';
 import '../../core/image_ressource.dart';
 
 class Splash extends StatefulWidget {
@@ -28,7 +28,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     _controller.forward();
 
     Timer(const Duration(milliseconds: 2000), () {
-      Get.to(() => const Onboarding());
+      Get.toNamed(AppRoutes.onboarding);
     });
   }
 

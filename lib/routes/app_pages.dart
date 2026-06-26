@@ -7,9 +7,10 @@ import 'package:todolist_flutter/models/todo.dart';
 import 'package:todolist_flutter/presentation/navigation_page.dart';
 import 'package:todolist_flutter/presentation/pages/detailTodo.dart';
 import 'package:todolist_flutter/presentation/pages/home_pages.dart';
+import 'package:todolist_flutter/presentation/pages/onboarding.dart';
+import 'package:todolist_flutter/presentation/pages/splash.dart';
 import 'package:todolist_flutter/routes/app_routes.dart';
 import 'package:get/get.dart';
-import 'package:getxtra/get.dart' hide GetPage, Get;
 import '../binding/home_view_biding.dart';
 import '../presentation/pages/home_view.dart';
 import '../models/task_entity.dart';
@@ -18,6 +19,10 @@ abstract class AppPages {
   static const intial = AppRoutes.splash;
 
   static final routes = [
+    GetPage(name: intial, page: () => const Splash()),
+
+    GetPage(name: AppRoutes.onboarding, page: ()=>const Onboarding()),
+
     GetPage(
       name: AppRoutes.home,
       page: () => HomeView(),

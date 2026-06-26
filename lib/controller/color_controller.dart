@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 import '../core/app_color.dart';
 
 class ColorController extends GetxController {

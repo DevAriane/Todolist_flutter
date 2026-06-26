@@ -1,5 +1,5 @@
-import 'package:getxtra/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:todolist_flutter/models/user_model.dart';
 import 'package:todolist_flutter/presentation/auth/login.dart';
 import 'package:todolist_flutter/presentation/pages/onboarding.dart';
@@ -8,11 +8,13 @@ import 'package:todolist_flutter/objectbox.g.dart';
 
 class UserController extends GetxController {
   final Rxn<UserModel> unUtilisateur = Rxn<UserModel>();
+  @override
   void onInit() {
     super.onInit();
     changerProfile();
   }
 
+  @override
   void dispose() {}
 
   void deconnexion() async {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' hide SearchController;
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 import '../core/app_color.dart';
 import '../controller/search_controller.dart';
 

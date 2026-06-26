@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter/services.dart';
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 import 'package:todolist_flutter/global_widget/button.dart';
 import 'package:todolist_flutter/global_widget/text_widget.dart';
 import 'package:todolist_flutter/presentation/auth/login.dart';
-import 'package:todolist_flutter/presentation/navigation_page.dart';
 import 'package:todolist_flutter/routes/app_routes.dart';
 import '../../core/app_color.dart';
 import '../../core/image_ressource.dart';

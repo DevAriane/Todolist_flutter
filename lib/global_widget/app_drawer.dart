@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-
-import 'package:getxtra/get.dart';
-
 import 'create_person.dart';
 import './create_category.dart';
 import './create_category_habit.dart';
 import './create_habit.dart';
-import './categories.dart';
-import './categories_habit.dart';
-import './habits.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});

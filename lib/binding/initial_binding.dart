@@ -1,5 +1,4 @@
-import 'package:getxtra/get.dart';
-import 'package:get/get.dart' hide Get;
+import 'package:get/get.dart';
 import '../controller/user_controller.dart';
 import '../controller/color_controller.dart';
 import '../controller/navigation_controller.dart';

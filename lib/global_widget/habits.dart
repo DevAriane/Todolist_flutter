@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:getxtra/get.dart';
-import 'package:todolist_flutter/core/image_ressource.dart';
+import 'package:get/get.dart';
 import 'package:todolist_flutter/global_widget/habit_details.dart';
 import '../controller/habit_controller.dart';
 import '../core/app_color.dart';

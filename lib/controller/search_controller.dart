@@ -1,4 +1,4 @@
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 import 'package:todolist_flutter/controller/habit_controller.dart';
 import 'package:todolist_flutter/objectbox.g.dart';
 import "./task_controller.dart";

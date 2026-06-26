@@ -1,12 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:todolist_flutter/controller/navigation_controller.dart';
 import 'package:todolist_flutter/global_widget/date_picker_widget.dart';
 import 'package:todolist_flutter/global_widget/textfield_widget.dart';
-import 'package:todolist_flutter/presentation/navigation_page.dart';
-import 'package:todolist_flutter/presentation/pages/home_pages.dart';
 import '../../controller/task_controller.dart';
 import '../../controller/category_controller.dart';
 import '../../controller/person_controller.dart';

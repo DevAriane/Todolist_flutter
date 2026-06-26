@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 import 'package:todolist_flutter/global_widget/icon_list.dart';
 import 'package:todolist_flutter/global_widget/icon_picker.dart';
 import '../controller/category_habit_controller.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 import 'package:todolist_flutter/models/category_entity.dart';
 import 'package:todolist_flutter/objectbox.g.dart';
 import '../services/api_service.dart';

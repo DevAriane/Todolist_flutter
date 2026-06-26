@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_instance/get_instance.dart';
 
 import '../controller/person_controller.dart' show PersonController;
 

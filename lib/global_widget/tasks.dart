@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 import '../core/app_color.dart';
 import '../controller/task_controller.dart';
-import './update_task.dart';
 import './details_tasks.dart';
 import '../routes/app_routes.dart';
 

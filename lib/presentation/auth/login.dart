@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter/services.dart';
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 import 'package:todolist_flutter/global_widget/button.dart';
 import 'package:todolist_flutter/global_widget/text_widget.dart';
 import 'package:todolist_flutter/models/user_model.dart';
@@ -11,7 +11,6 @@ import '../../core/app_color.dart';
 import '../../core/image_ressource.dart';
 import '../../global_widget/title.dart';
 import '../../global_widget/input_widget.dart';
-import '../navigation_page.dart';
 import '../../services/authService.dart';
 
 class Login extends StatefulWidget {
@@ -51,7 +50,7 @@ class _LoginState extends State<Login> {
         Get.snackbar(
           "Erreur de connexion",
           result,
-          snackPosition: SnackPosition.bottom,
+          snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent,
           colorText: Colors.white,
           duration: const Duration(seconds: 4),
@@ -61,7 +60,7 @@ class _LoginState extends State<Login> {
       Get.snackbar(
         "Champs vides",
         "Veuillez remplir tous les champs obligatoires.",
-        snackPosition: SnackPosition.bottom,
+        snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.orange,
         colorText: Colors.white,
       );

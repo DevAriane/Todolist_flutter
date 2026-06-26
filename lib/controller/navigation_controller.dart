@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 import '../presentation/pages/add_tasks_page.dart';
-import '../presentation/pages/calendar_page.dart';
 import '../presentation/pages/home_pages.dart';
 import '../presentation/pages/profil_pages.dart';
 import '../presentation/pages/home_view.dart';

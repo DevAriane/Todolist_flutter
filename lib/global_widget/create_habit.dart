@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 import 'package:todolist_flutter/core/app_color.dart';
 import 'package:todolist_flutter/global_widget/app_bottom_sheet.dart';
 import 'package:todolist_flutter/global_widget/date_picker_widget.dart';
@@ -39,7 +39,7 @@ class _CreateHabitState extends State<CreateHabit> {
       Get.snackbar(
         "Champ requis",
         "Veuillez donner un titre à votre projet",
-        snackPosition: SnackPosition.bottom,
+        snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.redAccent,
         colorText: Colors.white,
         margin: const EdgeInsets.all(15),
@@ -51,7 +51,7 @@ class _CreateHabitState extends State<CreateHabit> {
       Get.snackbar(
         "Sélection requise",
         "Veuillez choisir une catégorie pour votre projet",
-        snackPosition: SnackPosition.bottom,
+        snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.redAccent,
         colorText: Colors.white,
         margin: const EdgeInsets.all(15),
@@ -72,7 +72,7 @@ class _CreateHabitState extends State<CreateHabit> {
       Get.snackbar(
         "Succès",
         "Votre projet a été créé avec succès !",
-        snackPosition: SnackPosition.bottom,
+        snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.green,
         colorText: Colors.white,
         margin: const EdgeInsets.all(15),

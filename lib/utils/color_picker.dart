@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hsvcolor_picker/flutter_hsvcolor_picker.dart';
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 import '../controller/color_controller.dart';
 
 class ColorsPicker extends StatelessWidget {

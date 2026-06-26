@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 
 class DatePickerController extends GetxController {
   var selectedDate = Rxn<DateTime>();

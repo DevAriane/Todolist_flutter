@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 
 import '../controller/task_controller.dart';
 import '../core/app_color.dart';

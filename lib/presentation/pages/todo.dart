@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:getxtra/get.dart';
+import 'package:get/get.dart';
 import 'package:todolist_flutter/core/app_color.dart';
 import 'package:todolist_flutter/global_widget/text_widget.dart';
 import 'package:todolist_flutter/global_widget/textfield_widget.dart';
-import 'package:todolist_flutter/presentation/pages/detailTodo.dart';
 import 'package:todolist_flutter/routes/app_routes.dart';
 import '../../controller/todo_controller.dart';
 

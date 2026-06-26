@@ -1,8 +1,9 @@
 abstract class AppRoutes {
-  static const splash = '../presentation/pages/splash.dart';
-  static const home = '../presentation/pages/home_view.dart';
-  static const todoDetails = '../presentation/pages/detailTodo.dart';
-  static const updateTask = '../global_widget/update_task.dart';
-  static const homePages = '../presentation/pages/home_pages.dart';
-  static const navigation = '../presentation/navigation_page.dart';
+  static const splash = '/splash';
+  static const home = '/home_view';
+  static const todoDetails = '/detailTodo';
+  static const updateTask = '/update_task';
+  static const homePages = '/home_pages';
+  static const navigation = '/navigation_page';
+  static const onboarding = '/onboarding';
 }
