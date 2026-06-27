@@ -31,10 +31,11 @@ class _TextfieldWidgetState extends State<TextfieldWidget> {
         hintText: widget.name,
         hintStyle: const TextStyle(color: AppColor.placeholder),
         filled: true,
+
         fillColor: Colors.grey[900],
         focusedBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(5)),
-          borderSide: BorderSide(color: Colors.white60),
+          borderSide: BorderSide(color: AppColor.buttonColor),
         ),
         suffixIcon: widget.icon != null
             ? IconButton(

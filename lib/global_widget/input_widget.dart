@@ -31,7 +31,7 @@ class InputWidget extends StatelessWidget {
             : null,
         focusedBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
-          borderSide: BorderSide(color: AppColor.inputFond),
+          borderSide: BorderSide(color: AppColor.buttonColor),
         ),
 
         enabledBorder: const OutlineInputBorder(

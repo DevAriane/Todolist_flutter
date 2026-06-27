@@ -50,7 +50,7 @@ class Todo extends StatelessWidget {
                               ),
                               textAlign: TextAlign.center,
                             )
-                          : const Text(""),
+                          : null,
                     ),
                   ),
                 ],

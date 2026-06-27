@@ -13,10 +13,13 @@ import '../../services/authService.dart';
 
 class Signup extends StatelessWidget {
   Signup({super.key});
+
   final Authservice _authService = Authservice();
   final TextEditingController _name = TextEditingController();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
+
+  final RxBool _isLoading = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -39,29 +42,23 @@ class Signup extends StatelessWidget {
         child: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              begin: AlignmentGeometry.topCenter,
-              end: AlignmentGeometry.bottomCenter,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
               colors: [AppColor.buttonColor, AppColor.backg],
               stops: [0.1, 0.13],
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(ImageRessource.auth, height: 50, width: 50),
-                const SizedBox(height: 15),
-                const Title(name: "CREER UN COMPTE ?"),
-                const SizedBox(height: 20),
-                const TextWidget(
-                  name:
-                      "Rejoignez-nous dès aujourd'hui et gardez le contrôle de toutes vos tâches en un seul endroit",
-                  color: AppColor.blanc,
-                ),
-                const SizedBox(height: 22),
-                Container(
-                  child: Column(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(ImageRessource.auth, height: 50, width: 50),
+                  const SizedBox(height: 15),
+                  const Title(name: "CREER UN COMPTE ?"),
+                  const SizedBox(height: 22),
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const TextWidget(name: "Nom*:", color: AppColor.blanc),
@@ -94,56 +91,104 @@ class Signup extends StatelessWidget {
                         onTap: () {},
                         icon: const Icon(Icons.visibility_off),
                       ),
-
                       const SizedBox(height: 30),
-                      Button(
-                        name: "S'incrire",
-                        onTap: () async {
-                          final nom = _name.text.trim();
-                          final email = _email.text.trim();
-                          final password = _password.text.trim();
 
-                          final String? erreur = await _authService
-                              .inscrireEtEnregistrerUtilisateur(
-                                nom: nom,
-                                email: email,
-                                password: password,
+                      Obx(() {
+                        if (_isLoading.value) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                AppColor.buttonColor,
+                              ),
+                            ),
+                          );
+                        }
+
+                        return Button(
+                          name: "S'inscrire",
+                          onTap: () async {
+                            final nom = _name.text.trim();
+                            final email = _email.text.trim();
+                            final password = _password.text.trim();
+
+                            if (nom.isEmpty ||
+                                email.isEmpty ||
+                                password.isEmpty) {
+                              Get.snackbar(
+                                "Champs obligatoires",
+                                "Veuillez remplir tous les champs marqués d'un astérisque (*).",
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Colors.orange,
+                                colorText: Colors.white,
                               );
+                              return;
+                            }
 
-                          if (erreur == null) {
-                            Get.offAllNamed(AppRoutes.navigation);
-                          } else {
-                            Get.snackbar(
-                              "Erreur d'inscription",
-                              erreur,
-                              backgroundColor: Colors.redAccent,
-                              colorText: Colors.white,
-                            );
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 100),
-                      const SingleChildScrollView(
+                            try {
+                              _isLoading.value = true;
+
+                              final String? erreur = await _authService
+                                  .inscrireEtEnregistrerUtilisateur(
+                                    nom: nom,
+                                    email: email,
+                                    password: password,
+                                  );
+
+                              if (erreur == null) {
+                                Get.snackbar(
+                                  "Inscription réussie",
+                                  "Votre compte a été créé avec succès !",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.green,
+                                  colorText: Colors.white,
+                                  duration: const Duration(seconds: 2),
+                                );
+
+                                await Future.delayed(
+                                  const Duration(milliseconds: 500),
+                                );
+                                Get.offAllNamed(AppRoutes.navigation);
+                              } else {
+                                Get.snackbar(
+                                  "Erreur d'inscription",
+                                  erreur,
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.redAccent,
+                                  colorText: Colors.white,
+                                  duration: const Duration(seconds: 4),
+                                );
+                              }
+                            } finally {
+                              _isLoading.value = false;
+                            }
+                          },
+                        );
+                      }),
+
+                      const SizedBox(height: 20),
+                      SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-
                           children: [
-                            TextWidget(
-                              name: "Avez-vous déja un compte ? ",
+                            const TextWidget(
+                              name: "Avez-vous déjà un compte ? ",
                               color: AppColor.blanc,
                             ),
-                            TextWidget(
-                              name: "Se connecter ",
-                              color: AppColor.buttonColor,
+                            InkWell(
+                              onTap: () => Get.to(() => const Login()),
+                              child: const TextWidget(
+                                name: "Se connecter ",
+                                color: AppColor.buttonColor,
+                              ),
                             ),
                           ],
                         ),
                       ),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

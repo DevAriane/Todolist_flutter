@@ -132,15 +132,33 @@ class _UpdateTaskState extends State<UpdateTask> {
 
   void _updateTask() async {
     if (_titleController.text.trim().isEmpty) {
-      _showMessage('Veuillez entrer un titre');
+      Get.snackbar(
+        "Champ manquant",
+        "Veuillez entrer un titre",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
+      );
       return;
     }
     if (_selectedCategoryId == null) {
-      _showMessage('Veuillez sélectionner une catégorie');
+      Get.snackbar(
+        "Catégorie manquante",
+        "Veuillez sélectionner une catégorie",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
+      );
       return;
     }
     if (_selectedPersonId == null) {
-      _showMessage('Veuillez sélectionner une personne');
+      Get.snackbar(
+        "Personne manquante",
+        "Veuillez sélectionner une personne",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
+      );
       return;
     }
 
@@ -164,12 +182,25 @@ class _UpdateTaskState extends State<UpdateTask> {
     setState(() => _isLoading = false);
 
     if (success) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Tâche mise à jour avec succès !')),
+      Get.snackbar(
+        "Succès",
+        "Tâche mise à jour avec succès !",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 2),
       );
+      await Future.delayed(const Duration(milliseconds: 500));
       Get.toNamed(AppRoutes.homePages);
     } else {
-      _showMessage('Erreur lors de la mise à jour');
+      Get.snackbar(
+        "Erreur",
+        "Erreur lors de la mise à jour de la tâche",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 4),
+      );
     }
   }
 

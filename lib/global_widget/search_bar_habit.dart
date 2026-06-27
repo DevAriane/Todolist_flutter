@@ -37,6 +37,14 @@ class SearchbarsHabit extends StatelessWidget {
             vertical: 12.0,
             horizontal: 10,
           ),
+          focusedBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+            borderSide: BorderSide(color: AppColor.buttonColor),
+          ),
+          enabledBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+            borderSide: BorderSide(color: AppColor.bordure),
+          ),
           suffixIcon: Padding(
             padding: const EdgeInsets.all(2.0),
             child: IconButton(

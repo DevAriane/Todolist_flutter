@@ -31,14 +31,16 @@ class Authservice {
       }
       return "Une erreur inconnue est survenue.";
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use') {
-        return "Cette adresse email est déjà associée à un compte.";
-      } else if (e.code == 'weak-password') {
-        return "Le mot de passe est trop faible.";
-      } else if (e.code == 'invalid-email') {
-        return "Le format de l'adresse email est incorrect.";
+      switch (e.code) {
+        case 'email-already-in-use':
+          return "Cette adresse email est déjà associée à un compte.";
+        case 'weak-password':
+          return "Le mot de passe est trop faible.";
+        case 'invalid-email':
+          return "Le format de l'adresse email est incorrect.";
+        default:
+          return e.message ?? "Une erreur est survenue lors de l'inscription.";
       }
-      return e.message;
     } catch (e) {
       return e.toString();
     }

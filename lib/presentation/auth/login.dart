@@ -45,6 +45,16 @@ class _LoginState extends State<Login> {
       );
 
       if (result is UserModel) {
+        Get.snackbar(
+          "Connexion réussie",
+          "Bon retour parmi nous !",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 2),
+        );
+
+        await Future.delayed(const Duration(milliseconds: 500));
         Get.offAllNamed(AppRoutes.navigation);
       } else if (result is String) {
         Get.snackbar(
@@ -100,7 +110,7 @@ class _LoginState extends State<Login> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(ImageRessource.auth, height: 150, width: 150),
+                  Image.asset(ImageRessource.auth, height: 50, width: 50),
                   const SizedBox(height: 15),
                   const Title(name: "BON RETOUR !!!"),
                   const SizedBox(height: 20),
@@ -165,7 +175,7 @@ class _LoginState extends State<Login> {
                             handleSubmit(email, password);
                           },
                         ),
-                        const SizedBox(height: 100),
+                        const SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [

@@ -171,20 +171,32 @@ class _AddTasksPageState extends State<AddTasksPage>
 
   void _createTask() {
     if (_titleController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Veuillez entrer un titre')));
+      Get.snackbar(
+        "Champ manquant",
+        "Veuillez entrer un titre",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
+      );
       return;
     }
     if (_selectedCategoryId == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Veuillez sélectionner une catégorie')),
+      Get.snackbar(
+        "Catégorie manquante",
+        "Veuillez sélectionner une catégorie",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
       );
       return;
     }
     if (_selectedPersonId == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Veuillez sélectionner une personne')),
+      Get.snackbar(
+        "Personne manquante",
+        "Veuillez sélectionner une personne",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
       );
       return;
     }
@@ -207,14 +219,26 @@ class _AddTasksPageState extends State<AddTasksPage>
 
     if (success) {
       _resetForm();
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Tâche créée avec succès !')),
+      Get.snackbar(
+        "Succès",
+        "Tâche créée avec succès !",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 2),
       );
-      final navigationController = Get.find<NavigationController>();
-      navigationController.changeIndex(1);
+      Future.delayed(const Duration(milliseconds: 500), () {
+        final navigationController = Get.find<NavigationController>();
+        navigationController.changeIndex(2);
+      });
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Erreur lors de la création')),
+      Get.snackbar(
+        "Erreur",
+        "Erreur lors de la création de la tâche",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 4),
       );
     }
   }
