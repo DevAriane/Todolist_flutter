@@ -11,9 +11,40 @@ import './services/objectbox_service.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    debugPrint("Erreur d'initialisation Firebase : $e");
+  }
 
-  await ObjectBoxService.init();
+  String? erreurObjectBox;
+
+  try {
+    await ObjectBoxService.init();
+  } catch (e) {
+    erreurObjectBox = e.toString();
+  }
+
+  if (erreurObjectBox != null) {
+    runApp(MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.red[900],
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(
+              "🚨 ERREUR NATIVE OBJECTBOX :\n\n$erreurObjectBox",
+              style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ),
+    ));
+    return; 
+  }
 
   runApp(const MyApp());
 }
@@ -25,7 +56,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'TodoList',
-
       theme: ThemeData(
         scaffoldBackgroundColor: AppColor.backg,
         colorScheme: ColorScheme.fromSeed(seedColor: AppColor.blanc),
