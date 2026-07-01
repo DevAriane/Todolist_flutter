@@ -25,7 +25,11 @@ class Onboarding extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.backg,
-      appBar: AppBar(backgroundColor: AppColor.backg, elevation: 0),
+      appBar: AppBar(
+        backgroundColor: AppColor.backg,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),

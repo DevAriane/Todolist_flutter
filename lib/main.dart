@@ -28,22 +28,28 @@ Future<void> main() async {
   }
 
   if (erreurObjectBox != null) {
-    runApp(MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.red[900],
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text(
-              "🚨 ERREUR NATIVE OBJECTBOX :\n\n$erreurObjectBox",
-              style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+    runApp(
+      MaterialApp(
+        home: Scaffold(
+          backgroundColor: Colors.red[900],
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                "🚨 ERREUR NATIVE OBJECTBOX :\n\n$erreurObjectBox",
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
       ),
-    ));
-    return; 
+    );
+    return;
   }
 
   runApp(const MyApp());
@@ -57,7 +63,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'TodoList',
       theme: ThemeData(
-        scaffoldBackgroundColor: AppColor.backg,
+        scaffoldBackgroundColor: AppColor.backg.withValues(alpha: 0.9),
         colorScheme: ColorScheme.fromSeed(seedColor: AppColor.blanc),
         textTheme: GoogleFonts.interTextTheme(),
       ),

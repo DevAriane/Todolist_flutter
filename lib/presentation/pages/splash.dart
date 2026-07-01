@@ -15,6 +15,7 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  late Animation<double> _animation;
 
   @override
   void initState() {
@@ -22,12 +23,17 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 1500),
+    );
+
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOutBack,
     );
 
     _controller.forward();
 
-    Timer(const Duration(milliseconds: 2000), () {
+    Timer(const Duration(milliseconds: 2500), () {
       Get.toNamed(AppRoutes.onboarding);
     });
   }
@@ -42,27 +48,28 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.backg,
-      appBar: AppBar(backgroundColor: AppColor.backg),
+      appBar: AppBar(backgroundColor: AppColor.backg, elevation: 0),
       body: SafeArea(
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 1000),
-          curve: Curves.easeInOutBack,
-          width: double.infinity,
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(ImageRessource.logo, height: 100, width: 100),
-              const SizedBox(height: 15),
-              Text(
-                "TO DO LIST",
-                style: GoogleFonts.hennyPenny(
-                  color: AppColor.blanc,
-                  fontSize: 36,
-                ),
+        child: Center(
+          child: FadeTransition(
+            opacity: _controller,
+            child: ScaleTransition(
+              scale: _animation,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(ImageRessource.logo, height: 200),
+                  const SizedBox(height: 20),
+                  Text(
+                    "TO DO LIST",
+                    style: GoogleFonts.hennyPenny(
+                      color: AppColor.blanc.withValues(alpha: 0.9),
+                      fontSize: 36,
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
