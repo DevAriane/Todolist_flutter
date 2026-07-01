@@ -229,7 +229,7 @@ class _AddTasksPageState extends State<AddTasksPage>
       );
       Future.delayed(const Duration(milliseconds: 500), () {
         final navigationController = Get.find<NavigationController>();
-        navigationController.changeIndex(2);
+        navigationController.changeIndex(1);
       });
     } else {
       Get.snackbar(

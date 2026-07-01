@@ -24,18 +24,16 @@ class Signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColor.buttonColor,
-        elevation: 0,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          statusBarIconBrightness: Brightness.light,
-        ),
-        leading: GestureDetector(
-          onTap: () {
-            Get.to(() => const Login());
-          },
-          child: Image.asset(ImageRessource.left, height: 24),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(0.0),
+        child: AppBar(
+          backgroundColor: AppColor.buttonColor,
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: Brightness.light,
+          ),
         ),
       ),
       body: SafeArea(
@@ -54,14 +52,23 @@ class Signup extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(ImageRessource.auth, height: 50, width: 50),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(() => const Login());
+                      },
+                      child: Image.asset(ImageRessource.left, height: 24),
+                    ),
+                  ),
+                  Image.asset(ImageRessource.auth, height: 100),
                   const SizedBox(height: 15),
                   const Title(name: "CREER UN COMPTE ?"),
                   const SizedBox(height: 22),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const TextWidget(name: "Nom*:", color: AppColor.blanc),
+                      const TextWidget(name: "Nom *:", color: AppColor.blanc),
                       const SizedBox(height: 15),
                       InputWidget(
                         name: "Ariane la STAR",
@@ -70,7 +77,7 @@ class Signup extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       const TextWidget(
-                        name: "Adresse email*:",
+                        name: "Adresse email *:",
                         color: AppColor.blanc,
                       ),
                       const SizedBox(height: 15),
@@ -81,7 +88,7 @@ class Signup extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       const TextWidget(
-                        name: "Mot de passe*:",
+                        name: "Mot de passe *:",
                         color: AppColor.blanc,
                       ),
                       const SizedBox(height: 15),
@@ -165,7 +172,10 @@ class Signup extends StatelessWidget {
                         );
                       }),
 
-                      const SizedBox(height: 20),
+                      const Align(
+                        alignment: AlignmentGeometry.bottomCenter,
+                        child: SizedBox(height: 20),
+                      ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(

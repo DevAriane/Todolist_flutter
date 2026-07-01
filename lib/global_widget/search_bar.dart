@@ -13,11 +13,7 @@ class Searchbars extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
-      decoration: BoxDecoration(
-        color: AppColor.fond,
-        borderRadius: BorderRadius.circular(30.0),
-        border: Border.all(color: AppColor.bordure, width: 1.0),
-      ),
+
       child: TextField(
         controller: _search,
         style: const TextStyle(color: AppColor.blanc),

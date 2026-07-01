@@ -108,27 +108,16 @@ class _LoginState extends State<Login> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment
-                              .topLeft, // Zone droite invisible (occupe 1/3 pour forcer le logo à rester au milieu)// Zone droite invisible (occupe 1/3 pour forcer le logo à rester au milieu)// Zone droite invisible (occupe 1/3 pour forcer le logo à rester au milieu)// Zone droite invisible (occupe 1/3 pour forcer le logo à rester au milieu),
-                          child: GestureDetector(
-                            onTap: () {
-                              Get.to(() => const Onboarding());
-                            },
-                            child: Image.asset(ImageRessource.left, height: 24),
-                          ),
-                        ),
-                      ),
-
-                      Image.asset(ImageRessource.auth, height: 100, width: 100),
-
-                      const Expanded(child: SizedBox.shrink()),
-                    ],
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(() => const Onboarding());
+                      },
+                      child: Image.asset(ImageRessource.left, height: 24),
+                    ),
                   ),
+                  Image.asset(ImageRessource.auth, height: 100),
 
                   const SizedBox(height: 15),
                   const Title(name: "BON RETOUR !!!"),
@@ -143,7 +132,7 @@ class _LoginState extends State<Login> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const TextWidget(
-                        name: "Adresse email*:",
+                        name: "Adresse email *:",
                         color: AppColor.blanc,
                       ),
                       const SizedBox(height: 15),
@@ -154,7 +143,7 @@ class _LoginState extends State<Login> {
                       ),
                       const SizedBox(height: 15),
                       const TextWidget(
-                        name: "Mot de passe*:",
+                        name: "Mot de passe *:",
                         color: AppColor.blanc,
                       ),
                       const SizedBox(height: 15),
@@ -172,6 +161,7 @@ class _LoginState extends State<Login> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Icon(Icons.crop_square),
+                              SizedBox(width: 5),
                               TextWidget(
                                 name: "Se rappeller",
                                 color: AppColor.blanc,
