@@ -24,6 +24,7 @@ dependencies:
   firebase_auth: ^6.5.3
   http: ^1.6.0
   get: ^4.7.3
+  native_cutout: ^0.2.0
 
 
 dev_dependencies:

@@ -10,6 +10,7 @@ class CategoryHabitEntity {
   String name;
   int? dbColor;
   String? icon;
+  String? photoPath;
 
   @Backlink('categoryHabit')
   final habits = ToMany<HabitEntity>();
@@ -18,6 +19,7 @@ class CategoryHabitEntity {
     required this.name,
     this.dbColor,
     this.icon,
+    this.photoPath,
     Color? color,
   }) {
     this.color = color;
@@ -28,6 +30,7 @@ class CategoryHabitEntity {
       name: json['name'] ?? '',
       dbColor: json['dbColor'],
       icon: json['icon'],
+      photoPath: json['photoPath'] ?? "",
     );
   }
 

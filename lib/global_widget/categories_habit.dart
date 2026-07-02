@@ -66,7 +66,7 @@ class CategoriesHabit extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(
                           color: controller.selectedCategoryHabitId.value == 0
-                              ? AppColor.blanc
+                              ? AppColor.blanc.withValues(alpha: 0.3)
                               : Colors.transparent,
                           width: 2.0,
                         ),
@@ -104,7 +104,7 @@ class CategoriesHabit extends StatelessWidget {
                               color:
                                   controller.selectedCategoryHabitId.value ==
                                       category.id
-                                  ? AppColor.blanc
+                                  ? AppColor.blanc.withValues(alpha: 0.3)
                                   : Colors.transparent,
                               width: 2.0,
                             ),
