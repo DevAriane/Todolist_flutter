@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todolist_flutter/global_widget/icon_list.dart';
 import 'package:todolist_flutter/global_widget/icon_picker.dart';
-import '../controller/category_habit_controller.dart';
+import '../feature/habit/controllers/category_habit_controller.dart';
 import '../core/app_color.dart';
 import 'app_bottom_sheet.dart';
 import '../utils/color_picker.dart';

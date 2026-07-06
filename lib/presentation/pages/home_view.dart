@@ -6,7 +6,7 @@ import 'package:todolist_flutter/global_widget/categories_habit.dart';
 import 'package:todolist_flutter/global_widget/create_habit.dart';
 import 'package:todolist_flutter/global_widget/habits.dart';
 import 'package:todolist_flutter/global_widget/search_bar_habit.dart';
-import '../../controller/habit_controller.dart';
+import '../../feature/habit/controllers/habit_controller.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});

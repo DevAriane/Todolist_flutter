@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:todolist_flutter/core/app_color.dart';
 import 'package:todolist_flutter/global_widget/app_bottom_sheet.dart';
 import '../models/habit_entity.dart';
-import '../controller/habit_controller.dart';
+import '../feature/habit/controllers/habit_controller.dart';
 
 class HabitDetails extends StatelessWidget {
   final HabitEntity habit;

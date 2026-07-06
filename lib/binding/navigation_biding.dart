@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:todolist_flutter/controller/category_controller.dart';
-import 'package:todolist_flutter/controller/category_habit_controller.dart';
-import 'package:todolist_flutter/controller/habit_controller.dart';
+import 'package:todolist_flutter/feature/habit/controllers/category_habit_controller.dart';
+import 'package:todolist_flutter/feature/habit/controllers/habit_controller.dart';
 import 'package:todolist_flutter/controller/navigation_controller.dart';
 import 'package:todolist_flutter/controller/person_controller.dart';
 import 'package:todolist_flutter/controller/search_controller.dart';

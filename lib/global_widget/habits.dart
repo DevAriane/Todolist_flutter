@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todolist_flutter/global_widget/habit_details.dart';
-import '../controller/habit_controller.dart';
+import '../feature/habit/controllers/habit_controller.dart';
 import '../core/app_color.dart';
 import 'text_widget.dart';
 

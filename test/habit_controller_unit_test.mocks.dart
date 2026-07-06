@@ -9,9 +9,9 @@ import 'dart:ui' as _i11;
 import 'package:get/get.dart' as _i3;
 import 'package:get/get_state_manager/src/simple/list_notifier.dart' as _i10;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:todolist_flutter/controller/category_habit_controller.dart'
+import 'package:todolist_flutter/feature/habit/controllers/category_habit_controller.dart'
     as _i2;
-import 'package:todolist_flutter/controller/habit_controller.dart' as _i8;
+import 'package:todolist_flutter/feature/habit/controllers/habit_controller.dart' as _i8;
 import 'package:todolist_flutter/models/category_habit_entity.dart' as _i4;
 import 'package:todolist_flutter/models/habit_entity.dart' as _i9;
 import 'package:todolist_flutter/objectbox.g.dart' as _i5;
