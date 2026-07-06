@@ -56,7 +56,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(2, 3261053124586020583),
     name: 'CategoryHabitEntity',
-    lastPropertyId: const obx_int.IdUid(4, 2931195964718858625),
+    lastPropertyId: const obx_int.IdUid(5, 4864018437595021041),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -80,6 +80,12 @@ final _entities = <obx_int.ModelEntity>[
       obx_int.ModelProperty(
         id: const obx_int.IdUid(4, 2931195964718858625),
         name: 'icon',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 4864018437595021041),
+        name: 'photoPath',
         type: 9,
         flags: 0,
       ),
@@ -472,11 +478,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final iconOffset = object.icon == null
             ? null
             : fbb.writeString(object.icon!);
-        fbb.startTable(5);
+        final photoPathOffset = object.photoPath == null
+            ? null
+            : fbb.writeString(object.photoPath!);
+        fbb.startTable(6);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, nameOffset);
         fbb.addInt64(2, object.dbColor);
         fbb.addOffset(3, iconOffset);
+        fbb.addOffset(4, photoPathOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -494,10 +504,14 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final iconParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGetNullable(buffer, rootOffset, 10);
+        final photoPathParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 12);
         final object = CategoryHabitEntity(
           name: nameParam,
           dbColor: dbColorParam,
           icon: iconParam,
+          photoPath: photoPathParam,
         )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
         obx_int.InternalToManyAccess.setRelInfo<CategoryHabitEntity>(
           object.habits,
@@ -876,6 +890,11 @@ class CategoryHabitEntity_ {
   /// See [CategoryHabitEntity.icon].
   static final icon = obx.QueryStringProperty<CategoryHabitEntity>(
     _entities[1].properties[3],
+  );
+
+  /// See [CategoryHabitEntity.photoPath].
+  static final photoPath = obx.QueryStringProperty<CategoryHabitEntity>(
+    _entities[1].properties[4],
   );
 
   /// see [CategoryHabitEntity.habits]

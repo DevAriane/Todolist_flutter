@@ -24,7 +24,7 @@
     },
     {
       "id": "2:3261053124586020583",
-      "lastPropertyId": "4:2931195964718858625",
+      "lastPropertyId": "5:4864018437595021041",
       "name": "CategoryHabitEntity",
       "properties": [
         {
@@ -46,6 +46,11 @@
         {
           "id": "4:2931195964718858625",
           "name": "icon",
+          "type": 9
+        },
+        {
+          "id": "5:4864018437595021041",
+          "name": "photoPath",
           "type": 9
         }
       ],
