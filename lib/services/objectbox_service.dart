@@ -4,8 +4,8 @@ import 'package:todolist_flutter/objectbox.g.dart';
 import '../models/category_entity.dart';
 import '../models/task_entity.dart';
 import '../models/person_entity.dart';
-import '../models/habit_entity.dart';
-import '../models/category_habit_entity.dart';
+import '../feature/habits/data/models/habit_entity.dart';
+import '../feature/habits/data/models/category_habit_entity.dart';
 import '../models/user_model.dart';
 import '../models/todo.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todolist_flutter/feature/habit/controllers/habit_controller.dart';
-import 'package:todolist_flutter/models/category_habit_entity.dart';
+import 'package:todolist_flutter/feature/habits/data/models/category_habit_entity.dart';
 import '../../../services/api_service.dart';
 import '../../../services/objectbox_service.dart';
 import '../../../controller/color_controller.dart';

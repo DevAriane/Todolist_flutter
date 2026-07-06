@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todolist_flutter/global_widget/icon_list.dart';
 import 'package:todolist_flutter/global_widget/icon_picker.dart';
-import '../feature/habit/controllers/category_habit_controller.dart';
-import '../core/app_color.dart';
-import 'app_bottom_sheet.dart';
-import '../utils/color_picker.dart';
-import '../controller/color_controller.dart';
+import '../../habit/controllers/category_habit_controller.dart';
+import '../../../core/app_color.dart';
+import '../../../global_widget/app_bottom_sheet.dart';
+import '../../../utils/color_picker.dart';
+import '../../../controller/color_controller.dart';
 
 class CreateCategoryHabit extends StatefulWidget {
   const CreateCategoryHabit({super.key});

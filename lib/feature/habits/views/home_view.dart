@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todolist_flutter/core/app_color.dart';
 import 'package:todolist_flutter/global_widget/app_drawer.dart';
-import 'package:todolist_flutter/global_widget/categories_habit.dart';
-import 'package:todolist_flutter/global_widget/create_habit.dart';
-import 'package:todolist_flutter/global_widget/habits.dart';
+import 'package:todolist_flutter/feature/habits/views/categories_habit.dart';
+import 'package:todolist_flutter/feature/habits/views/create_habit.dart';
+import 'package:todolist_flutter/feature/habits/views/habits.dart';
 import 'package:todolist_flutter/global_widget/search_bar_habit.dart';
-import '../../feature/habit/controllers/habit_controller.dart';
+import '../../habit/controllers/habit_controller.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});

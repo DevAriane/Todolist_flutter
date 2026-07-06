@@ -15,8 +15,8 @@ import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_sync_flutter_libs/objectbox_sync_flutter_libs.dart';
 
 import 'models/category_entity.dart';
-import 'models/category_habit_entity.dart';
-import 'models/habit_entity.dart';
+import 'feature/habits/data/models/category_habit_entity.dart';
+import 'feature/habits/data/models/habit_entity.dart';
 import 'models/person_entity.dart';
 import 'models/task_entity.dart';
 import 'models/todo.dart';

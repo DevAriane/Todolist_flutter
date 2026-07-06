@@ -4,7 +4,7 @@ import 'package:todolist_flutter/objectbox.g.dart';
 import 'package:todolist_flutter/services/api_service.dart';
 import 'package:todolist_flutter/services/objectbox_service.dart';
 import 'category_habit_controller.dart';
-import '../../../models/habit_entity.dart';
+import '../data/models/habit_entity.dart';
 
 class HabitController extends GetxController {
   final CategoryHabitController categoryHabit =

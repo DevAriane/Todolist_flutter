@@ -12,7 +12,7 @@ import 'package:todolist_flutter/presentation/pages/splash.dart';
 import 'package:todolist_flutter/routes/app_routes.dart';
 import 'package:get/get.dart';
 import '../binding/home_view_biding.dart';
-import '../presentation/pages/home_view.dart';
+import '../feature/habits/views/home_view.dart';
 import '../models/task_entity.dart';
 
 abstract class AppPages {

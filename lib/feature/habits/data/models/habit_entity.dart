@@ -1,5 +1,5 @@
 import 'package:objectbox/objectbox.dart';
-import 'package:todolist_flutter/models/category_habit_entity.dart';
+import 'package:todolist_flutter/feature/habits/data/models/category_habit_entity.dart';
 
 @Entity()
 class HabitEntity {

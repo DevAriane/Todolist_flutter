@@ -5,8 +5,8 @@ import 'package:todolist_flutter/global_widget/app_bottom_sheet.dart';
 import 'package:todolist_flutter/global_widget/date_picker_widget.dart';
 import 'package:todolist_flutter/global_widget/text_widget.dart';
 import 'package:todolist_flutter/global_widget/textfield_widget.dart';
-import '../feature/habit/controllers/habit_controller.dart';
-import '../feature/habit/controllers/category_habit_controller.dart';
+import '../../habit/controllers/habit_controller.dart';
+import '../../habit/controllers/category_habit_controller.dart';
 
 class CreateHabit extends StatefulWidget {
   const CreateHabit({super.key});
