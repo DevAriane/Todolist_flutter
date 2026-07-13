@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../controller/person_controller.dart' show PersonController;
+import '../controllers/person_controller.dart' show PersonController;
 
 class PersonBiding extends Bindings {
   @override

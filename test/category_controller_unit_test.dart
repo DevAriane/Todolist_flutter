@@ -4,8 +4,8 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:todolist_flutter/services/api_service.dart';
-import 'package:todolist_flutter/controller/category_controller.dart';
-import 'package:todolist_flutter/controller/task_controller.dart';
+import 'package:todolist_flutter/feature/tasks/controllers/category_controller.dart';
+import 'package:todolist_flutter/feature/tasks/controllers/task_controller.dart';
 import 'package:todolist_flutter/models/category_entity.dart';
 import 'category_controller_unit_test.mocks.dart';
 

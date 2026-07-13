@@ -5,7 +5,7 @@ import '../../core/app_color.dart';
 import '../../global_widget/categories.dart';
 import '../../global_widget/tasks.dart';
 import '../../global_widget/horizontal_date_picker.dart';
-import '../../controller/task_controller.dart';
+import '../../feature/tasks/controllers/task_controller.dart';
 
 class HomePages extends StatelessWidget {
   HomePages({super.key});

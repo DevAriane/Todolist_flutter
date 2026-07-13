@@ -12,8 +12,8 @@ import 'package:mockito/mockito.dart' as _i1;
 import 'package:todolist_flutter/feature/habit/controllers/category_habit_controller.dart'
     as _i2;
 import 'package:todolist_flutter/feature/habit/controllers/habit_controller.dart' as _i8;
-import 'package:todolist_flutter/models/category_habit_entity.dart' as _i4;
-import 'package:todolist_flutter/models/habit_entity.dart' as _i9;
+import 'package:todolist_flutter/feature/habits/data/models/category_habit_entity.dart' as _i4;
+import 'package:todolist_flutter/feature/habits/data/models/habit_entity.dart' as _i9;
 import 'package:todolist_flutter/objectbox.g.dart' as _i5;
 import 'package:todolist_flutter/services/api_service.dart' as _i6;
 

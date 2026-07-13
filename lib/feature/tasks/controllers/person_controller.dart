@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../services/api_service.dart';
-import '../services/objectbox_service.dart';
-import '../models/person_entity.dart';
+import '../../../services/api_service.dart';
+import '../../../services/objectbox_service.dart';
+import '../../../models/person_entity.dart';
 
 class PersonController extends GetxController {
   final persons = <PersonEntity>[].obs;

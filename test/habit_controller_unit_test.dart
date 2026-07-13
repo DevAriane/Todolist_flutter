@@ -6,7 +6,7 @@ import 'package:objectbox/objectbox.dart';
 import 'package:todolist_flutter/services/api_service.dart';
 import 'package:todolist_flutter/feature/habit/controllers/category_habit_controller.dart';
 import 'package:todolist_flutter/feature/habit/controllers/habit_controller.dart';
-import 'package:todolist_flutter/models/category_habit_entity.dart';
+import 'package:todolist_flutter/feature/habits/data/models/category_habit_entity.dart';
 import 'habit_controller_unit_test.mocks.dart';
 
 @GenerateMocks(

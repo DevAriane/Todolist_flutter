@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:todolist_flutter/feature/habit/controllers/category_habit_controller.dart';
 import 'package:todolist_flutter/feature/habit/controllers/habit_controller.dart';
-import 'package:todolist_flutter/controller/search_controller.dart';
+import 'package:todolist_flutter/feature/tasks/data/search_controller.dart';
 
 class HomeViewBiding extends Bindings {
   @override

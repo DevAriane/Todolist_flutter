@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:mockito/mockito.dart';
 import 'package:todolist_flutter/global_widget/categories.dart';
 import 'package:todolist_flutter/global_widget/create_category.dart';
-import 'package:todolist_flutter/controller/category_controller.dart';
-import 'package:todolist_flutter/controller/task_controller.dart';
+import 'package:todolist_flutter/feature/tasks/controllers/category_controller.dart';
+import 'package:todolist_flutter/feature/tasks/controllers/task_controller.dart';
 import 'package:todolist_flutter/models/category_entity.dart';
 import '../categories_unit_test.mocks.dart';
 

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:todolist_flutter/controller/search_controller.dart';
+import 'package:todolist_flutter/feature/tasks/data/search_controller.dart';
 
 class SearchBiding extends Bindings {
   @override

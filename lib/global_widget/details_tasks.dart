@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controller/task_controller.dart';
+import '../feature/tasks/controllers/task_controller.dart';
 import '../core/app_color.dart';
 import '../models/task_entity.dart';
 import 'app_bottom_sheet.dart';

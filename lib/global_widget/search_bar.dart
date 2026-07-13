@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide SearchController;
 import 'package:get/get.dart';
 import '../core/app_color.dart';
-import '../controller/search_controller.dart';
+import '../feature/tasks/data/search_controller.dart';
 
 class Searchbars extends StatelessWidget {
   Searchbars({super.key});
