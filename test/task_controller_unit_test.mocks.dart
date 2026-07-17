@@ -14,7 +14,7 @@ import 'package:todolist_flutter/feature/tasks/controllers/person_controller.dar
 import 'package:todolist_flutter/feature/tasks/controllers/task_controller.dart' as _i11;
 import 'package:todolist_flutter/models/category_entity.dart' as _i7;
 import 'package:todolist_flutter/models/person_entity.dart' as _i8;
-import 'package:todolist_flutter/models/task_entity.dart' as _i5;
+import 'package:todolist_flutter/feature/tasks/data/task_entity.dart' as _i5;
 import 'package:todolist_flutter/objectbox.g.dart' as _i6;
 import 'package:todolist_flutter/services/api_service.dart' as _i9;
 

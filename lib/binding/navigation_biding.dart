@@ -4,7 +4,7 @@ import 'package:todolist_flutter/feature/habit/controllers/category_habit_contro
 import 'package:todolist_flutter/feature/habit/controllers/habit_controller.dart';
 import 'package:todolist_flutter/controller/navigation_controller.dart';
 import 'package:todolist_flutter/feature/tasks/controllers/person_controller.dart';
-import 'package:todolist_flutter/feature/tasks/data/search_controller.dart';
+import 'package:todolist_flutter/feature/tasks/controllers/search_controller.dart';
 import 'package:todolist_flutter/feature/tasks/controllers/task_controller.dart';
 import 'package:todolist_flutter/controller/todo_controller.dart';
 import 'package:todolist_flutter/controller/user_controller.dart';

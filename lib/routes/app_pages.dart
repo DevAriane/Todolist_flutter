@@ -13,7 +13,7 @@ import 'package:todolist_flutter/routes/app_routes.dart';
 import 'package:get/get.dart';
 import '../feature/habits/bindings/home_view_biding.dart';
 import '../feature/habits/views/home_view.dart';
-import '../models/task_entity.dart';
+import '../feature/tasks/data/task_entity.dart';
 
 abstract class AppPages {
   static const intial = AppRoutes.splash;

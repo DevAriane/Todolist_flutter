@@ -9,7 +9,7 @@ import '../feature/tasks/controllers/category_controller.dart';
 import '../feature/tasks/controllers/person_controller.dart';
 import '../controller/color_controller.dart';
 import '../core/app_color.dart';
-import '../models/task_entity.dart';
+import '../feature/tasks/data/task_entity.dart';
 import '../utils/color_picker.dart';
 
 class UpdateTask extends StatefulWidget {

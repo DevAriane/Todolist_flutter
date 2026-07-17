@@ -18,7 +18,7 @@ import 'models/category_entity.dart';
 import 'feature/habits/data/models/category_habit_entity.dart';
 import 'feature/habits/data/models/habit_entity.dart';
 import 'models/person_entity.dart';
-import 'models/task_entity.dart';
+import 'feature/tasks/data/task_entity.dart';
 import 'models/todo.dart';
 import 'models/user_model.dart';
 

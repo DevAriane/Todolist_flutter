@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todolist_flutter/objectbox.g.dart';
-import '../../../models/task_entity.dart';
+import '../data/task_entity.dart';
 import '../../../services/api_service.dart';
 import '../../../services/objectbox_service.dart';
 import 'category_controller.dart';

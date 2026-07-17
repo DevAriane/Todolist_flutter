@@ -6,7 +6,7 @@ import 'package:objectbox/objectbox.dart';
 import 'package:todolist_flutter/feature/tasks/controllers/category_controller.dart';
 import 'package:todolist_flutter/feature/tasks/controllers/person_controller.dart';
 import 'package:todolist_flutter/feature/tasks/controllers/task_controller.dart';
-import 'package:todolist_flutter/models/task_entity.dart';
+import 'package:todolist_flutter/feature/tasks/data/task_entity.dart';
 import 'package:todolist_flutter/models/category_entity.dart';
 import 'package:todolist_flutter/models/person_entity.dart';
 import 'package:todolist_flutter/services/api_service.dart';

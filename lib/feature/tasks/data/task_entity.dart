@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
-import 'category_entity.dart';
-import 'person_entity.dart';
+import '../../../models/category_entity.dart';
+import '../../../models/person_entity.dart';
 
 @Entity()
 class TaskEntity {

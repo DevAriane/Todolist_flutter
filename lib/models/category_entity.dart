@@ -1,5 +1,5 @@
 import 'package:objectbox/objectbox.dart';
-import './task_entity.dart';
+import '../feature/tasks/data/task_entity.dart';
 
 @Entity()
 class CategoryEntity {

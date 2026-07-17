@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:todolist_flutter/feature/habit/controllers/habit_controller.dart';
 import 'package:todolist_flutter/objectbox.g.dart';
-import "../controllers/task_controller.dart";
+import "task_controller.dart";
 import '../../../services/objectbox_service.dart';
-import '../controllers/category_controller.dart';
+import 'category_controller.dart';
 import '../../habit/controllers/category_habit_controller.dart';
 
 class SearchController extends GetxController {
