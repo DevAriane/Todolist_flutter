@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart' hide SearchController;
 import 'package:get/get.dart';
+import 'package:todolist_flutter/feature/habits/controllers/category_habit_controller.dart';
 import 'package:todolist_flutter/feature/habits/views/create_category_habit.dart';
 import '../../../core/app_color.dart';
-import '../../habit/controllers/category_habit_controller.dart';
 
 class CategoriesHabit extends StatelessWidget {
   final CategoryHabitController controller =
